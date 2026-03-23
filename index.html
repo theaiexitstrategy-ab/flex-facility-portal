@@ -835,6 +835,9 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
         <span class="nav-icon">📅</span> Bookings
         <span class="nav-badge white">6</span>
       </div>
+      <div class="nav-item" onclick="showView('calendar',this)">
+        <span class="nav-icon">📆</span> Calendar Manager
+      </div>
       <div class="nav-item" onclick="showView('calls',this)">
         <span class="nav-icon">📞</span> Call Log
       </div>
@@ -1118,6 +1121,151 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
       </div>
     </div>
 
+    <!-- ══ CALENDAR MANAGER ══ -->
+    <div class="view" id="view-calendar">
+      <!-- HEADER -->
+      <div class="section-header">
+        <div class="section-title">CALENDAR MANAGER</div>
+        <div class="section-sub" id="cal-week-label">Loading...</div>
+      </div>
+
+      <!-- TOP ACTION BAR -->
+      <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;">
+        <button class="sync-btn" onclick="calPrevWeek()" style="background:var(--white);color:var(--navy);border:1px solid var(--border);">&larr; Prev Week</button>
+        <button class="sync-btn" onclick="calToday()">Today</button>
+        <button class="sync-btn" onclick="calNextWeek()" style="background:var(--white);color:var(--navy);border:1px solid var(--border);">Next Week &rarr;</button>
+        <div style="margin-left:auto;display:flex;gap:8px;">
+          <button class="sync-btn" onclick="openManualBooking()" style="background:var(--green);border-color:var(--green);">+ Manual Booking</button>
+          <button class="sync-btn" onclick="showView('sms-center', document.querySelector('[onclick*=sms-center]'))">💬 SMS Center</button>
+        </div>
+      </div>
+
+      <div class="grid-2" style="align-items:start;">
+
+        <!-- WEEKLY CALENDAR GRID -->
+        <div class="panel" style="grid-column:1/3;">
+          <div class="panel-header">
+            <div class="panel-title"><div class="panel-dot"></div> WEEKLY SCHEDULE</div>
+            <div style="display:flex;gap:12px;font-size:11px;font-family:var(--font-mono);">
+              <span style="color:var(--green-text)">● Confirmed</span>
+              <span style="color:var(--gold-text)">● Pending</span>
+              <span style="color:var(--red-text)">● Cancelled</span>
+              <span style="color:var(--muted)">● Blocked</span>
+            </div>
+          </div>
+          <div class="panel-body" style="padding:0;">
+            <div id="cal-grid" style="display:grid;grid-template-columns:repeat(7,1fr);min-height:300px;">
+              <!-- populated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- APPOINTMENT DETAIL PANEL -->
+        <div class="panel" id="appt-detail-panel" style="display:none;">
+          <div class="panel-header">
+            <div class="panel-title"><div class="panel-dot"></div> APPOINTMENT DETAIL</div>
+            <div class="panel-action" onclick="closeApptDetail()">✕ CLOSE</div>
+          </div>
+          <div class="panel-body" id="appt-detail-body">
+            <!-- populated by JS -->
+          </div>
+        </div>
+
+        <!-- AVAILABILITY MANAGER -->
+        <div class="panel" id="availability-panel">
+          <div class="panel-header">
+            <div class="panel-title"><div class="panel-dot"></div> AVAILABILITY</div>
+            <div class="panel-action" onclick="saveAvailability()">SAVE &rarr;</div>
+          </div>
+          <div class="panel-body">
+            <div style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted);margin-bottom:12px;">BLOCK A DATE</div>
+            <div style="display:flex;gap:8px;margin-bottom:16px;">
+              <input type="date" id="block-date" style="flex:1;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-family:var(--font-body);font-size:13px;color:var(--navy);background:var(--bg);outline:none;">
+              <input type="text" id="block-reason" placeholder="Reason (optional)" style="flex:2;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-family:var(--font-body);font-size:13px;color:var(--navy);background:var(--bg);outline:none;">
+            </div>
+            <button onclick="blockDate()" style="width:100%;padding:9px;background:var(--navy);color:white;border:none;border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:2px;cursor:pointer;margin-bottom:16px;">BLOCK DATE</button>
+            <div id="blocked-dates-list" style="display:flex;flex-direction:column;gap:6px;">
+              <!-- populated by JS -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MANUAL BOOKING MODAL -->
+      <div id="manual-booking-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;">
+        <div style="background:var(--white);border-radius:14px;padding:28px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+            <div style="font-family:var(--font-display);font-size:20px;letter-spacing:2px;color:var(--navy)">MANUAL BOOKING</div>
+            <div style="cursor:pointer;font-size:18px;color:var(--muted)" onclick="closeManualBooking()">✕</div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div style="grid-column:1/3"><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">FULL NAME *</label><input id="mb-name" type="text" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);" placeholder="Customer name"></div>
+            <div><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">PHONE *</label><input id="mb-phone" type="tel" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);" placeholder="(314) 000-0000"></div>
+            <div><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">EMAIL *</label><input id="mb-email" type="email" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);" placeholder="email@example.com"></div>
+            <div><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">DATE *</label><input id="mb-date" type="date" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);"></div>
+            <div><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">TIME *</label><input id="mb-time" type="time" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);"></div>
+            <div><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">SESSION TYPE</label><select id="mb-session" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);"><option value="athlete">Athlete Assessment</option><option value="lifestyle">Lifestyle Consultation</option><option value="bodybuilding">Bodybuilding Consult</option></select></div>
+            <div style="grid-column:1/3"><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">NOTES</label><textarea id="mb-notes" rows="2" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);resize:vertical;" placeholder="Sport, goal, referral source..."></textarea></div>
+            <div style="grid-column:1/3;display:flex;align-items:center;gap:8px;"><input type="checkbox" id="mb-sms" checked style="width:16px;height:16px;accent-color:var(--navy);"><label for="mb-sms" style="font-size:13px;color:var(--muted2)">Send confirmation SMS to customer</label></div>
+          </div>
+          <button onclick="submitManualBooking()" style="width:100%;margin-top:18px;padding:12px;background:var(--navy);color:white;border:none;border-radius:9px;font-family:var(--font-display);font-size:16px;letter-spacing:2px;cursor:pointer;">CONFIRM BOOKING</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SMS CENTER ══ -->
+    <div class="view" id="view-sms-center">
+      <div class="section-header">
+        <div class="section-title">SMS CENTER</div>
+        <div class="section-sub">Send messages to customers via Twilio</div>
+      </div>
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title"><div class="panel-dot"></div> COMPOSE MESSAGE</div>
+          </div>
+          <div class="panel-body">
+            <div style="margin-bottom:14px;">
+              <div style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);margin-bottom:6px;">RECIPIENT</div>
+              <div style="display:flex;gap:8px;">
+                <input id="sms-to-name" type="text" placeholder="Customer name" style="flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);">
+                <input id="sms-to-phone" type="tel" placeholder="(314) 000-0000" style="flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);">
+              </div>
+            </div>
+            <div style="margin-bottom:10px;">
+              <div style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);margin-bottom:6px;">TEMPLATES</div>
+              <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                <div class="filter-chip" onclick="smsTemplate('reminder')">📅 Reminder</div>
+                <div class="filter-chip" onclick="smsTemplate('confirm')">✅ Confirmation</div>
+                <div class="filter-chip" onclick="smsTemplate('cancel')">❌ Cancellation</div>
+                <div class="filter-chip" onclick="smsTemplate('followup')">🔥 Follow-up</div>
+                <div class="filter-chip" onclick="smsTemplate('custom')">✏️ Custom</div>
+              </div>
+            </div>
+            <div style="margin-bottom:10px;">
+              <div style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);margin-bottom:6px;">MESSAGE</div>
+              <textarea id="sms-body" rows="5" placeholder="Type your message here..." style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);resize:vertical;" oninput="updateSmsCount()"></textarea>
+              <div style="display:flex;justify-content:space-between;margin-top:4px;">
+                <div id="sms-count" style="font-size:11px;color:var(--muted);font-family:var(--font-mono);">0 / 160 chars</div>
+                <div id="sms-count-warn" style="font-size:11px;color:var(--red-text);font-family:var(--font-mono);display:none;">Multiple SMS segments</div>
+              </div>
+            </div>
+            <button onclick="sendSingleSMS()" style="width:100%;padding:11px;background:var(--navy);color:white;border:none;border-radius:9px;font-family:var(--font-display);font-size:16px;letter-spacing:2px;cursor:pointer;margin-bottom:10px;">SEND MESSAGE</button>
+            <button onclick="openBlastModal()" style="width:100%;padding:11px;background:var(--white);color:var(--navy);border:1.5px solid var(--border);border-radius:9px;font-family:var(--font-display);font-size:16px;letter-spacing:2px;cursor:pointer;">📣 SMS BLAST</button>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title"><div class="panel-dot"></div> RECENT MESSAGES</div>
+          </div>
+          <div class="panel-body" id="sms-log-panel">
+            <div style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">Loading message history...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ══ CALLS ══ -->
     <div class="view" id="view-calls">
       <div class="section-header"><div class="section-title">FLEX AI CALL LOG</div><div class="section-sub">VAPI assistant · Last 7 days</div></div>
@@ -1265,14 +1413,15 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 </div><!-- /layout -->
 
 <script>
-const titles = { dashboard:'DASHBOARD', funnel:'FUNNEL ANALYTICS', crm:'CRM — LEAD PIPELINE', bookings:'BOOKINGS', calls:'CALL LOG', sms:'SMS SEQUENCES', ai:'AI INSIGHTS', settings:'SETTINGS' };
+const titles = { dashboard:'DASHBOARD', funnel:'FUNNEL ANALYTICS', crm:'CRM — LEAD PIPELINE', bookings:'BOOKINGS', calendar:'CALENDAR MANAGER', 'sms-center':'SMS CENTER', calls:'CALL LOG', sms:'SMS SEQUENCES', ai:'AI INSIGHTS', settings:'SETTINGS' };
 
 function showView(id, el) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('view-' + id).classList.add('active');
-  el.classList.add('active');
+  if (el) el.classList.add('active');
   document.getElementById('page-title').textContent = titles[id] || id.toUpperCase();
+  if (id === 'calendar') renderCalendarManager();
 }
 
 function updateClock() {
@@ -1291,10 +1440,329 @@ function flashSync(btn) {
 
 document.querySelectorAll('.filter-chip').forEach(chip => {
   chip.addEventListener('click', function() {
-    this.closest('.filter-row').querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+    const row = this.closest('.filter-row');
+    if (row) row.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
     this.classList.add('active');
   });
 });
+
+// ── CALENDAR MANAGER ──
+const BOOKING_API = 'https://book.theflexfacility.com/api';
+let calWeekStart = getMonday(new Date());
+let calBookings = [];
+let calBlocked = [];
+
+function getMonday(d) {
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  return new Date(d.setDate(diff));
+}
+
+function calPrevWeek() { calWeekStart.setDate(calWeekStart.getDate() - 7); renderCalendarManager(); }
+function calNextWeek() { calWeekStart.setDate(calWeekStart.getDate() + 7); renderCalendarManager(); }
+function calToday() { calWeekStart = getMonday(new Date()); renderCalendarManager(); }
+
+async function renderCalendarManager() {
+  const grid = document.getElementById('cal-grid');
+  if (!grid) return;
+
+  const days = ['MON','TUE','WED','THU','FRI','SAT','SUN'];
+  const weekDates = Array.from({length:7}, (_,i) => {
+    const d = new Date(calWeekStart);
+    d.setDate(calWeekStart.getDate() + i);
+    return d;
+  });
+
+  // update label
+  const label = document.getElementById('cal-week-label');
+  if (label) {
+    label.textContent = weekDates[0].toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' \u2013 ' + weekDates[6].toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  }
+
+  // fetch bookings for this week
+  try {
+    const bookings = await fetch('/api/bookings', { credentials: 'include' }).then(r => r.json());
+    calBookings = Array.isArray(bookings) ? bookings : [];
+  } catch(e) { calBookings = []; }
+
+  const today = new Date().toDateString();
+  const statusColor = { 'Confirmed':'var(--green-dim)', 'Pending':'var(--gold-dim)', 'Cancelled':'rgba(214,56,85,0.08)', 'No-Show':'rgba(214,56,85,0.08)' };
+  const statusText = { 'Confirmed':'var(--green-text)', 'Pending':'var(--gold-text)', 'Cancelled':'var(--red-text)', 'No-Show':'var(--red-text)' };
+
+  grid.innerHTML = weekDates.map((date, i) => {
+    const dateStr = date.toISOString().split('T')[0];
+    const isToday = date.toDateString() === today;
+    const dayBookings = calBookings.filter(b => b['Date'] === dateStr);
+    const isBlocked = calBlocked.includes(dateStr);
+
+    return '<div style="border-right:1px solid var(--border);min-height:280px;' + (i===6?'border-right:none':'') + ';background:' + (isToday?'rgba(26,32,53,0.03)':'transparent') + '">' +
+      '<div style="padding:10px 12px;border-bottom:1px solid var(--border);background:' + (isToday?'var(--navy)':'var(--bg)') + ';text-align:center;">' +
+        '<div style="font-size:10px;font-family:var(--font-mono);color:' + (isToday?'rgba(255,255,255,0.6)':'var(--muted)') + ';letter-spacing:1px;">' + days[i] + '</div>' +
+        '<div style="font-family:var(--font-display);font-size:20px;color:' + (isToday?'white':'var(--navy)') + ';">' + date.getDate() + '</div>' +
+      '</div>' +
+      '<div style="padding:8px;">' +
+        (isBlocked ? '<div style="background:rgba(136,136,152,0.15);border:1px solid var(--border);border-radius:6px;padding:6px 8px;font-size:10px;font-family:var(--font-mono);color:var(--muted);text-align:center;">BLOCKED</div>' : '') +
+        dayBookings.map(b =>
+          '<div onclick="openApptDetail(\'' + b.id + '\')" style="background:' + (statusColor[b['Status']]||'var(--cyan-dim)') + ';border:1px solid var(--border);border-radius:6px;padding:7px 8px;margin-bottom:5px;cursor:pointer;transition:transform 0.1s;" onmouseover="this.style.transform=\'translateX(2px)\'" onmouseout="this.style.transform=\'\'">' +
+            '<div style="font-size:11px;font-weight:600;color:' + (statusText[b['Status']]||'var(--cyan-text)') + ';font-family:var(--font-mono);">' + (b['Time'] || '\u2014') + '</div>' +
+            '<div style="font-size:12px;color:var(--navy);font-weight:500;margin-top:2px;">' + (b['Name'] || 'Unknown') + '</div>' +
+            '<div style="font-size:10px;color:var(--muted2);">' + (b['Session Type']||'').slice(0,20) + '</div>' +
+          '</div>'
+        ).join('') +
+        (dayBookings.length === 0 && !isBlocked ? '<div style="text-align:center;padding:16px 0;font-size:11px;color:var(--muted);font-family:var(--font-mono);">\u2014</div>' : '') +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+async function openApptDetail(bookingId) {
+  const panel = document.getElementById('appt-detail-panel');
+  const body = document.getElementById('appt-detail-body');
+  if (!panel || !body) return;
+
+  body.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted)">Loading...</div>';
+  panel.style.display = 'block';
+
+  try {
+    const booking = calBookings.find(b => b.id === bookingId) || {};
+    const statusClass = { 'Confirmed':'booked', 'Pending':'warm', 'Cancelled':'cold', 'No-Show':'hot' };
+
+    body.innerHTML =
+      '<div style="display:flex;flex-direction:column;gap:14px;">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+          '<div>' +
+            '<div style="font-family:var(--font-display);font-size:22px;color:var(--navy);">' + (booking['Name'] || 'Unknown') + '</div>' +
+            '<div style="font-size:12px;color:var(--muted2);">' + (booking['Session Type'] || '\u2014') + '</div>' +
+          '</div>' +
+          '<span class="pill ' + (statusClass[booking['Status']]||'new') + '"><span class="pill-dot"></span>' + (booking['Status']||'UNKNOWN').toUpperCase() + '</span>' +
+        '</div>' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">' +
+          '<div style="background:var(--bg);border-radius:8px;padding:10px 12px;">' +
+            '<div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">DATE & TIME</div>' +
+            '<div style="font-size:13px;font-weight:600;color:var(--navy);">' + (booking['Date'] || '\u2014') + ' \u00b7 ' + (booking['Time'] || '\u2014') + '</div>' +
+          '</div>' +
+          '<div style="background:var(--bg);border-radius:8px;padding:10px 12px;">' +
+            '<div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">PHONE</div>' +
+            '<div style="font-size:13px;font-weight:600;color:var(--navy);">' + (booking['Phone'] || '\u2014') + '</div>' +
+          '</div>' +
+          '<div style="background:var(--bg);border-radius:8px;padding:10px 12px;">' +
+            '<div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">EMAIL</div>' +
+            '<div style="font-size:12px;color:var(--navy);">' + (booking['Email'] || '\u2014') + '</div>' +
+          '</div>' +
+          '<div style="background:var(--bg);border-radius:8px;padding:10px 12px;">' +
+            '<div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">SEGMENT</div>' +
+            '<div style="font-size:13px;font-weight:600;color:var(--navy);">' + (booking['Segment'] || '\u2014') + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div>' +
+          '<div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:6px;">NOTES</div>' +
+          '<textarea id="appt-notes" rows="2" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);resize:none;">' + (booking['Notes'] || '') + '</textarea>' +
+        '</div>' +
+        '<div>' +
+          '<div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:8px;">RESCHEDULE</div>' +
+          '<div style="display:flex;gap:8px;">' +
+            '<input type="date" id="appt-new-date" value="' + (booking['Date']||'') + '" style="flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);">' +
+            '<input type="text" id="appt-new-time" value="' + (booking['Time']||'') + '" placeholder="7:00 PM" style="flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);">' +
+          '</div>' +
+        '</div>' +
+        '<div style="display:flex;gap:8px;">' +
+          '<button onclick="rescheduleBooking(\'' + bookingId + '\',\'' + (booking['Phone']||'') + '\')" style="flex:1;padding:10px;background:var(--navy);color:white;border:none;border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;">RESCHEDULE</button>' +
+          '<button onclick="sendApptSMS(\'' + (booking['Phone']||'') + '\',\'' + (booking['Name']||'').split(' ')[0] + '\')" style="flex:1;padding:10px;background:var(--white);color:var(--navy);border:1.5px solid var(--border);border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;">\uD83D\uDCAC SMS</button>' +
+          '<button onclick="cancelBooking(\'' + bookingId + '\',\'' + (booking['Phone']||'') + '\',\'' + (booking['Name']||'').split(' ')[0] + '\')" style="flex:1;padding:10px;background:var(--red-dim);color:var(--red-text);border:1px solid rgba(214,56,85,0.2);border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;">CANCEL</button>' +
+        '</div>' +
+      '</div>';
+  } catch (err) {
+    body.innerHTML = '<div style="color:var(--red-text);font-size:13px;">Failed to load booking: ' + err.message + '</div>';
+  }
+}
+
+function closeApptDetail() {
+  const panel = document.getElementById('appt-detail-panel');
+  if (panel) panel.style.display = 'none';
+}
+
+async function rescheduleBooking(id, phone) {
+  const newDate = document.getElementById('appt-new-date')?.value;
+  const newTime = document.getElementById('appt-new-time')?.value;
+  const notes = document.getElementById('appt-notes')?.value;
+  if (!newDate || !newTime) { alert('Please enter a new date and time.'); return; }
+  if (!confirm('Reschedule to ' + newDate + ' at ' + newTime + '?')) return;
+  try {
+    const r = await fetch('/api/booking?id=' + id, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ date: newDate, time: newTime, notes: notes })
+    });
+    if (!r.ok) throw new Error('Update failed');
+    if (phone) {
+      await fetch('/api/sms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ to: phone, message: 'Hi! Your appointment at The Flex Facility has been rescheduled to ' + newDate + ' at ' + newTime + '. Questions? Call 1-877-515-FLEX. \uD83D\uDCAA\uD83C\uDFFE' })
+      });
+    }
+    closeApptDetail();
+    renderCalendarManager();
+    alert('Booking rescheduled and SMS sent.');
+  } catch (err) { alert('Reschedule failed: ' + err.message); }
+}
+
+async function cancelBooking(id, phone, firstName) {
+  if (!confirm('Cancel this appointment for ' + firstName + '? An SMS will be sent to notify them.')) return;
+  try {
+    const r = await fetch('/api/booking?id=' + id, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ status: 'Cancelled' })
+    });
+    if (!r.ok) throw new Error('Cancel failed');
+    if (phone) {
+      await fetch('/api/sms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ to: phone, message: 'Hi ' + firstName + ', your appointment at The Flex Facility has been cancelled. To rebook, visit book.theflexfacility.com or call 1-877-515-FLEX. \uD83D\uDCAA\uD83C\uDFFE' })
+      });
+    }
+    closeApptDetail();
+    renderCalendarManager();
+  } catch (err) { alert('Cancellation failed: ' + err.message); }
+}
+
+function sendApptSMS(phone, firstName) {
+  document.getElementById('sms-to-phone').value = phone;
+  document.getElementById('sms-to-name').value = firstName;
+  document.getElementById('sms-body').value = 'Hi ' + firstName + '! This is Coach Kenny from The Flex Facility. ';
+  showView('sms-center', null);
+}
+
+function openManualBooking() {
+  document.getElementById('manual-booking-modal').style.display = 'flex';
+}
+
+function closeManualBooking() {
+  document.getElementById('manual-booking-modal').style.display = 'none';
+}
+
+async function submitManualBooking() {
+  const name = document.getElementById('mb-name').value.trim();
+  const phone = document.getElementById('mb-phone').value.trim();
+  const email = document.getElementById('mb-email').value.trim();
+  const date = document.getElementById('mb-date').value;
+  const timeRaw = document.getElementById('mb-time').value;
+  const session = document.getElementById('mb-session').value;
+  const notes = document.getElementById('mb-notes').value.trim();
+  const sendSms = document.getElementById('mb-sms').checked;
+
+  if (!name || !phone || !email || !date || !timeRaw) {
+    alert('Please fill in all required fields.');
+    return;
+  }
+
+  const [h, m] = timeRaw.split(':');
+  const hour = parseInt(h);
+  const ampm = hour >= 12 ? 'PM' : 'AM';
+  const hour12 = hour % 12 || 12;
+  const time = hour12 + ':' + m + ' ' + ampm;
+
+  try {
+    const r = await fetch('/api/bookings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        session_type: session,
+        session_name: session === 'athlete' ? 'Free Athlete Performance Assessment' : session === 'lifestyle' ? 'Lifestyle Consultation' : 'Bodybuilding Consult',
+        date: date, time: time, name: name, phone: phone, email: email,
+        notes: notes,
+        source: 'manual-portal-entry'
+      })
+    });
+    if (!r.ok) { const d = await r.json(); throw new Error(d.error); }
+    closeManualBooking();
+    renderCalendarManager();
+    alert('Booking created for ' + name + (sendSms ? ' \u00b7 Confirmation SMS sent' : '') + '.');
+  } catch (err) { alert('Booking failed: ' + err.message); }
+}
+
+async function blockDate() {
+  const date = document.getElementById('block-date').value;
+  const reason = document.getElementById('block-reason').value.trim();
+  if (!date) { alert('Please select a date to block.'); return; }
+  try {
+    const r = await fetch('/api/availability', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ blocked_date: date, block_reason: reason || 'Unavailable' })
+    });
+    if (!r.ok) throw new Error('Failed to block date');
+    document.getElementById('block-date').value = '';
+    document.getElementById('block-reason').value = '';
+    renderCalendarManager();
+    alert(date + ' blocked.');
+  } catch (err) { alert('Error: ' + err.message); }
+}
+
+function saveAvailability() {
+  alert('Availability settings saved.');
+}
+
+// ── SMS CENTER ──
+const smsTemplates = {
+  reminder: function(name) { return 'Hi ' + (name||'there') + '! Just a reminder \u2014 your appointment at The Flex Facility is coming up. Reply CONFIRM to confirm or call 1-877-515-FLEX to reschedule. \uD83D\uDCAA\uD83C\uDFFE'; },
+  confirm: function(name) { return 'Hi ' + (name||'there') + '! Your session at The Flex Facility is confirmed. We\'ll see you soon! Questions? 1-877-515-FLEX. \uD83D\uDCAA\uD83C\uDFFE'; },
+  cancel: function(name) { return 'Hi ' + (name||'there') + ', your appointment at The Flex Facility has been cancelled. To rebook: book.theflexfacility.com or call 1-877-515-FLEX.'; },
+  followup: function(name) { return 'Hey ' + (name||'there') + '! Coach Kenny here from The Flex Facility. Checking in \u2014 still interested in leveling up your performance? Your spot is ready. \uD83D\uDCAA\uD83C\uDFFE'; },
+  custom: function() { return ''; }
+};
+
+function smsTemplate(type) {
+  const name = (document.getElementById('sms-to-name')?.value || '').split(' ')[0] || '';
+  const body = document.getElementById('sms-body');
+  if (body) { body.value = smsTemplates[type](name); updateSmsCount(); }
+  document.querySelectorAll('#view-sms-center .filter-chip').forEach(function(c) { c.classList.remove('active'); });
+  if (event && event.target) event.target.classList.add('active');
+}
+
+function updateSmsCount() {
+  const body = document.getElementById('sms-body');
+  const count = document.getElementById('sms-count');
+  const warn = document.getElementById('sms-count-warn');
+  if (!body || !count) return;
+  const len = body.value.length;
+  count.textContent = len + ' / 160 chars';
+  count.style.color = len > 140 ? 'var(--gold-text)' : 'var(--muted)';
+  if (warn) warn.style.display = len > 160 ? 'block' : 'none';
+}
+
+async function sendSingleSMS() {
+  const phone = document.getElementById('sms-to-phone').value.trim();
+  const message = document.getElementById('sms-body').value.trim();
+  if (!phone || !message) { alert('Please enter a phone number and message.'); return; }
+  if (!confirm('Send SMS to ' + phone + '?')) return;
+  try {
+    const r = await fetch('/api/sms', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ to: phone, message: message })
+    });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error);
+    alert('SMS sent successfully!');
+    document.getElementById('sms-body').value = '';
+    document.getElementById('sms-to-phone').value = '';
+    document.getElementById('sms-to-name').value = '';
+  } catch (err) { alert('SMS failed: ' + err.message); }
+}
+
+function openBlastModal() {
+  alert('SMS Blast feature coming soon.');
+}
 </script>
 </body>
 </html>
