@@ -1,0 +1,9 @@
+{
+  "name": "theflexfacility-portal",
+  "version": "1.0.0",
+  "description": "The Flex Facility Command Center — Admin Portal",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.0"
+  }
+}
