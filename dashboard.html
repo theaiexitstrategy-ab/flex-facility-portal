@@ -1620,16 +1620,26 @@ async function renderCalendarManager() {
       +'</div>'
       +'<div style="padding:8px;">'
         +(isBlocked?'<div style="background:rgba(136,136,152,0.15);border:1px solid var(--border);border-radius:6px;padding:6px 8px;font-size:10px;font-family:var(--font-mono);color:var(--muted);text-align:center;">BLOCKED</div>':'')
-        +dayBookings.map(b=>'<div onclick="openApptDetail(''+b.id+'')" style="background:'+(statusColor[b['Status']]||'var(--cyan-dim)')+';border:1px solid var(--border);border-radius:6px;padding:7px 8px;margin-bottom:5px;cursor:pointer;" onmouseover="this.style.transform='translateX(2px)'" onmouseout="this.style.transform=''">'
-          +'<div style="font-size:11px;font-weight:600;color:'+(statusText[b['Status']]||'var(--cyan-text)')+';font-family:var(--font-mono);">'+(b['Time']||'—')+'</div>'
++dayBookings.map(function(b){ var bg=statusColor[b['Status']]||'var(--cyan-dim)'; var tc=statusText[b['Status']]||'var(--cyan-text)'; return '<div onclick="openApptDetail(\''+b.id+'\')" style="background:'+bg+';border:1px solid var(--border);border-radius:6px;padding:7px 8px;margin-bottom:5px;cursor:pointer;">'
           +'<div style="font-size:12px;color:var(--navy);font-weight:500;margin-top:2px;">'+(b['Name']||'Unknown')+'</div>'
           +'<div style="font-size:10px;color:var(--muted2);">'+(b['Session Type']||'').slice(0,20)+'</div>'
         +'</div>').join('')
         +(dayBookings.length===0&&!isBlocked?'<div style="text-align:center;padding:16px 0;font-size:11px;color:var(--muted);font-family:var(--font-mono);">—</div>':'')
+      window._currentBooking = {id:bookingId,phone:booking['Phone']||'',name:(booking['Name']||'').split(' ')[0]};
+  setTimeout(function(){
+    var r=document.getElementById('btn-reschedule'); if(r) r.addEventListener('click',function(){rescheduleBooking(window._currentBooking.id,window._currentBooking.phone);});
+    var s=document.getElementById('btn-sms'); if(s) s.addEventListener('click',function(){sendApptSMS(window._currentBooking.phone,window._currentBooking.name);});
+    var c=document.getElementById('btn-cancel'); if(c) c.addEventListener('click',function(){cancelBooking(window._currentBooking.id,window._currentBooking.phone,window._currentBooking.name);});
+  },0);
+    window._currentBooking = {id:bookingId,phone:booking['Phone']||'',name:(booking['Name']||'').split(' ')[0]};
+  setTimeout(function(){
+    var r=document.getElementById('btn-reschedule'); if(r) r.addEventListener('click',function(){rescheduleBooking(window._currentBooking.id,window._currentBooking.phone);});
+    var s=document.getElementById('btn-sms'); if(s) s.addEventListener('click',function(){sendApptSMS(window._currentBooking.phone,window._currentBooking.name);});
+    var c=document.getElementById('btn-cancel'); if(c) c.addEventListener('click',function(){cancelBooking(window._currentBooking.id,window._currentBooking.phone,window._currentBooking.name);});
+  },0);
       +'</div></div>';
   }).join('');
 }
-
 async function openApptDetail(bookingId) {
   const panel = document.getElementById('appt-detail-panel');
   const body = document.getElementById('appt-detail-body');
@@ -1649,9 +1659,9 @@ async function openApptDetail(bookingId) {
     +'<div><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:6px;">NOTES</div><textarea id="appt-notes" rows="2" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);resize:none;">'+(booking['Notes']||'')+'</textarea></div>'
     +'<div><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:8px;">RESCHEDULE</div><div style="display:flex;gap:8px;"><input type="date" id="appt-new-date" value="'+(booking['Date']||'')+'" style="flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);"><input type="text" id="appt-new-time" value="'+(booking['Time']||'')+'" placeholder="7:00 PM" style="flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);"></div></div>'
     +'<div style="display:flex;gap:8px;">'
-      +'<button onclick="rescheduleBooking(''+bookingId+'',''+(booking['Phone']||'')+'')" style="flex:1;padding:10px;background:var(--navy);color:white;border:none;border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;">RESCHEDULE</button>'
-      +'<button onclick="sendApptSMS(''+(booking['Phone']||'')+'',''+(booking['Name']||'').split(' ')[0]+'')" style="flex:1;padding:10px;background:var(--white);color:var(--navy);border:1.5px solid var(--border);border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;">💬 SMS</button>'
-      +'<button onclick="cancelBooking(''+bookingId+'',''+(booking['Phone']||'')+'',''+(booking['Name']||'').split(' ')[0]+'')" style="flex:1;padding:10px;background:var(--red-dim);color:var(--red-text);border:1px solid rgba(214,56,85,0.2);border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;">CANCEL</button>'
++'<button id="btn-reschedule" style="flex:1;padding:10px;background:var(--navy);color:white;border:none;border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;">RESCHEDULE</button>'
++'<button id="btn-sms" style="flex:1;padding:10px;background:var(--white);color:var(--navy);border:1.5px solid var(--border);border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;">💬 SMS</button>'
++'<button id="btn-cancel" style="flex:1;padding:10px;background:var(--red-dim);color:var(--red-text);border:1px solid rgba(214,56,85,0.2);border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;">CANCEL</button>'
     +'</div>'
   +'</div>';
 }
