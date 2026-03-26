@@ -1,10 +1,4 @@
 {
-  "rewrites": [
-    { "source": "/login", "destination": "/index.html" },
-    { "source": "/dashboard", "destination": "/dashboard.html" },
-    { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/", "destination": "/index.html" }
-  ],
   "headers": [
     {
       "source": "/api/(.*)",
@@ -23,5 +17,10 @@
         { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
       ]
     }
+  ],
+  "rewrites": [
+    { "source": "/login", "destination": "/index.html" },
+    { "source": "/dashboard", "destination": "/dashboard.html" },
+    { "source": "/", "destination": "/index.html" }
   ]
 }
