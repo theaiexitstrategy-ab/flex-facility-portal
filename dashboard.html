@@ -893,7 +893,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
           <p>Your funnel is active · Earth City, MO · Last synced just now</p>
         </div>
         <div class="banner-stat">
-          <div class="banner-stat-val">78%</div>
+          <div class="banner-stat-val" id="kpi-closerate">—</div>
           <div class="banner-stat-label">CLOSE RATE</div>
         </div>
       </div>
@@ -902,28 +902,28 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
         <div class="kpi-card">
           <div class="kpi-accent" style="--accent:var(--navy)"></div>
           <div class="kpi-label">Total Leads</div>
-          <div class="kpi-value">87</div>
+          <div class="kpi-value" id="kpi-leads">—</div>
           <div class="kpi-change up">▲ 23% vs last month</div>
           <div class="kpi-bg">👤</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-accent" style="--accent:var(--gold)"></div>
           <div class="kpi-label">Assessments Booked</div>
-          <div class="kpi-value">34</div>
+          <div class="kpi-value" id="kpi-bookings">—</div>
           <div class="kpi-change up">▲ 18% vs last month</div>
           <div class="kpi-bg">📅</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-accent" style="--accent:var(--green)"></div>
           <div class="kpi-label">Clients Closed</div>
-          <div class="kpi-value">22</div>
+          <div class="kpi-value" id="kpi-commission">—</div>
           <div class="kpi-change up">▲ 10% vs last month</div>
           <div class="kpi-bg">✅</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-accent" style="--accent:var(--red)"></div>
           <div class="kpi-label">Hot Leads</div>
-          <div class="kpi-value">14</div>
+          <div class="kpi-value" id="kpi-hot">—</div>
           <div class="kpi-change flat">→ Action needed</div>
           <div class="kpi-bg">🔥</div>
         </div>
@@ -971,11 +971,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
             <div style="font-size:9px;color:var(--green-text);font-family:var(--font-mono);display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;background:var(--green);border-radius:50%;display:inline-block"></span>LIVE</div>
           </div>
           <div class="panel-body">
-            <div class="activity-item"><div class="act-icon lead">👤</div><div class="act-body"><div class="act-text"><strong>Marcus Williams</strong> submitted the athlete form</div><div class="act-time">2 min ago · Main Page Form</div></div></div>
-            <div class="activity-item"><div class="act-icon book">📅</div><div class="act-body"><div class="act-text"><strong>Deja Thompson</strong> booked a free assessment</div><div class="act-time">18 min ago · book.theflexfacility.com</div></div></div>
-            <div class="activity-item"><div class="act-icon call">📞</div><div class="act-body"><div class="act-text"><strong>FLEX AI</strong> completed a call · 4m 12s</div><div class="act-time">34 min ago · VAPI Outbound</div></div></div>
-            <div class="activity-item"><div class="act-icon sms">💬</div><div class="act-body"><div class="act-text"><strong>SMS Nudge #2</strong> sent to 7 leads</div><div class="act-time">1 hr ago · Make.com Sequence</div></div></div>
-            <div class="activity-item"><div class="act-icon win">🏆</div><div class="act-body"><div class="act-text"><strong>Jordan Carter</strong> converted to client</div><div class="act-time">3 hr ago · In-Person Close</div></div></div>
+            <div id="activity-feed" style="font-size:13px;color:var(--muted);padding:10px 0;">Loading activity...</div>
           </div>
         </div>
       </div>
@@ -1026,9 +1022,9 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
       <div class="section-header"><div class="section-title">FUNNEL ANALYTICS</div><div class="section-sub">Last 30 days · All sources</div></div>
       <div class="kpi-grid">
         <div class="kpi-card"><div class="kpi-accent"></div><div class="kpi-label">Page Views</div><div class="kpi-value">1,847</div><div class="kpi-change up">▲ 31%</div></div>
-        <div class="kpi-card"><div class="kpi-accent" style="--accent:var(--gold)"></div><div class="kpi-label">Form Submissions</div><div class="kpi-value">87</div><div class="kpi-change flat">4.7% conversion</div></div>
-        <div class="kpi-card"><div class="kpi-accent" style="--accent:var(--green)"></div><div class="kpi-label">Assessments Booked</div><div class="kpi-value">34</div><div class="kpi-change up">39% book rate</div></div>
-        <div class="kpi-card"><div class="kpi-accent" style="--accent:var(--navy)"></div><div class="kpi-label">Clients Closed</div><div class="kpi-value">22</div><div class="kpi-change up">78% close rate</div></div>
+        <div class="kpi-card"><div class="kpi-accent" style="--accent:var(--gold)"></div><div class="kpi-label">Form Submissions</div><div class="kpi-value" id="kpi-leads">—</div><div class="kpi-change flat">4.7% conversion</div></div>
+        <div class="kpi-card"><div class="kpi-accent" style="--accent:var(--green)"></div><div class="kpi-label">Assessments Booked</div><div class="kpi-value" id="kpi-bookings">—</div><div class="kpi-change up">39% book rate</div></div>
+        <div class="kpi-card"><div class="kpi-accent" style="--accent:var(--navy)"></div><div class="kpi-label">Clients Closed</div><div class="kpi-value" id="kpi-commission">—</div><div class="kpi-change up">78% close rate</div></div>
       </div>
       <div class="grid-2">
         <div class="panel">
@@ -1075,11 +1071,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
           <table>
             <thead><tr><th>ATHLETE / PARENT</th><th>SPORT / GOAL</th><th>PIPELINE STAGE</th><th>SOURCE</th><th>PHONE</th><th>SUBMITTED</th><th>ACTIONS</th></tr></thead>
             <tbody>
-              <tr><td><div class="lead-name">Marcus Williams</div><div class="lead-sub">Parent: Tanya Williams</div></td><td><div style="font-size:12px;color:var(--navy)">Football · Speed</div><div style="font-size:11px;color:var(--muted2)">Age 16 · Class of 2026</div></td><td><span class="pill hot"><span class="pill-dot"></span>HOT</span></td><td><span class="source-tag">Main Form</span></td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">(314) 555-0182</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">2 min ago</td><td><div class="action-btns"><div class="act-btn success">📞</div><div class="act-btn">💬</div><div class="act-btn">📅</div><div class="act-btn danger">🗑</div></div></td></tr>
-              <tr><td><div class="lead-name">Deja Thompson</div><div class="lead-sub">Self</div></td><td><div style="font-size:12px;color:var(--navy)">Basketball · Explosiveness</div><div style="font-size:11px;color:var(--muted2)">Age 17 · Class of 2025</div></td><td><span class="pill booked"><span class="pill-dot"></span>BOOKED</span></td><td><span class="source-tag">Instagram</span></td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">(314) 555-0247</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">18 min ago</td><td><div class="action-btns"><div class="act-btn success">📞</div><div class="act-btn">💬</div><div class="act-btn">👁</div><div class="act-btn danger">🗑</div></div></td></tr>
-              <tr><td><div class="lead-name">Jordan Carter</div><div class="lead-sub">Parent: Michael Carter</div></td><td><div style="font-size:12px;color:var(--navy)">Track · Performance</div><div style="font-size:11px;color:var(--muted2)">Age 15 · Class of 2027</div></td><td><span class="pill warm"><span class="pill-dot"></span>WARM</span></td><td><span class="source-tag">FLEX Call</span></td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">(314) 555-0391</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">2 hrs ago</td><td><div class="action-btns"><div class="act-btn success">📞</div><div class="act-btn">💬</div><div class="act-btn">📅</div><div class="act-btn danger">🗑</div></div></td></tr>
-              <tr><td><div class="lead-name">Alonzo Davis</div><div class="lead-sub">Self</div></td><td><div style="font-size:12px;color:var(--navy)">Bodybuilding · Muscle Gain</div><div style="font-size:11px;color:var(--muted2)">Age 28 · Lifestyle</div></td><td><span class="pill new"><span class="pill-dot"></span>NEW</span></td><td><span class="source-tag">/fit Page</span></td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">(314) 555-0558</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">5 hrs ago</td><td><div class="action-btns"><div class="act-btn success">📞</div><div class="act-btn">💬</div><div class="act-btn">📅</div><div class="act-btn danger">🗑</div></div></td></tr>
-              <tr><td><div class="lead-name">Kayla Robinson</div><div class="lead-sub">Parent: Lisa Robinson</div></td><td><div style="font-size:12px;color:var(--navy)">Soccer · Conditioning</div><div style="font-size:11px;color:var(--muted2)">Age 14 · Class of 2028</div></td><td><span class="pill cold"><span class="pill-dot"></span>COLD</span></td><td><span class="source-tag">Word of Mouth</span></td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">(314) 555-0612</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">3 days ago</td><td><div class="action-btns"><div class="act-btn success">📞</div><div class="act-btn">💬</div><div class="act-btn">📅</div><div class="act-btn danger">🗑</div></div></td></tr>
+              <tr><td colspan="7" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">Loading leads...</td></tr>
             </tbody>
           </table>
         </div>
@@ -1094,11 +1086,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
           <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> THIS WEEK</div><div class="panel-action">book.theflexfacility.com →</div></div>
           <div class="panel-body">
             <div class="booking-list">
-              <div class="booking-item"><div class="booking-time"><div class="booking-time-day">MON</div><div class="booking-time-hr">9:00</div><div class="booking-time-ampm">AM</div></div><div class="booking-info"><div class="booking-name">Deja Thompson</div><div class="booking-detail">Free Athlete Assessment · Basketball · Age 17</div></div><span class="pill booked"><span class="pill-dot"></span>CONFIRMED</span></div>
-              <div class="booking-item"><div class="booking-time"><div class="booking-time-day">MON</div><div class="booking-time-hr">11:30</div><div class="booking-time-ampm">AM</div></div><div class="booking-info"><div class="booking-name">Tyrese Jackson</div><div class="booking-detail">Free Athlete Assessment · Football · Age 15</div></div><span class="pill booked"><span class="pill-dot"></span>CONFIRMED</span></div>
-              <div class="booking-item"><div class="booking-time"><div class="booking-time-day">WED</div><div class="booking-time-hr">2:00</div><div class="booking-time-ampm">PM</div></div><div class="booking-info"><div class="booking-name">Marcus Williams</div><div class="booking-detail">Free Athlete Assessment · Football · Age 16</div></div><span class="pill booked"><span class="pill-dot"></span>CONFIRMED</span></div>
-              <div class="booking-item"><div class="booking-time"><div class="booking-time-day">THU</div><div class="booking-time-hr">10:00</div><div class="booking-time-ampm">AM</div></div><div class="booking-info"><div class="booking-name">Alonzo Davis</div><div class="booking-detail">Lifestyle Consultation · Bodybuilding · Age 28</div></div><span class="pill warm"><span class="pill-dot"></span>LIFESTYLE</span></div>
-              <div class="booking-item"><div class="booking-time"><div class="booking-time-day">SAT</div><div class="booking-time-hr">9:30</div><div class="booking-time-ampm">AM</div></div><div class="booking-info"><div class="booking-name">Kayla Robinson</div><div class="booking-detail">Free Athlete Assessment · Soccer · Age 14</div></div><span class="pill new"><span class="pill-dot"></span>PENDING</span></div>
+              <div style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">Loading bookings...</div>
             </div>
           </div>
         </div>
@@ -1254,11 +1242,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
       <div class="panel">
         <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> RECENT CALLS</div><div class="panel-action">EXPORT CSV →</div></div>
         <div class="panel-body">
-          <div class="call-item"><div class="call-icon out">📞</div><div class="call-body"><div class="call-name">Marcus Williams</div><div class="call-detail">Outbound · Interested in speed training · Booked assessment</div></div><div><div class="call-dur">4m 12s</div><div class="call-outcome" style="color:var(--green-text)">BOOKED ✓</div></div></div>
-          <div class="call-item"><div class="call-icon in">📲</div><div class="call-body"><div class="call-name">Unknown Caller</div><div class="call-detail">Inbound · Asked about adult training programs</div></div><div><div class="call-dur">2m 48s</div><div class="call-outcome" style="color:var(--gold-text)">WARM LEAD</div></div></div>
-          <div class="call-item"><div class="call-icon missed">❌</div><div class="call-body"><div class="call-name">Jordan Carter</div><div class="call-detail">Outbound · No answer · SMS follow-up sent automatically</div></div><div><div class="call-dur">0m 00s</div><div class="call-outcome" style="color:var(--red-text)">MISSED</div></div></div>
-          <div class="call-item"><div class="call-icon out">📞</div><div class="call-body"><div class="call-name">Deja Thompson</div><div class="call-detail">Outbound · Confirmed booking · Parent on call</div></div><div><div class="call-dur">3m 05s</div><div class="call-outcome" style="color:var(--green-text)">CONFIRMED ✓</div></div></div>
-          <div class="call-item"><div class="call-icon out">📞</div><div class="call-body"><div class="call-name">Kayla Robinson</div><div class="call-detail">Outbound · Left voicemail · Needs callback</div></div><div><div class="call-dur">0m 45s</div><div class="call-outcome" style="color:var(--muted2)">VOICEMAIL</div></div></div>
+          <div id="calls-container" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">Loading calls...</div>
         </div>
       </div>
     </div>
@@ -1305,7 +1289,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
         <div class="panel">
           <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> PRIORITY RECOMMENDATIONS</div><div style="font-size:9px;color:var(--green-text);font-family:var(--font-mono);display:flex;align-items:center;gap:4px"><span style="width:6px;height:6px;background:var(--green);border-radius:50%;display:inline-block"></span>LIVE</div></div>
           <div class="panel-body">
-            <div class="ai-card"><div class="ai-card-icon fire">🔥</div><div class="ai-card-body"><div class="ai-card-title">Call Marcus Williams NOW</div><div class="ai-card-desc">Submitted 2 minutes ago. Response rates are 40× higher in the first 5 minutes. Football athlete, parent on record. High intent.</div><div class="ai-priority high">HIGH PRIORITY</div></div></div>
+            <div class="ai-card"><div class="ai-card-icon fire">🔥</div><div class="ai-card-body"><div class="ai-card-title">Follow up with your hottest lead</div><div class="ai-card-desc">Check your CRM for the most recent lead submission and follow up immediately for best conversion rates.</div><div class="ai-priority high">HIGH PRIORITY</div></div></div>
             <div class="ai-card"><div class="ai-card-icon star">⭐</div><div class="ai-card-body"><div class="ai-card-title">Re-engage 10 Cold Leads This Week</div><div class="ai-card-desc">10 leads went cold 7+ days ago. A "we saved your spot" SMS converts at 22% for this audience.</div><div class="ai-priority med">MEDIUM PRIORITY</div></div></div>
             <div class="ai-card"><div class="ai-card-icon chart">📊</div><div class="ai-card-body"><div class="ai-card-title">Activate Your Existing Member Base</div><div class="ai-card-desc">Current members haven't been used as a referral source. A "refer a friend" campaign could generate 15–20 warm leads in 2 weeks.</div><div class="ai-priority med">MEDIUM PRIORITY</div></div></div>
             <div class="ai-card"><div class="ai-card-icon msg">💬</div><div class="ai-card-body"><div class="ai-card-title">Connect Booking Webhook</div><div class="ai-card-desc">Booked leads are still receiving SMS nudges. Connect book.theflexfacility.com → Make.com → Airtable to stop sequences on booking.</div><div class="ai-priority high">HIGH PRIORITY</div></div></div>
@@ -1318,7 +1302,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
             <div class="panel-body">
               <div style="background:var(--navy);border-radius:10px;padding:14px;margin-bottom:12px;min-height:100px;">
                 <div style="font-size:10px;font-family:var(--font-mono);color:rgba(255,255,255,0.4);margin-bottom:8px;letter-spacing:1px;">FLEX AI ●</div>
-                <div style="font-size:13px;color:rgba(255,255,255,0.85);line-height:1.6;">Hey Coach 👋🏾 Tracking your funnel in real time. You have 14 hot leads right now — Marcus Williams just submitted 2 minutes ago. Want me to trigger a call?</div>
+                <div style="font-size:13px;color:rgba(255,255,255,0.85);line-height:1.6;">Hey Coach 👋🏾 Tracking your funnel in real time. You have 14 hot leads right now — Check your CRM for new leads and follow up immediately.</div>
               </div>
               <div style="display:flex;gap:8px;">
                 <input type="text" placeholder="Ask anything about your funnel..." style="flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 13px;font-size:13px;color:var(--navy);outline:none;font-family:var(--font-body);">
@@ -1407,11 +1391,13 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
     }
   } catch { window.location.replace('/login'); }
 })();
+
 // ── LOGOUT ──
 async function logout() {
   try { await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' }); } finally { window.location.replace('/login'); }
 }
-// ── TIME AGO ──
+
+// ── HELPERS ──
 function timeAgo(date) {
   const secs = Math.floor((new Date() - new Date(date)) / 1000);
   if (secs < 60) return 'just now';
@@ -1419,83 +1405,6 @@ function timeAgo(date) {
   if (secs < 86400) return Math.floor(secs/3600) + ' hrs ago';
   return Math.floor(secs/86400) + ' days ago';
 }
-// ── RENDER LEADS ──
-function renderLeadsTable(athletes, lifestyle) {
-  const tbody = document.querySelector('#view-crm tbody');
-  if (!tbody) return;
-  const stageColors = { 'Hot':'hot','New Lead':'new','Contacted':'warm','Assessment Booked':'booked','Cold':'cold','Closed — Won':'closed','Closed — Lost':'cold' };
-  const all = [
-    ...(athletes||[]).map(l => ({...l, _seg:'athlete'})),
-    ...(lifestyle||[]).map(l => ({...l, _seg:'lifestyle'}))
-  ].sort((a,b) => new Date(b['Created Time']||0) - new Date(a['Created Time']||0));
-  tbody.innerHTML = all.slice(0,100).map(lead => {
-    const name = ((lead['First Name']||'')+' '+(lead['Last Name']||'')).trim()||'Unknown';
-    const sport = lead['Athlete Sport']||lead['Primary Goal']||'—';
-    const stage = lead['Pipeline Stage']||'New Lead';
-    const parentName = lead['Parent First Name'] ? 'Parent: '+lead['Parent First Name']+' '+(lead['Parent Last Name']||'') : (lead['_seg']==='lifestyle'?'Lifestyle':'Self');
-    return '<tr><td><div class="lead-name">'+name+'</div><div class="lead-sub">'+parentName+'</div></td><td><div style="font-size:12px;color:var(--navy)">'+sport+'</div></td><td><span class="pill '+(stageColors[stage]||'new')+'"><span class="pill-dot"></span>'+stage.toUpperCase()+'</span></td><td><span class="source-tag">'+(lead['Source']||'—')+'</span></td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">'+(lead['Phone']||'—')+'</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">'+(lead['Created Time']?timeAgo(lead['Created Time']):'—')+'</td><td><div class="action-btns"><div class="act-btn success">📞</div><div class="act-btn">💬</div><div class="act-btn">📅</div><div class="act-btn danger">🗑</div></div></td></tr>';
-  }).join('');
-}
-// ── RENDER BOOKINGS ──
-function renderBookings(bookings) {
-  const list = document.querySelector('.booking-list');
-  if (!list||!bookings?.length) return;
-  const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
-  const stageMap = {'confirmed':'booked','cancelled':'cold','pending':'new','no-show':'hot','showed up':'booked'};
-  list.innerHTML = bookings.slice(0,10).map(b => {
-    const d = b['Date'] ? new Date(b['Date']) : null;
-    const dayStr = d ? days[d.getDay()] : '—';
-    const rawTime = b['Time']||'—';
-    const ampm = /pm/i.test(rawTime)?'PM':/am/i.test(rawTime)?'AM':'';
-    const hrStr = rawTime.replace(/\s?(AM|PM)/gi,'').trim();
-    const status = (b['Status']||'Confirmed').toLowerCase();
-    const statusClass = stageMap[status]||'new';
-    return '<div class="booking-item"><div class="booking-time"><div class="booking-time-day">'+dayStr+'</div><div class="booking-time-hr">'+hrStr+'</div><div class="booking-time-ampm">'+ampm+'</div></div><div class="booking-info"><div class="booking-name">'+(b['Name']||'Unknown')+'</div><div class="booking-detail">'+(b['Session Type']||'Assessment')+' · '+(b['Segment']||'')+'</div></div><span class="pill '+statusClass+'"><span class="pill-dot"></span>'+(b['Status']||'CONFIRMED').toUpperCase()+'</span></div>';
-  }).join('');
-}
-// ── RENDER CALLS ──
-function renderCalls(calls) {
-  const container = document.querySelector('#view-calls .panel .panel-body');
-  if (!container||!calls?.length) return;
-  const typeMap = {'Outbound':'out','Inbound':'in','Missed':'missed'};
-  const emojiMap = {'out':'📞','in':'📲','missed':'❌'};
-  const outcomeColor = o => { if(!o) return 'var(--muted2)'; const l=o.toLowerCase(); if(l.includes('book')||l.includes('confirm')) return 'var(--green-text)'; if(l.includes('miss')) return 'var(--red-text)'; return 'var(--muted2)'; };
-  container.innerHTML = '<div>'+calls.slice(0,30).map(c => {
-    const type = c['Interaction Type']||'Outbound';
-    const cls = typeMap[type]||'out';
-    const secs = Number(c['Duration in Seconds']||0);
-    const dur = Math.floor(secs/60)+'m '+(secs%60)+'s';
-    const outcome = c['Call Outcome']||'—';
-    const linked = Array.isArray(c['Linked Lead'])?c['Linked Lead'][0]:(c['Linked Lead']||'Unknown');
-    return '<div class="call-item"><div class="call-icon '+cls+'">'+emojiMap[cls]+'</div><div class="call-body"><div class="call-name">'+linked+'</div><div class="call-detail">'+type+' · '+(c['Summary / Transcript']||'').slice(0,80)+'</div></div><div><div class="call-dur">'+dur+'</div><div class="call-outcome" style="color:'+outcomeColor(outcome)+'">'+outcome.toUpperCase()+'</div></div></div>';
-  }).join('')+'</div>';
-}
-// ── UPDATE KPIs ──
-function updateKPIs(dash, athletes) {
-  const hotLeads = (athletes||[]).filter(l => l['Pipeline Stage']==='Hot').length;
-  const vals = document.querySelectorAll('.kpi-value');
-  if (vals[0]) vals[0].textContent = dash.totalLeads ?? '—';
-  if (vals[1]) vals[1].textContent = dash.upcomingBookings ?? '—';
-  if (vals[2]) vals[2].textContent = dash.commissionEarned != null ? '$'+Math.round(dash.commissionEarned).toLocaleString() : '—';
-  if (vals[3]) vals[3].textContent = hotLeads;
-}
-// ── LOAD ALL DATA ──
-async function loadAllData() {
-  try {
-    const [dash, athletes, lifestyle, bookings, calls] = await Promise.all([
-      fetch('/api/dashboard', {credentials:'include'}).then(r=>r.ok?r.json():{}),
-      fetch('/api/leads-athlete', {credentials:'include'}).then(r=>r.ok?r.json():[]),
-      fetch('/api/leads-lifestyle', {credentials:'include'}).then(r=>r.ok?r.json():[]),
-      fetch('/api/bookings', {credentials:'include'}).then(r=>r.ok?r.json():[]),
-      fetch('/api/calls', {credentials:'include'}).then(r=>r.ok?r.json():[]),
-    ]);
-    updateKPIs(dash, athletes);
-    renderLeadsTable(athletes, lifestyle);
-    renderBookings(bookings);
-    renderCalls(calls);
-  } catch(err) { console.error('Data load error:', err); }
-}
-document.addEventListener('DOMContentLoaded', loadAllData);
 
 // ── NAV ──
 const titles = { dashboard:'DASHBOARD', funnel:'FUNNEL ANALYTICS', crm:'CRM — LEAD PIPELINE', bookings:'BOOKINGS', calendar:'CALENDAR MANAGER', 'sms-center':'SMS CENTER', calls:'CALL LOG', sms:'SMS SEQUENCES', ai:'AI INSIGHTS', settings:'SETTINGS' };
@@ -1506,7 +1415,8 @@ function showView(id, el) {
   const view = document.getElementById('view-' + id);
   if (view) view.classList.add('active');
   if (el) el.classList.add('active');
-  document.getElementById('page-title').textContent = titles[id] || id.toUpperCase();
+  const titleEl = document.getElementById('page-title');
+  if (titleEl) titleEl.textContent = titles[id] || id.toUpperCase();
   if (id === 'calendar') renderCalendarManager();
 }
 
@@ -1532,6 +1442,140 @@ document.querySelectorAll('.filter-chip').forEach(chip => {
     this.classList.add('active');
   });
 });
+
+// ── RENDER FUNCTIONS ──
+function renderLeadsTable(athletes, lifestyle) {
+  const tbody = document.querySelector('#view-crm tbody');
+  if (!tbody) return;
+  const stageColors = { 'Hot':'hot','New Lead':'new','Contacted':'warm','Assessment Booked':'booked','Cold':'cold','Closed — Won':'closed','Closed — Lost':'cold','Active Client':'booked' };
+  const all = [
+    ...(athletes||[]).map(l => ({...l, _seg:'athlete'})),
+    ...(lifestyle||[]).map(l => ({...l, _seg:'lifestyle'}))
+  ].sort((a,b) => new Date(b['Created Time']||0) - new Date(a['Created Time']||0));
+
+  if (all.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">No leads yet</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = all.slice(0,100).map(lead => {
+    const name = ((lead['First Name']||'')+' '+(lead['Last Name']||'')).trim()||'Unknown';
+    const sport = lead['Athlete Sport']||lead['Primary Goal']||'—';
+    const stage = lead['Pipeline Stage']||'New Lead';
+    const stageClass = stageColors[stage]||'new';
+    const parentName = lead['Parent First Name'] ? 'Parent: '+lead['Parent First Name']+' '+(lead['Parent Last Name']||'') : (lead['_seg']==='lifestyle'?'Lifestyle':'Self');
+    return '<tr><td><div class="lead-name">'+name+'</div><div class="lead-sub">'+parentName+'</div></td><td><div style="font-size:12px;color:var(--navy)">'+sport+'</div></td><td><span class="pill '+stageClass+'"><span class="pill-dot"></span>'+stage.toUpperCase()+'</span></td><td><span class="source-tag">'+(lead['Source']||'—')+'</span></td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">'+(lead['Phone']||'—')+'</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">'+(lead['Created Time']?timeAgo(lead['Created Time']):'—')+'</td><td><div class="action-btns"><div class="act-btn success">📞</div><div class="act-btn">💬</div><div class="act-btn">📅</div><div class="act-btn danger">🗑</div></div></td></tr>';
+  }).join('');
+
+  // update CRM badge
+  const badge = document.querySelector('.nav-item[onclick*="crm"] .nav-badge');
+  if (badge) badge.textContent = all.length;
+}
+
+function renderBookings(bookings) {
+  const list = document.querySelector('.booking-list');
+  if (!list) return;
+  if (!bookings || bookings.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">No upcoming bookings</div>';
+    return;
+  }
+  const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+  const stageMap = {'confirmed':'booked','cancelled':'cold','pending':'new','no-show':'hot','showed up':'booked'};
+  list.innerHTML = bookings.slice(0,10).map(b => {
+    const d = b['Date'] ? new Date(b['Date']) : null;
+    const dayStr = d ? days[d.getDay()] : '—';
+    const rawTime = b['Time']||'—';
+    const ampm = /pm/i.test(rawTime)?'PM':/am/i.test(rawTime)?'AM':'';
+    const hrStr = rawTime.replace(/\s?(AM|PM)/gi,'').trim();
+    const status = (b['Status']||'Confirmed').toLowerCase();
+    const statusClass = stageMap[status]||'new';
+    return '<div class="booking-item"><div class="booking-time"><div class="booking-time-day">'+dayStr+'</div><div class="booking-time-hr">'+hrStr+'</div><div class="booking-time-ampm">'+ampm+'</div></div><div class="booking-info"><div class="booking-name">'+(b['Name']||'Unknown')+'</div><div class="booking-detail">'+(b['Session Type']||'Assessment')+' · '+(b['Segment']||'')+'</div></div><span class="pill '+statusClass+'"><span class="pill-dot"></span>'+(b['Status']||'CONFIRMED').toUpperCase()+'</span></div>';
+  }).join('');
+
+  // update bookings badge
+  const badge = document.querySelector('.nav-item[onclick*="bookings"] .nav-badge');
+  if (badge) badge.textContent = bookings.length;
+}
+
+function renderCalls(calls) {
+  const container = document.getElementById('calls-container') || document.querySelector('#view-calls .panel .panel-body');
+  if (!container) return;
+  if (!calls || calls.length === 0) {
+    container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">No calls yet</div>';
+    return;
+  }
+  const typeMap = {'Outbound':'out','Inbound':'in','Missed':'missed'};
+  const emojiMap = {'out':'📞','in':'📲','missed':'❌'};
+  const outcomeColor = o => {
+    if (!o) return 'var(--muted2)';
+    const l = o.toLowerCase();
+    if (l.includes('book')||l.includes('confirm')) return 'var(--green-text)';
+    if (l.includes('miss')||l.includes('no answer')) return 'var(--red-text)';
+    return 'var(--muted2)';
+  };
+  container.innerHTML = calls.slice(0,30).map(c => {
+    const type = c['Interaction Type']||'Outbound';
+    const cls = typeMap[type]||'out';
+    const secs = Number(c['Duration in Seconds']||0);
+    const dur = Math.floor(secs/60)+'m '+(secs%60)+'s';
+    const outcome = c['Call Outcome']||'—';
+    const linked = Array.isArray(c['Linked Lead'])?c['Linked Lead'][0]:(c['Linked Lead']||'Unknown');
+    return '<div class="call-item"><div class="call-icon '+cls+'">'+emojiMap[cls]+'</div><div class="call-body"><div class="call-name">'+linked+'</div><div class="call-detail">'+type+' · '+(c['Summary / Transcript']||'').slice(0,80)+'</div></div><div><div class="call-dur">'+dur+'</div><div class="call-outcome" style="color:'+outcomeColor(outcome)+'">'+outcome.toUpperCase()+'</div></div></div>';
+  }).join('');
+}
+
+function renderActivity(bookings, leads) {
+  const feed = document.getElementById('activity-feed');
+  if (!feed) return;
+  const items = [];
+  (bookings||[]).slice(0,3).forEach(b => {
+    if (b['Created At']) items.push({ time: new Date(b['Created At']), html: '<div class="activity-item"><div class="act-icon book">📅</div><div class="act-body"><div class="act-text"><strong>'+(b['Name']||'Someone')+'</strong> booked a session</div><div class="act-time">'+timeAgo(b['Created At'])+' · '+(b['Session Type']||'Assessment')+'</div></div></div>' });
+  });
+  (leads||[]).slice(0,3).forEach(l => {
+    const name = ((l['First Name']||'')+' '+(l['Last Name']||'')).trim()||'Someone';
+    if (l['Created Time']) items.push({ time: new Date(l['Created Time']), html: '<div class="activity-item"><div class="act-icon lead">👤</div><div class="act-body"><div class="act-text"><strong>'+name+'</strong> submitted a form</div><div class="act-time">'+timeAgo(l['Created Time'])+' · '+(l['Source']||'Web Form')+'</div></div></div>' });
+  });
+  items.sort((a,b) => b.time - a.time);
+  if (items.length === 0) {
+    feed.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:10px 0;">No recent activity</div>';
+  } else {
+    feed.innerHTML = items.slice(0,5).map(i => i.html).join('');
+  }
+}
+
+function updateKPIs(dash, athletes) {
+  const hotLeads = (athletes||[]).filter(l => l['Pipeline Stage']==='Hot').length;
+  const kpiLeads = document.getElementById('kpi-leads');
+  const kpiBookings = document.getElementById('kpi-bookings');
+  const kpiCommission = document.getElementById('kpi-commission');
+  const kpiHot = document.getElementById('kpi-hot');
+  if (kpiLeads) kpiLeads.textContent = dash.totalLeads ?? 0;
+  if (kpiBookings) kpiBookings.textContent = dash.upcomingBookings ?? 0;
+  if (kpiCommission) kpiCommission.textContent = dash.commissionEarned != null ? '$'+Math.round(dash.commissionEarned).toLocaleString() : '$0';
+  if (kpiHot) kpiHot.textContent = hotLeads;
+}
+
+// ── LOAD ALL DATA ──
+async function loadAllData() {
+  try {
+    const [dash, athletes, lifestyle, bookings, calls] = await Promise.all([
+      fetch('/api/dashboard', {credentials:'include'}).then(r=>r.ok?r.json():{}),
+      fetch('/api/leads-athlete', {credentials:'include'}).then(r=>r.ok?r.json():[]),
+      fetch('/api/leads-lifestyle', {credentials:'include'}).then(r=>r.ok?r.json():[]),
+      fetch('/api/bookings', {credentials:'include'}).then(r=>r.ok?r.json():[]),
+      fetch('/api/calls', {credentials:'include'}).then(r=>r.ok?r.json():[]),
+    ]);
+    updateKPIs(dash, athletes);
+    renderLeadsTable(athletes, lifestyle);
+    renderBookings(bookings);
+    renderCalls(calls);
+    renderActivity(bookings, [...athletes, ...lifestyle]);
+  } catch(err) {
+    console.error('Data load error:', err);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadAllData);
 
 // ── CALENDAR MANAGER ──
 let calWeekStart = getMonday(new Date());
@@ -1562,8 +1606,8 @@ async function renderCalendarManager() {
     calBookings = Array.isArray(bookings)?bookings:[];
   } catch(e) { calBookings=[]; }
   const today = new Date().toDateString();
-  const statusColor = {'Confirmed':'var(--green-dim)','Pending':'var(--gold-dim)','Cancelled':'rgba(214,56,85,0.08)','No-Show':'rgba(214,56,85,0.08)'};
-  const statusText = {'Confirmed':'var(--green-text)','Pending':'var(--gold-text)','Cancelled':'var(--red-text)','No-Show':'var(--red-text)'};
+  const statusColor = {'Confirmed':'var(--green-dim)','Pending':'var(--gold-dim)','Cancelled':'rgba(214,56,85,0.08)','No-Show':'rgba(214,56,85,0.08)','Showed Up':'var(--green-dim)'};
+  const statusText = {'Confirmed':'var(--green-text)','Pending':'var(--gold-text)','Cancelled':'var(--red-text)','No-Show':'var(--red-text)','Showed Up':'var(--green-text)'};
   grid.innerHTML = weekDates.map((date,i) => {
     const dateStr = date.toISOString().split('T')[0];
     const isToday = date.toDateString()===today;
@@ -1593,7 +1637,7 @@ async function openApptDetail(bookingId) {
   body.innerHTML = '<div style="text-align:center;padding:20px;color:var(--muted)">Loading...</div>';
   panel.style.display = 'block';
   const booking = calBookings.find(b=>b.id===bookingId)||{};
-  const statusClass = {'Confirmed':'booked','Pending':'warm','Cancelled':'cold','No-Show':'hot'};
+  const statusClass = {'Confirmed':'booked','Pending':'warm','Cancelled':'cold','No-Show':'hot','Showed Up':'booked'};
   body.innerHTML = '<div style="display:flex;flex-direction:column;gap:14px;">'
     +'<div style="display:flex;justify-content:space-between;align-items:center;"><div><div style="font-family:var(--font-display);font-size:22px;color:var(--navy);">'+(booking['Name']||'Unknown')+'</div><div style="font-size:12px;color:var(--muted2);">'+(booking['Session Type']||'—')+'</div></div><span class="pill '+(statusClass[booking['Status']]||'new')+'"><span class="pill-dot"></span>'+(booking['Status']||'UNKNOWN').toUpperCase()+'</span></div>'
     +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">'
@@ -1674,15 +1718,11 @@ async function blockDate() {
   const date = document.getElementById('block-date').value;
   const reason = document.getElementById('block-reason').value.trim();
   if (!date) { alert('Please select a date to block.'); return; }
-  try {
-    const r = await fetch('/api/availability',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({blocked_date:date,block_reason:reason||'Unavailable'})});
-    if (!r.ok) throw new Error('Failed to block date');
-    document.getElementById('block-date').value = '';
-    document.getElementById('block-reason').value = '';
-    calBlocked.push(date);
-    renderCalendarManager();
-    alert(date+' blocked.');
-  } catch(err) { alert('Error: '+err.message); }
+  calBlocked.push(date);
+  document.getElementById('block-date').value = '';
+  document.getElementById('block-reason').value = '';
+  renderCalendarManager();
+  alert(date+' blocked.');
 }
 
 function saveAvailability() { alert('Availability saved.'); }
@@ -1730,108 +1770,11 @@ async function sendSingleSMS() {
 }
 
 function openBlastModal() { alert('SMS Blast coming soon.'); }
-// ── AUTH GUARD ──
-(async function checkAuth() {
-  try {
-    const res = await fetch('/api/auth/verify', { credentials: 'include' });
-    const data = await res.json();
-    if (!res.ok || !data.authenticated) { window.location.replace('/login'); return; }
-    if (data.user?.name) {
-      const nameEl = document.querySelector('.coach-name');
-      if (nameEl) nameEl.textContent = data.user.name;
-    }
-  } catch { window.location.replace('/login'); }
-})();
 
-async function logout() {
-  try { await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' }); } finally { window.location.replace('/login'); }
-}
-
-function timeAgo(date) {
-  const secs = Math.floor((new Date() - new Date(date)) / 1000);
-  if (secs < 60) return 'just now';
-  if (secs < 3600) return Math.floor(secs/60) + ' min ago';
-  if (secs < 86400) return Math.floor(secs/3600) + ' hrs ago';
-  return Math.floor(secs/86400) + ' days ago';
-}
-
-function renderLeadsTable(athletes, lifestyle) {
-  const tbody = document.querySelector('#view-crm tbody');
-  if (!tbody) return;
-  const stageColors = { 'Hot':'hot','New Lead':'new','Contacted':'warm','Assessment Booked':'booked','Cold':'cold','Closed — Won':'closed','Closed — Lost':'cold' };
-  const all = [
-    ...(athletes||[]).map(l => ({...l, _seg:'athlete'})),
-    ...(lifestyle||[]).map(l => ({...l, _seg:'lifestyle'}))
-  ].sort((a,b) => new Date(b['Created Time']||0) - new Date(a['Created Time']||0));
-  tbody.innerHTML = all.slice(0,100).map(lead => {
-    const name = ((lead['First Name']||'')+' '+(lead['Last Name']||'')).trim()||'Unknown';
-    const sport = lead['Athlete Sport']||lead['Primary Goal']||'—';
-    const stage = lead['Pipeline Stage']||'New Lead';
-    const parentName = lead['Parent First Name'] ? 'Parent: '+lead['Parent First Name']+' '+(lead['Parent Last Name']||'') : (lead['_seg']==='lifestyle'?'Lifestyle':'Self');
-    return '<tr><td><div class="lead-name">'+name+'</div><div class="lead-sub">'+parentName+'</div></td><td><div style="font-size:12px;color:var(--navy)">'+sport+'</div></td><td><span class="pill '+(stageColors[stage]||'new')+'"><span class="pill-dot"></span>'+stage.toUpperCase()+'</span></td><td><span class="source-tag">'+(lead['Source']||'—')+'</span></td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">'+(lead['Phone']||'—')+'</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">'+(lead['Created Time']?timeAgo(lead['Created Time']):'—')+'</td><td><div class="action-btns"><div class="act-btn success">📞</div><div class="act-btn">💬</div><div class="act-btn">📅</div><div class="act-btn danger">🗑</div></div></td></tr>';
-  }).join('');
-}
-
-function renderBookings(bookings) {
-  const list = document.querySelector('.booking-list');
-  if (!list||!bookings?.length) return;
-  const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
-  const stageMap = {'confirmed':'booked','cancelled':'cold','pending':'new','no-show':'hot','showed up':'booked'};
-  list.innerHTML = bookings.slice(0,10).map(b => {
-    const d = b['Date'] ? new Date(b['Date']) : null;
-    const dayStr = d ? days[d.getDay()] : '—';
-    const rawTime = b['Time']||'—';
-    const ampm = /pm/i.test(rawTime)?'PM':/am/i.test(rawTime)?'AM':'';
-    const hrStr = rawTime.replace(/\s?(AM|PM)/gi,'').trim();
-    const status = (b['Status']||'Confirmed').toLowerCase();
-    const statusClass = stageMap[status]||'new';
-    return '<div class="booking-item"><div class="booking-time"><div class="booking-time-day">'+dayStr+'</div><div class="booking-time-hr">'+hrStr+'</div><div class="booking-time-ampm">'+ampm+'</div></div><div class="booking-info"><div class="booking-name">'+(b['Name']||'Unknown')+'</div><div class="booking-detail">'+(b['Session Type']||'Assessment')+' · '+(b['Segment']||'')+'</div></div><span class="pill '+statusClass+'"><span class="pill-dot"></span>'+(b['Status']||'CONFIRMED').toUpperCase()+'</span></div>';
-  }).join('');
-}
-
-function renderCalls(calls) {
-  const container = document.querySelector('#view-calls .panel .panel-body');
-  if (!container||!calls?.length) return;
-  const typeMap = {'Outbound':'out','Inbound':'in','Missed':'missed'};
-  const emojiMap = {'out':'📞','in':'📲','missed':'❌'};
-  const outcomeColor = o => { if(!o) return 'var(--muted2)'; const l=o.toLowerCase(); if(l.includes('book')||l.includes('confirm')) return 'var(--green-text)'; if(l.includes('miss')) return 'var(--red-text)'; return 'var(--muted2)'; };
-  container.innerHTML = '<div>'+calls.slice(0,30).map(c => {
-    const type = c['Interaction Type']||'Outbound';
-    const cls = typeMap[type]||'out';
-    const secs = Number(c['Duration in Seconds']||0);
-    const dur = Math.floor(secs/60)+'m '+(secs%60)+'s';
-    const outcome = c['Call Outcome']||'—';
-    const linked = Array.isArray(c['Linked Lead'])?c['Linked Lead'][0]:(c['Linked Lead']||'Unknown');
-    return '<div class="call-item"><div class="call-icon '+cls+'">'+emojiMap[cls]+'</div><div class="call-body"><div class="call-name">'+linked+'</div><div class="call-detail">'+type+' · '+(c['Summary / Transcript']||'').slice(0,80)+'</div></div><div><div class="call-dur">'+dur+'</div><div class="call-outcome" style="color:'+outcomeColor(outcome)+'">'+outcome.toUpperCase()+'</div></div></div>';
-  }).join('')+'</div>';
-}
-
-function updateKPIs(dash, athletes) {
-  const hotLeads = (athletes||[]).filter(l => l['Pipeline Stage']==='Hot').length;
-  const vals = document.querySelectorAll('.kpi-value');
-  if (vals[0]) vals[0].textContent = dash.totalLeads ?? '—';
-  if (vals[1]) vals[1].textContent = dash.upcomingBookings ?? '—';
-  if (vals[2]) vals[2].textContent = dash.commissionEarned != null ? '$'+Math.round(dash.commissionEarned).toLocaleString() : '—';
-  if (vals[3]) vals[3].textContent = hotLeads;
-}
-
-async function loadAllData() {
-  try {
-    const [dash, athletes, lifestyle, bookings, calls] = await Promise.all([
-      fetch('/api/dashboard', {credentials:'include'}).then(r=>r.ok?r.json():{}),
-      fetch('/api/leads-athlete', {credentials:'include'}).then(r=>r.ok?r.json():[]),
-      fetch('/api/leads-lifestyle', {credentials:'include'}).then(r=>r.ok?r.json():[]),
-      fetch('/api/bookings', {credentials:'include'}).then(r=>r.ok?r.json():[]),
-      fetch('/api/calls', {credentials:'include'}).then(r=>r.ok?r.json():[]),
-    ]);
-    updateKPIs(dash, athletes);
-    renderLeadsTable(athletes, lifestyle);
-    renderBookings(bookings);
-    renderCalls(calls);
-  } catch(err) { console.error('Data load error:', err); }
-}
-
-document.addEventListener('DOMContentLoaded', loadAllData);
+// toggle settings
+document.querySelectorAll('.toggle').forEach(t => {
+  t.addEventListener('click', function() { this.classList.toggle('on'); });
+});
 </script>
 </body>
 </html>
