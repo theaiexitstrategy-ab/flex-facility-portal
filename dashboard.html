@@ -1407,13 +1407,11 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
     }
   } catch { window.location.replace('/login'); }
 })();
-
 // ── LOGOUT ──
 async function logout() {
   try { await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' }); } finally { window.location.replace('/login'); }
 }
-
-// ── HELPERS ──
+// ── TIME AGO ──
 function timeAgo(date) {
   const secs = Math.floor((new Date() - new Date(date)) / 1000);
   if (secs < 60) return 'just now';
@@ -1421,6 +1419,83 @@ function timeAgo(date) {
   if (secs < 86400) return Math.floor(secs/3600) + ' hrs ago';
   return Math.floor(secs/86400) + ' days ago';
 }
+// ── RENDER LEADS ──
+function renderLeadsTable(athletes, lifestyle) {
+  const tbody = document.querySelector('#view-crm tbody');
+  if (!tbody) return;
+  const stageColors = { 'Hot':'hot','New Lead':'new','Contacted':'warm','Assessment Booked':'booked','Cold':'cold','Closed — Won':'closed','Closed — Lost':'cold' };
+  const all = [
+    ...(athletes||[]).map(l => ({...l, _seg:'athlete'})),
+    ...(lifestyle||[]).map(l => ({...l, _seg:'lifestyle'}))
+  ].sort((a,b) => new Date(b['Created Time']||0) - new Date(a['Created Time']||0));
+  tbody.innerHTML = all.slice(0,100).map(lead => {
+    const name = ((lead['First Name']||'')+' '+(lead['Last Name']||'')).trim()||'Unknown';
+    const sport = lead['Athlete Sport']||lead['Primary Goal']||'—';
+    const stage = lead['Pipeline Stage']||'New Lead';
+    const parentName = lead['Parent First Name'] ? 'Parent: '+lead['Parent First Name']+' '+(lead['Parent Last Name']||'') : (lead['_seg']==='lifestyle'?'Lifestyle':'Self');
+    return '<tr><td><div class="lead-name">'+name+'</div><div class="lead-sub">'+parentName+'</div></td><td><div style="font-size:12px;color:var(--navy)">'+sport+'</div></td><td><span class="pill '+(stageColors[stage]||'new')+'"><span class="pill-dot"></span>'+stage.toUpperCase()+'</span></td><td><span class="source-tag">'+(lead['Source']||'—')+'</span></td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">'+(lead['Phone']||'—')+'</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">'+(lead['Created Time']?timeAgo(lead['Created Time']):'—')+'</td><td><div class="action-btns"><div class="act-btn success">📞</div><div class="act-btn">💬</div><div class="act-btn">📅</div><div class="act-btn danger">🗑</div></div></td></tr>';
+  }).join('');
+}
+// ── RENDER BOOKINGS ──
+function renderBookings(bookings) {
+  const list = document.querySelector('.booking-list');
+  if (!list||!bookings?.length) return;
+  const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+  const stageMap = {'confirmed':'booked','cancelled':'cold','pending':'new','no-show':'hot','showed up':'booked'};
+  list.innerHTML = bookings.slice(0,10).map(b => {
+    const d = b['Date'] ? new Date(b['Date']) : null;
+    const dayStr = d ? days[d.getDay()] : '—';
+    const rawTime = b['Time']||'—';
+    const ampm = /pm/i.test(rawTime)?'PM':/am/i.test(rawTime)?'AM':'';
+    const hrStr = rawTime.replace(/\s?(AM|PM)/gi,'').trim();
+    const status = (b['Status']||'Confirmed').toLowerCase();
+    const statusClass = stageMap[status]||'new';
+    return '<div class="booking-item"><div class="booking-time"><div class="booking-time-day">'+dayStr+'</div><div class="booking-time-hr">'+hrStr+'</div><div class="booking-time-ampm">'+ampm+'</div></div><div class="booking-info"><div class="booking-name">'+(b['Name']||'Unknown')+'</div><div class="booking-detail">'+(b['Session Type']||'Assessment')+' · '+(b['Segment']||'')+'</div></div><span class="pill '+statusClass+'"><span class="pill-dot"></span>'+(b['Status']||'CONFIRMED').toUpperCase()+'</span></div>';
+  }).join('');
+}
+// ── RENDER CALLS ──
+function renderCalls(calls) {
+  const container = document.querySelector('#view-calls .panel .panel-body');
+  if (!container||!calls?.length) return;
+  const typeMap = {'Outbound':'out','Inbound':'in','Missed':'missed'};
+  const emojiMap = {'out':'📞','in':'📲','missed':'❌'};
+  const outcomeColor = o => { if(!o) return 'var(--muted2)'; const l=o.toLowerCase(); if(l.includes('book')||l.includes('confirm')) return 'var(--green-text)'; if(l.includes('miss')) return 'var(--red-text)'; return 'var(--muted2)'; };
+  container.innerHTML = '<div>'+calls.slice(0,30).map(c => {
+    const type = c['Interaction Type']||'Outbound';
+    const cls = typeMap[type]||'out';
+    const secs = Number(c['Duration in Seconds']||0);
+    const dur = Math.floor(secs/60)+'m '+(secs%60)+'s';
+    const outcome = c['Call Outcome']||'—';
+    const linked = Array.isArray(c['Linked Lead'])?c['Linked Lead'][0]:(c['Linked Lead']||'Unknown');
+    return '<div class="call-item"><div class="call-icon '+cls+'">'+emojiMap[cls]+'</div><div class="call-body"><div class="call-name">'+linked+'</div><div class="call-detail">'+type+' · '+(c['Summary / Transcript']||'').slice(0,80)+'</div></div><div><div class="call-dur">'+dur+'</div><div class="call-outcome" style="color:'+outcomeColor(outcome)+'">'+outcome.toUpperCase()+'</div></div></div>';
+  }).join('')+'</div>';
+}
+// ── UPDATE KPIs ──
+function updateKPIs(dash, athletes) {
+  const hotLeads = (athletes||[]).filter(l => l['Pipeline Stage']==='Hot').length;
+  const vals = document.querySelectorAll('.kpi-value');
+  if (vals[0]) vals[0].textContent = dash.totalLeads ?? '—';
+  if (vals[1]) vals[1].textContent = dash.upcomingBookings ?? '—';
+  if (vals[2]) vals[2].textContent = dash.commissionEarned != null ? '$'+Math.round(dash.commissionEarned).toLocaleString() : '—';
+  if (vals[3]) vals[3].textContent = hotLeads;
+}
+// ── LOAD ALL DATA ──
+async function loadAllData() {
+  try {
+    const [dash, athletes, lifestyle, bookings, calls] = await Promise.all([
+      fetch('/api/dashboard', {credentials:'include'}).then(r=>r.ok?r.json():{}),
+      fetch('/api/leads-athlete', {credentials:'include'}).then(r=>r.ok?r.json():[]),
+      fetch('/api/leads-lifestyle', {credentials:'include'}).then(r=>r.ok?r.json():[]),
+      fetch('/api/bookings', {credentials:'include'}).then(r=>r.ok?r.json():[]),
+      fetch('/api/calls', {credentials:'include'}).then(r=>r.ok?r.json():[]),
+    ]);
+    updateKPIs(dash, athletes);
+    renderLeadsTable(athletes, lifestyle);
+    renderBookings(bookings);
+    renderCalls(calls);
+  } catch(err) { console.error('Data load error:', err); }
+}
+document.addEventListener('DOMContentLoaded', loadAllData);
 
 // ── NAV ──
 const titles = { dashboard:'DASHBOARD', funnel:'FUNNEL ANALYTICS', crm:'CRM — LEAD PIPELINE', bookings:'BOOKINGS', calendar:'CALENDAR MANAGER', 'sms-center':'SMS CENTER', calls:'CALL LOG', sms:'SMS SEQUENCES', ai:'AI INSIGHTS', settings:'SETTINGS' };
@@ -1457,85 +1532,6 @@ document.querySelectorAll('.filter-chip').forEach(chip => {
     this.classList.add('active');
   });
 });
-
-// ── RENDER FUNCTIONS ──
-function renderLeadsTable(athletes, lifestyle) {
-  const tbody = document.querySelector('#view-crm tbody');
-  if (!tbody) return;
-  const stageColors = { 'Hot':'hot','New Lead':'new','Contacted':'warm','Assessment Booked':'booked','Cold':'cold','Closed — Won':'closed','Closed — Lost':'cold' };
-  const all = [
-    ...(athletes||[]).map(l => ({...l, _seg:'athlete'})),
-    ...(lifestyle||[]).map(l => ({...l, _seg:'lifestyle'}))
-  ].sort((a,b) => new Date(b['Created Time']||0) - new Date(a['Created Time']||0));
-  tbody.innerHTML = all.slice(0,100).map(lead => {
-    const name = ((lead['First Name']||'')+' '+(lead['Last Name']||'')).trim()||'Unknown';
-    const sport = lead['Athlete Sport']||lead['Primary Goal']||'—';
-    const stage = lead['Pipeline Stage']||'New Lead';
-    const parentName = lead['Parent First Name'] ? 'Parent: '+lead['Parent First Name']+' '+(lead['Parent Last Name']||'') : (lead['_seg']==='lifestyle'?'Lifestyle':'Self');
-    return '<tr><td><div class="lead-name">'+name+'</div><div class="lead-sub">'+parentName+'</div></td><td><div style="font-size:12px;color:var(--navy)">'+sport+'</div></td><td><span class="pill '+(stageColors[stage]||'new')+'"><span class="pill-dot"></span>'+stage.toUpperCase()+'</span></td><td><span class="source-tag">'+(lead['Source']||'—')+'</span></td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">'+(lead['Phone']||'—')+'</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">'+(lead['Created Time']?timeAgo(lead['Created Time']):'—')+'</td><td><div class="action-btns"><div class="act-btn success">📞</div><div class="act-btn">💬</div><div class="act-btn">📅</div><div class="act-btn danger">🗑</div></div></td></tr>';
-  }).join('');
-}
-
-function renderBookings(bookings) {
-  const list = document.querySelector('.booking-list');
-  if (!list||!bookings?.length) return;
-  const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
-  const stageMap = {'confirmed':'booked','cancelled':'cold','pending':'new','no-show':'hot'};
-  list.innerHTML = bookings.slice(0,10).map(b => {
-    const d = b['Date'] ? new Date(b['Date']) : null;
-    const dayStr = d ? days[d.getDay()] : '—';
-    const rawTime = b['Time']||'—';
-    const ampm = /pm/i.test(rawTime)?'PM':/am/i.test(rawTime)?'AM':'';
-    const hrStr = rawTime.replace(/\s?(AM|PM)/gi,'').trim();
-    const status = (b['Status']||'Confirmed').toLowerCase();
-    const statusClass = stageMap[status]||'new';
-    return '<div class="booking-item"><div class="booking-time"><div class="booking-time-day">'+dayStr+'</div><div class="booking-time-hr">'+hrStr+'</div><div class="booking-time-ampm">'+ampm+'</div></div><div class="booking-info"><div class="booking-name">'+(b['Name']||'Unknown')+'</div><div class="booking-detail">'+(b['Session Type']||'Assessment')+' · '+(b['Segment']||'')+'</div></div><span class="pill '+statusClass+'"><span class="pill-dot"></span>'+(b['Status']||'CONFIRMED').toUpperCase()+'</span></div>';
-  }).join('');
-}
-
-function renderCalls(calls) {
-  const container = document.querySelector('#view-calls .panel .panel-body');
-  if (!container||!calls?.length) return;
-  const typeMap = {'Outbound':'out','Inbound':'in','Missed':'missed'};
-  const emojiMap = {'out':'📞','in':'📲','missed':'❌'};
-  const outcomeColor = o => { if(!o) return 'var(--muted2)'; const l=o.toLowerCase(); if(l.includes('book')||l.includes('confirm')) return 'var(--green-text)'; if(l.includes('miss')||l.includes('no answer')) return 'var(--red-text)'; return 'var(--muted2)'; };
-  container.innerHTML = '<div>'+calls.slice(0,30).map(c => {
-    const type = c['Interaction Type']||'Outbound';
-    const cls = typeMap[type]||'out';
-    const secs = Number(c['Duration in Seconds']||0);
-    const dur = Math.floor(secs/60)+'m '+(secs%60)+'s';
-    const outcome = c['Call Outcome']||'—';
-    const linked = Array.isArray(c['Linked Lead'])?c['Linked Lead'][0]:(c['Linked Lead']||'Unknown Caller');
-    return '<div class="call-item"><div class="call-icon '+cls+'">'+emojiMap[cls]+'</div><div class="call-body"><div class="call-name">'+linked+'</div><div class="call-detail">'+type+' · '+(c['Summary / Transcript']||'').slice(0,80)+'</div></div><div><div class="call-dur">'+dur+'</div><div class="call-outcome" style="color:'+outcomeColor(outcome)+'">'+outcome.toUpperCase()+'</div></div></div>';
-  }).join('')+'</div>';
-}
-
-function updateKPIs(dash, athletes) {
-  const hotLeads = (athletes||[]).filter(l => l['Pipeline Stage']==='Hot').length;
-  const vals = document.querySelectorAll('.kpi-value');
-  if (vals[0]) vals[0].textContent = dash.totalLeads??'—';
-  if (vals[1]) vals[1].textContent = dash.upcomingBookings??'—';
-  if (vals[2]) vals[2].textContent = dash.commissionEarned!=null?'$'+Math.round(dash.commissionEarned).toLocaleString():'—';
-  if (vals[3]) vals[3].textContent = hotLeads;
-}
-
-async function loadAllData() {
-  try {
-    const [dash, athletes, lifestyle, bookings, calls] = await Promise.all([
-      fetch('/api/dashboard',{credentials:'include'}).then(r=>r.ok?r.json():{}),
-      fetch('/api/leads-athlete',{credentials:'include'}).then(r=>r.ok?r.json():[]),
-      fetch('/api/leads-lifestyle',{credentials:'include'}).then(r=>r.ok?r.json():[]),
-      fetch('/api/bookings',{credentials:'include'}).then(r=>r.ok?r.json():[]),
-      fetch('/api/calls',{credentials:'include'}).then(r=>r.ok?r.json():[]),
-    ]);
-    updateKPIs(dash, athletes);
-    renderLeadsTable(athletes, lifestyle);
-    renderBookings(bookings);
-    renderCalls(calls);
-  } catch(err) { console.error('Data load error:',err); }
-}
-
-document.addEventListener('DOMContentLoaded', loadAllData);
 
 // ── CALENDAR MANAGER ──
 let calWeekStart = getMonday(new Date());
