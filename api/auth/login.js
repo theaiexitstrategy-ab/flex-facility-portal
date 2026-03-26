@@ -1,4 +1,11 @@
+import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
+function hashPassword(password) {
+  return crypto
+    .createHash('sha256')
+    .update(password + process.env.JWT_SECRET)
+    .digest('hex');
+}
 export default async function handler(req, res) {
   if (req.method === 'OPTIONS') { res.status(200).end(); return; }
   if (req.method !== 'POST') { res.status(405).json({ error: 'Method not allowed' }); return; }
@@ -7,14 +14,15 @@ export default async function handler(req, res) {
     return res.status(400).json({ success: false, message: 'Email and password required.' });
   }
   const users = [
-    { email: process.env.KENNY_EMAIL, password: 'Flex123!!!', name: 'Coach Kenny', role: 'owner' },
-    { email: process.env.AARON_EMAIL, password: 'Flex123!!!', name: 'Aaron', role: 'admin' },
+    { email: process.env.KENNY_EMAIL, hash: process.env.KENNY_PASSWORD, name: 'Coach Kenny', role: 'owner' },
+    { email: process.env.AARON_EMAIL, hash: process.env.AARON_PASSWORD, name: 'Aaron', role: 'admin' },
   ];
   const user = users.find(u => u.email?.toLowerCase() === email.toLowerCase());
   if (!user) {
     return res.status(401).json({ success: false, message: 'Invalid email or password.' });
   }
-  if (password !== user.password) {
+  const submittedHash = hashPassword(password);
+  if (submittedHash !== user.hash) {
     return res.status(401).json({ success: false, message: 'Invalid email or password.' });
   }
   const token = jwt.sign(
