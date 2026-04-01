@@ -1,4 +1,9 @@
 import jwt from 'jsonwebtoken';
+import { createClient } from '@supabase/supabase-js';
+
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
+  auth: { autoRefreshToken: false, persistSession: false }
+});
 
 function requireAuth(req) {
   const cookie = req.headers.cookie || '';
@@ -7,29 +12,22 @@ function requireAuth(req) {
   try { jwt.verify(match[1], process.env.JWT_SECRET); return true; } catch { return false; }
 }
 
-async function fetchAirtable(tableName, opts = {}) {
-  const base = process.env.AIRTABLE_BASE_ID;
-  const key = process.env.AIRTABLE_API_KEY;
-  const params = new URLSearchParams();
-  params.set('maxRecords', opts.maxRecords || 200);
-  if (opts.sortField) { params.set('sort[0][field]', opts.sortField); params.set('sort[0][direction]', opts.sortDir || 'desc'); }
-  if (opts.filter) params.set('filterByFormula', opts.filter);
-  const url = `https://api.airtable.com/v0/${base}/${encodeURIComponent(tableName)}?${params}`;
-  const r = await fetch(url, { headers: { Authorization: `Bearer ${key}` } });
-  if (!r.ok) throw new Error(`Airtable ${tableName}: ${r.status}`);
-  const d = await r.json();
-  return d.records.map(rec => ({ id: rec.id, ...rec.fields }));
-}
-
 export default async function handler(req, res) {
   if (req.method === 'OPTIONS') { res.status(200).end(); return; }
   if (!requireAuth(req)) return res.status(401).json({ error: 'Unauthorized' });
+
   try {
-    const bookings = await fetchAirtable('Bookings — Master', {
-      sortField: 'Date', sortDir: 'asc',
-      filter: `IS_AFTER({Date}, DATEADD(TODAY(), -1, 'days'))`,
-      maxRecords: 100
-    });
-    res.status(200).json(bookings);
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    const dateStr = yesterday.toISOString().split('T')[0];
+
+    const { data, error } = await supabase
+      .from('bookings_master')
+      .select('*')
+      .gte('booking_date', dateStr)
+      .order('booking_date', { ascending: true })
+      .limit(100);
+    if (error) throw error;
+    res.status(200).json(data);
   } catch (err) { res.status(500).json({ error: err.message }); }
 }

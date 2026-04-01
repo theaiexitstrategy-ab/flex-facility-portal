@@ -1,8 +1,8 @@
 # The Flex Facility — Command Center
 
 **URL:** portal.theflexfacility.com
-**Stack:** HTML/CSS/JS · Vercel Serverless · Airtable REST API
-**Auth:** bcrypt + JWT · HttpOnly cookies · 24hr session
+**Stack:** HTML/CSS/JS · Vercel Serverless · Supabase (PostgreSQL)
+**Auth:** SHA256 + JWT · HttpOnly cookies · 24hr session
 
 ## Environment Variables
 
@@ -11,12 +11,23 @@ Set all 7 in Vercel → Settings → Environment Variables:
 | Variable | Value |
 |---|---|
 | KENNY_EMAIL | Coach Kenny's login email |
-| KENNY_PASSWORD | bcrypt hash (cost 12) of his password |
+| KENNY_PASSWORD | SHA256 hash of his password (hashed with JWT_SECRET) |
 | AARON_EMAIL | Aaron's login email |
-| AARON_PASSWORD | bcrypt hash (cost 12) of his password |
+| AARON_PASSWORD | SHA256 hash of his password (hashed with JWT_SECRET) |
 | JWT_SECRET | Run: `node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"` |
-| AIRTABLE_API_KEY | From airtable.com/create/tokens |
-| AIRTABLE_BASE_ID | app0MAjRtdbZ4na2h |
+| SUPABASE_URL | Your Supabase project URL |
+| SUPABASE_SERVICE_ROLE_KEY | Your Supabase service role key |
+
+## Database Setup
+
+Run the setup script to create all 9 tables in Supabase:
+
+```bash
+npm run setup
+```
+
+If the script cannot execute DDL via REST (common in hosted Supabase), copy the SQL output and run it in:
+Supabase Dashboard → SQL Editor → New Query
 
 ## Deploy
 
@@ -29,7 +40,6 @@ Set all 7 in Vercel → Settings → Environment Variables:
 
 ## Changing a Password
 
-1. Go to bcrypt-generator.com · cost factor 12
-2. Generate hash of new password
-3. Update KENNY_PASSWORD or AARON_PASSWORD in Vercel env vars
-4. Redeploy
+1. Use: `node -e "const c=require('crypto');console.log(c.createHash('sha256').update('YOUR_PASSWORD'+process.env.JWT_SECRET).digest('hex'))"`
+2. Update KENNY_PASSWORD or AARON_PASSWORD in Vercel env vars
+3. Redeploy
