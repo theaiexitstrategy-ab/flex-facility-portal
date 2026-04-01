@@ -16,46 +16,23 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') { res.status(200).end(); return; }
   if (!requireAuth(req)) return res.status(401).json({ error: 'Unauthorized' });
 
+  const { segment } = req.query;
+  const table = segment === 'lifestyle' ? 'pipeline_lifestyle' : 'pipeline_athlete';
+
   try {
     if (req.method === 'GET') {
       const { data, error } = await supabase
-        .from('leads_lifestyle')
+        .from(table)
         .select('*')
         .order('created_at', { ascending: false })
-        .limit(200);
+        .limit(500);
       if (error) throw error;
       res.status(200).json(data);
-    } else if (req.method === 'POST') {
-      const body = req.body || {};
-      if (body.phone) {
-        const { data: existing } = await supabase
-          .from('leads_lifestyle')
-          .select('id')
-          .eq('phone', body.phone)
-          .limit(1);
-        if (existing && existing.length > 0) {
-          const { data, error } = await supabase
-            .from('leads_lifestyle')
-            .update(body)
-            .eq('id', existing[0].id)
-            .select()
-            .single();
-          if (error) throw error;
-          return res.status(200).json(data);
-        }
-      }
-      const { data, error } = await supabase
-        .from('leads_lifestyle')
-        .insert(body)
-        .select()
-        .single();
-      if (error) throw error;
-      res.status(201).json(data);
     } else if (req.method === 'PATCH') {
       const { id } = req.query;
       if (!id) return res.status(400).json({ error: 'Missing id' });
       const { data, error } = await supabase
-        .from('leads_lifestyle')
+        .from(table)
         .update(req.body)
         .eq('id', id)
         .select()
