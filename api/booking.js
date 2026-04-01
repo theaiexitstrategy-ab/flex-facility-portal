@@ -1,9 +1,6 @@
-const Airtable = require('airtable');
+import supabase from '../lib/supabase.js';
 
-const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY }).base(process.env.AIRTABLE_BASE_ID);
-const TABLE_NAME = 'Bookings — Master';
-
-module.exports = async (req, res) => {
+export default async function handler(req, res) {
   if (req.method !== 'PATCH') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
@@ -26,14 +23,22 @@ module.exports = async (req, res) => {
   }
 
   try {
-    const record = await base(TABLE_NAME).update(id, fields);
+    const { data, error } = await supabase
+      .from('bookings_master')
+      .update(fields)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+
     return res.status(200).json({
       success: true,
-      id: record.id,
-      fields: record.fields
+      id: data.id,
+      fields: data
     });
   } catch (err) {
     console.error('Booking update error:', err.message);
     return res.status(500).json({ error: err.message });
   }
-};
+}

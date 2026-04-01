@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "The Flex Facility Command Center — Admin Portal",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
+    "@supabase/supabase-js": "^2.49.1",
     "jsonwebtoken": "^9.0.0"
   }
 }
