@@ -12,40 +12,46 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (!requireAuth(req)) return res.status(401).json({ success: false, error: 'Unauthorized' });
 
-  const seg = req.query.segment;
-  if (!seg || (seg !== 'athlete' && seg !== 'lifestyle')) {
-    return res.status(400).json({ success: false, error: 'Missing or invalid segment (athlete or lifestyle)' });
-  }
-  const table = seg === 'athlete' ? 'pipeline_athlete' : 'pipeline_lifestyle';
-
   try {
     if (req.method === 'GET') {
       if (req.query.id) {
-        const { data, error } = await supabase.from(table).select('*').eq('id', req.query.id).single();
+        const { data, error } = await supabase.from('contacts_master').select('*').eq('id', req.query.id).single();
         if (error) return res.status(400).json({ success: false, error: error.message });
         return res.status(200).json({ success: true, data });
       }
-      const { data, error } = await supabase.from(table).select('*').order('created_at', { ascending: false }).limit(500);
+      let query = supabase.from('contacts_master').select('*');
+      if (req.query.segment) query = query.eq('segment', req.query.segment);
+      if (req.query.search) query = query.or(`first_name.ilike.%${req.query.search}%,last_name.ilike.%${req.query.search}%,phone.ilike.%${req.query.search}%,email.ilike.%${req.query.search}%`);
+      const { data, error } = await query.order('created_at', { ascending: false }).limit(500);
       if (error) return res.status(400).json({ success: false, error: error.message });
       return res.status(200).json({ success: true, data });
     }
 
     if (req.method === 'POST') {
-      const { data, error } = await supabase.from(table).insert(req.body).select().single();
+      const body = req.body || {};
+      if (body.phone) {
+        const { data: existing } = await supabase.from('contacts_master').select('id').eq('phone', body.phone).limit(1);
+        if (existing?.length > 0) {
+          const { data, error } = await supabase.from('contacts_master').update(body).eq('id', existing[0].id).select().single();
+          if (error) return res.status(400).json({ success: false, error: error.message });
+          return res.status(200).json({ success: true, data });
+        }
+      }
+      const { data, error } = await supabase.from('contacts_master').insert(body).select().single();
       if (error) return res.status(400).json({ success: false, error: error.message });
       return res.status(201).json({ success: true, data });
     }
 
     if (req.method === 'PUT') {
       if (!req.query.id) return res.status(400).json({ success: false, error: 'Missing id' });
-      const { data, error } = await supabase.from(table).update(req.body).eq('id', req.query.id).select().single();
+      const { data, error } = await supabase.from('contacts_master').update(req.body).eq('id', req.query.id).select().single();
       if (error) return res.status(400).json({ success: false, error: error.message });
       return res.status(200).json({ success: true, data });
     }
 
     if (req.method === 'DELETE') {
       if (!req.query.id) return res.status(400).json({ success: false, error: 'Missing id' });
-      const { error } = await supabase.from(table).delete().eq('id', req.query.id);
+      const { error } = await supabase.from('contacts_master').delete().eq('id', req.query.id);
       if (error) return res.status(400).json({ success: false, error: error.message });
       return res.status(200).json({ success: true });
     }
