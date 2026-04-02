@@ -1,8 +1,12 @@
 {
   "name": "theflexfacility-portal",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "The Flex Facility Command Center — Admin Portal",
+  "scripts": {
+    "setup": "node scripts/setup-supabase.js"
+  },
   "dependencies": {
+    "@supabase/supabase-js": "^2.101.1",
     "bcryptjs": "^2.4.3",
     "jsonwebtoken": "^9.0.0"
   }
