@@ -12,42 +12,29 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (!requireAuth(req)) return res.status(401).json({ success: false, error: 'Unauthorized' });
 
-  const seg = req.query.segment;
-  if (!seg || (seg !== 'athlete' && seg !== 'lifestyle')) {
-    return res.status(400).json({ success: false, error: 'Missing or invalid segment (athlete or lifestyle)' });
-  }
-  const table = seg === 'athlete' ? 'pipeline_athlete' : 'pipeline_lifestyle';
-
   try {
     if (req.method === 'GET') {
-      if (req.query.id) {
-        const { data, error } = await supabase.from(table).select('*').eq('id', req.query.id).single();
-        if (error) return res.status(400).json({ success: false, error: error.message });
-        return res.status(200).json({ success: true, data });
-      }
-      const { data, error } = await supabase.from(table).select('*').order('created_at', { ascending: false }).limit(500);
+      const { data, error } = await supabase.from('purchases_ebook').select('*').order('created_at', { ascending: false }).limit(200);
       if (error) return res.status(400).json({ success: false, error: error.message });
       return res.status(200).json({ success: true, data });
     }
 
     if (req.method === 'POST') {
-      const { data, error } = await supabase.from(table).insert(req.body).select().single();
+      const body = req.body || {};
+      if (body.stripe_session_id) {
+        const { data: existing } = await supabase.from('purchases_ebook').select('id').eq('stripe_session_id', body.stripe_session_id).limit(1);
+        if (existing?.length > 0) return res.status(200).json({ success: true, data: existing[0], duplicate: true });
+      }
+      const { data, error } = await supabase.from('purchases_ebook').insert(body).select().single();
       if (error) return res.status(400).json({ success: false, error: error.message });
       return res.status(201).json({ success: true, data });
     }
 
     if (req.method === 'PUT') {
       if (!req.query.id) return res.status(400).json({ success: false, error: 'Missing id' });
-      const { data, error } = await supabase.from(table).update(req.body).eq('id', req.query.id).select().single();
+      const { data, error } = await supabase.from('purchases_ebook').update(req.body).eq('id', req.query.id).select().single();
       if (error) return res.status(400).json({ success: false, error: error.message });
       return res.status(200).json({ success: true, data });
-    }
-
-    if (req.method === 'DELETE') {
-      if (!req.query.id) return res.status(400).json({ success: false, error: 'Missing id' });
-      const { error } = await supabase.from(table).delete().eq('id', req.query.id);
-      if (error) return res.status(400).json({ success: false, error: error.message });
-      return res.status(200).json({ success: true });
     }
 
     return res.status(405).json({ success: false, error: 'Method not allowed' });
