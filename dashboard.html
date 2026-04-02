@@ -559,6 +559,50 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 .filter-chip:hover { border-color: var(--navy); color: var(--navy); }
 .filter-chip.active { border-color: var(--navy); color: var(--white); background: var(--navy); }
 
+/* ── CRM ── */
+.crm-mode-tab{font-size:11px;font-family:var(--font-mono);padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:var(--white);color:var(--muted2);cursor:pointer;letter-spacing:.5px;transition:all .15s}
+.crm-mode-tab:hover{border-color:var(--navy);color:var(--navy)}
+.crm-mode-tab.active{border-color:var(--navy);color:var(--white);background:var(--navy)}
+.status-select{font-size:10px;font-family:var(--font-mono);padding:3px 6px;border-radius:20px;border:1px solid var(--border);background:var(--white);cursor:pointer;font-weight:700;letter-spacing:.5px;outline:none;appearance:none;-webkit-appearance:none;text-align:center;min-width:90px}
+.status-select.status-new{background:#c8a84b;color:#fff;border-color:#c8a84b}
+.status-select.status-contacted{background:var(--cyan-dim);color:var(--cyan-text);border-color:var(--cyan)}
+.status-select.status-booked{background:var(--purple-dim);color:var(--purple-text);border-color:var(--purple)}
+.status-select.status-showed{background:var(--gold-dim);color:var(--gold-text);border-color:var(--gold)}
+.status-select.status-closed{background:var(--green-dim);color:var(--green-text);border-color:var(--green)}
+.status-select.status-lost{background:#f0f0ec;color:var(--muted2);border-color:var(--border2)}
+th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--navy)}th.sortable.asc::after{content:' ↑'}th.sortable.desc::after{content:' ↓'}
+.drawer-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.35);z-index:900}
+.lead-drawer{position:fixed;top:0;right:0;width:460px;max-width:90vw;height:100vh;background:var(--white);box-shadow:-4px 0 24px rgba(0,0,0,.12);z-index:910;display:flex;flex-direction:column;overflow:hidden}
+.drawer-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.drawer-title{font-family:var(--font-display);font-size:18px;letter-spacing:2px;color:var(--navy)}
+.drawer-body{flex:1;overflow-y:auto;padding:20px}
+.drawer-section{margin-bottom:20px}
+.drawer-section-title{font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.drawer-field{margin-bottom:10px}
+.drawer-field label{display:block;font-size:10px;font-family:var(--font-mono);letter-spacing:1px;color:var(--muted);margin-bottom:3px;text-transform:uppercase}
+.drawer-field input,.drawer-field textarea,.drawer-field select{width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-family:var(--font-body);font-size:13px;color:var(--navy);background:var(--bg);outline:none}
+.drawer-field input:focus,.drawer-field textarea:focus,.drawer-field select:focus{border-color:var(--navy)}
+.add-lead-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:480px;max-width:90vw;max-height:85vh;background:var(--white);border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,.18);z-index:910;display:flex;flex-direction:column;overflow:hidden}
+.add-lead-modal .drawer-body{overflow-y:auto}
+.form-group{margin-bottom:12px}
+.form-group label{display:block;font-size:10px;font-family:var(--font-mono);letter-spacing:1px;color:var(--muted);margin-bottom:3px;text-transform:uppercase}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-family:var(--font-body);font-size:13px;color:var(--navy);background:var(--bg);outline:none}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--navy)}
+.crm-kanban{display:flex;gap:12px;overflow-x:auto;padding-bottom:12px;min-height:400px}
+.kanban-col{min-width:220px;width:220px;flex-shrink:0;background:var(--bg);border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;max-height:calc(100vh - 320px)}
+.kanban-col-header{padding:10px 12px;border-bottom:1px solid var(--border);font-family:var(--font-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);background:var(--white);border-radius:10px 10px 0 0;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.kanban-col-count{font-size:10px;background:var(--navy);color:white;padding:1px 6px;border-radius:10px}
+.kanban-col-body{padding:8px;flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
+.kanban-col-body.drag-over{background:var(--cyan-dim)}
+.kanban-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:10px 12px;cursor:grab;transition:box-shadow .15s,border-color .15s}
+.kanban-card:hover{border-color:var(--navy);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.kanban-card.dragging{opacity:.5}
+.kanban-card-name{font-weight:600;font-size:12px;color:var(--navy);margin-bottom:3px}
+.kanban-card-phone{font-size:10px;font-family:var(--font-mono);color:var(--muted2)}
+.kanban-card-meta{display:flex;justify-content:space-between;margin-top:6px;font-size:10px}
+.kanban-card-type{color:var(--muted);font-family:var(--font-mono)}
+.kanban-card-value{color:var(--green-text);font-weight:600;font-family:var(--font-mono)}
+
 /* ── BOOKINGS ── */
 .booking-list { display: flex; flex-direction: column; gap: 8px; }
 .booking-item {
@@ -1053,29 +1097,83 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 
     <!-- ══ CRM ══ -->
     <div class="view" id="view-crm">
-      <div class="section-header"><div class="section-title">CRM — LEAD PIPELINE</div><div class="section-sub">87 total leads · 14 need action</div></div>
-      <div class="search-bar"><span class="search-icon">🔍</span><input type="text" placeholder="Search by name, sport, phone, source..."></div>
-      <div class="filter-row">
-        <div class="filter-chip active">ALL (87)</div>
-        <div class="filter-chip">🔥 HOT (14)</div>
-        <div class="filter-chip">🟡 WARM (23)</div>
-        <div class="filter-chip">🆕 NEW (18)</div>
-        <div class="filter-chip">📅 BOOKED (22)</div>
-        <div class="filter-chip">❄️ COLD (10)</div>
-        <div class="filter-chip">✅ CLOSED (22)</div>
-        <div class="filter-chip" style="margin-left:auto;">Athletes</div>
-        <div class="filter-chip">Lifestyle</div>
+      <div class="section-header"><div class="section-title">CRM — LEAD PIPELINE</div><div class="section-sub" id="crm-summary">Loading...</div></div>
+      <div style="display:flex;gap:8px;margin-bottom:14px;align-items:center;">
+        <div class="crm-mode-tab active" onclick="setCrmMode('leads',this)">Lead Table</div>
+        <div class="crm-mode-tab" onclick="setCrmMode('pipeline',this)">Pipeline Board</div>
+        <button class="sync-btn" onclick="openAddLeadModal()" style="margin-left:auto;background:var(--green);border-color:var(--green);">+ Add New Lead</button>
       </div>
-      <div class="panel">
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>ATHLETE / PARENT</th><th>SPORT / GOAL</th><th>PIPELINE STAGE</th><th>SOURCE</th><th>PHONE</th><th>SUBMITTED</th><th>ACTIONS</th></tr></thead>
-            <tbody>
-              <tr><td colspan="7" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">Loading leads...</td></tr>
-            </tbody>
-          </table>
+      <div style="display:flex;gap:6px;margin-bottom:14px;">
+        <div class="filter-chip active" data-seg="athlete" onclick="setCrmSegment('athlete',this)">Athletes & Parents</div>
+        <div class="filter-chip" data-seg="lifestyle" onclick="setCrmSegment('lifestyle',this)">Lifestyle & Bodybuilding</div>
+      </div>
+      <div id="crm-leads-view">
+        <div class="search-bar"><span class="search-icon">🔍</span><input type="text" id="crm-search" placeholder="Search by name, phone, or email..." oninput="debounceCrmSearch()"></div>
+        <div class="filter-row" id="crm-status-filters">
+          <div class="filter-chip active" onclick="setCrmStatusFilter('All',this)">ALL</div>
+          <div class="filter-chip" onclick="setCrmStatusFilter('New',this)">NEW</div>
+          <div class="filter-chip" onclick="setCrmStatusFilter('Contacted',this)">CONTACTED</div>
+          <div class="filter-chip" onclick="setCrmStatusFilter('Booked',this)">BOOKED</div>
+          <div class="filter-chip" onclick="setCrmStatusFilter('Showed',this)">SHOWED</div>
+          <div class="filter-chip" onclick="setCrmStatusFilter('Closed',this)">CLOSED</div>
+          <div class="filter-chip" onclick="setCrmStatusFilter('Lost',this)">LOST</div>
+        </div>
+        <div class="panel"><div class="table-wrap"><table>
+          <thead><tr>
+            <th class="sortable" onclick="setCrmSort('first_name',this)">NAME</th>
+            <th class="sortable" onclick="setCrmSort('phone',this)">PHONE</th>
+            <th class="sortable" onclick="setCrmSort('email',this)">EMAIL</th>
+            <th class="sortable" onclick="setCrmSort('source',this)">SOURCE</th>
+            <th>LEAD STATUS</th>
+            <th class="sortable" onclick="setCrmSort('created_at',this)">CREATED</th>
+            <th>ACTIONS</th>
+          </tr></thead>
+          <tbody id="crm-leads-tbody"><tr><td colspan="7" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">Loading leads...</td></tr></tbody>
+        </table></div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;">
+          <div id="crm-page-info" style="font-size:11px;color:var(--muted);font-family:var(--font-mono);"></div>
+          <div style="display:flex;gap:6px;">
+            <button class="sync-btn" id="crm-prev-btn" onclick="crmPrevPage()" style="background:var(--white);color:var(--navy);border:1px solid var(--border);" disabled>Prev</button>
+            <button class="sync-btn" id="crm-next-btn" onclick="crmNextPage()" style="background:var(--white);color:var(--navy);border:1px solid var(--border);" disabled>Next</button>
+          </div>
         </div>
       </div>
+      <div id="crm-pipeline-view" style="display:none;"><div id="crm-kanban" class="crm-kanban"></div></div>
+    </div>
+    <!-- LEAD DRAWER -->
+    <div id="lead-drawer-overlay" class="drawer-overlay" onclick="closeLeadDrawer()" style="display:none;"></div>
+    <div id="lead-drawer" class="lead-drawer" style="display:none;">
+      <div class="drawer-header"><div class="drawer-title" id="drawer-title">Lead Detail</div><div style="cursor:pointer;font-size:18px;color:var(--muted);" onclick="closeLeadDrawer()">✕</div></div>
+      <div class="drawer-body" id="drawer-body"><div style="text-align:center;padding:40px;color:var(--muted);">Loading...</div></div>
+    </div>
+    <!-- ADD LEAD MODAL -->
+    <div id="add-lead-modal-overlay" class="drawer-overlay" onclick="closeAddLeadModal()" style="display:none;"></div>
+    <div id="add-lead-modal" class="add-lead-modal" style="display:none;">
+      <div class="drawer-header"><div class="drawer-title">Add New Lead</div><div style="cursor:pointer;font-size:18px;color:var(--muted);" onclick="closeAddLeadModal()">✕</div></div>
+      <div class="drawer-body"><form id="add-lead-form" onsubmit="submitNewLead(event)">
+        <div class="form-group"><label>First Name *</label><input type="text" name="first_name" required></div>
+        <div class="form-group"><label>Last Name *</label><input type="text" name="last_name" required></div>
+        <div class="form-group"><label>Phone *</label><input type="tel" name="phone" required oninput="formatPhoneInput(this)"></div>
+        <div class="form-group"><label>Email</label><input type="email" name="email"></div>
+        <div id="add-lead-athlete-fields">
+          <div class="form-group"><label>Parent Name</label><input type="text" name="parent_name"></div>
+          <div class="form-group"><label>Parent Phone</label><input type="tel" name="parent_phone" oninput="formatPhoneInput(this)"></div>
+          <div class="form-group"><label>Sport</label><input type="text" name="sport"></div>
+          <div class="form-group"><label>Position</label><input type="text" name="position"></div>
+          <div class="form-group"><label>School</label><input type="text" name="school"></div>
+          <div class="form-group"><label>Grad Year</label><input type="number" name="grad_year" min="2024" max="2040"></div>
+          <div class="form-group"><label>Athlete Age</label><input type="number" name="athlete_age" min="5" max="99"></div>
+        </div>
+        <div id="add-lead-lifestyle-fields" style="display:none;">
+          <div class="form-group"><label>Age</label><input type="number" name="age" min="10" max="99"></div>
+          <div class="form-group"><label>Experience Level</label><select name="experience_level"><option value="">Select...</option><option>Beginner</option><option>Intermediate</option><option>Advanced</option></select></div>
+        </div>
+        <div class="form-group"><label>Goals</label><textarea name="goals" rows="2"></textarea></div>
+        <div class="form-group"><label>Source</label><select name="source"><option value="">Select...</option><option>Website</option><option>Instagram</option><option>TikTok</option><option>Referral</option><option>Walk-In</option><option>Phone Call</option><option>VAPI AI</option><option>Other</option></select></div>
+        <div class="form-group"><label>Notes</label><textarea name="notes" rows="2"></textarea></div>
+        <button type="submit" class="sync-btn" style="width:100%;background:var(--green);border-color:var(--green);margin-top:8px;">Save Lead</button>
+        <div id="add-lead-error" style="color:var(--red);font-size:12px;margin-top:8px;display:none;"></div>
+      </form></div>
     </div>
 
     <!-- ══ BOOKINGS ══ -->
@@ -1103,7 +1201,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
             </div>
             <div style="padding:12px;background:var(--red-dim);border:1px solid rgba(214,56,85,0.15);border-radius:8px;">
               <div class="warn-title">⚠️ Booking Webhook Not Connected</div>
-              <div class="warn-text">Booked leads may still receive SMS nudges. Wire book.theflexfacility.com → Make.com → Airtable to fix this.</div>
+              <div class="warn-text">Booked leads may still receive SMS nudges. Wire book.theflexfacility.com → Make.com → Supabase to fix this.</div>
             </div>
           </div>
         </div>
@@ -1292,7 +1390,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
             <div class="ai-card"><div class="ai-card-icon fire">🔥</div><div class="ai-card-body"><div class="ai-card-title">Follow up with your hottest lead</div><div class="ai-card-desc">Check your CRM for the most recent lead submission and follow up immediately for best conversion rates.</div><div class="ai-priority high">HIGH PRIORITY</div></div></div>
             <div class="ai-card"><div class="ai-card-icon star">⭐</div><div class="ai-card-body"><div class="ai-card-title">Re-engage 10 Cold Leads This Week</div><div class="ai-card-desc">10 leads went cold 7+ days ago. A "we saved your spot" SMS converts at 22% for this audience.</div><div class="ai-priority med">MEDIUM PRIORITY</div></div></div>
             <div class="ai-card"><div class="ai-card-icon chart">📊</div><div class="ai-card-body"><div class="ai-card-title">Activate Your Existing Member Base</div><div class="ai-card-desc">Current members haven't been used as a referral source. A "refer a friend" campaign could generate 15–20 warm leads in 2 weeks.</div><div class="ai-priority med">MEDIUM PRIORITY</div></div></div>
-            <div class="ai-card"><div class="ai-card-icon msg">💬</div><div class="ai-card-body"><div class="ai-card-title">Connect Booking Webhook</div><div class="ai-card-desc">Booked leads are still receiving SMS nudges. Connect book.theflexfacility.com → Make.com → Airtable to stop sequences on booking.</div><div class="ai-priority high">HIGH PRIORITY</div></div></div>
+            <div class="ai-card"><div class="ai-card-icon msg">💬</div><div class="ai-card-body"><div class="ai-card-title">Connect Booking Webhook</div><div class="ai-card-desc">Booked leads are still receiving SMS nudges. Connect book.theflexfacility.com → Make.com → Supabase to stop sequences on booking.</div><div class="ai-priority high">HIGH PRIORITY</div></div></div>
             <div class="ai-card"><div class="ai-card-icon check">✅</div><div class="ai-card-body"><div class="ai-card-title">Saturday Is Your Best Day — Post More</div><div class="ai-card-desc">8 of your last 30 leads came in on Saturdays. Friday evening Instagram posts with parent testimonials are driving this.</div><div class="ai-priority low">OPPORTUNITY</div></div></div>
           </div>
         </div>
@@ -1337,7 +1435,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
           <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> INTEGRATIONS</div></div>
           <div class="panel-body">
             <div class="setting-row"><div><div class="setting-label">🤖 VAPI — FLEX AI</div><div class="setting-sub" style="color:var(--green-text)">Connected · Assistant ID active</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-            <div class="setting-row"><div><div class="setting-label">📋 Airtable CRM</div><div class="setting-sub" style="color:var(--green-text)">Connected · 8 tables syncing</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="setting-row"><div><div class="setting-label">📋 Supabase CRM</div><div class="setting-sub" style="color:var(--green-text)">Connected · 9 tables syncing</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
             <div class="setting-row"><div><div class="setting-label">⚡ Make.com Webhooks</div><div class="setting-sub" style="color:var(--green-text)">Connected · 3 webhooks active</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
             <div class="setting-row"><div><div class="setting-label">💬 Twilio SMS</div><div class="setting-sub" style="color:var(--green-text)">Connected · Sending enabled</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
             <div class="setting-row"><div><div class="setting-label">📅 Booking Webhook</div><div class="setting-sub" style="color:var(--red-text)">⚠️ Not connected — action needed</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
@@ -1367,7 +1465,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
             <div class="status-row"><div class="status-label">Website (Vercel)</div><div class="status-live">LIVE</div></div>
             <div class="status-row"><div class="status-label">VAPI Assistant (FLEX)</div><div class="status-live">LIVE</div></div>
             <div class="status-row"><div class="status-label">Make.com Automation</div><div class="status-live">LIVE</div></div>
-            <div class="status-row"><div class="status-label">Airtable Sync</div><div class="status-live">LIVE</div></div>
+            <div class="status-row"><div class="status-label">Supabase Sync</div><div class="status-live">LIVE</div></div>
             <div class="status-row"><div class="status-label">Booking Webhook</div><div class="status-offline">OFFLINE</div></div>
           </div>
         </div>
@@ -1382,7 +1480,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 // ── AUTH GUARD ──
 (async function checkAuth() {
   try {
-    const res = await fetch('/api/auth/verify', { credentials: 'include' });
+    const res = await fetch('/api/auth?action=verify', { credentials: 'include' });
     const data = await res.json();
     if (!res.ok || !data.authenticated) { window.location.replace('/login'); return; }
     if (data.user?.name) {
@@ -1394,7 +1492,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 
 // ── LOGOUT ──
 async function logout() {
-  try { await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' }); } finally { window.location.replace('/login'); }
+  try { await fetch('/api/auth?action=logout', { method: 'POST', credentials: 'include' }); } finally { window.location.replace('/login'); }
 }
 
 // ── HELPERS ──
@@ -1445,29 +1543,8 @@ document.querySelectorAll('.filter-chip').forEach(chip => {
 
 // ── RENDER FUNCTIONS ──
 function renderLeadsTable(athletes, lifestyle) {
-  const tbody = document.querySelector('#view-crm tbody');
-  if (!tbody) return;
-  const stageColors = { 'Hot':'hot','New Lead':'new','Contacted':'warm','Assessment Booked':'booked','Cold':'cold','Closed — Won':'closed','Closed — Lost':'cold','Active Client':'booked' };
-  const all = [
-    ...(athletes||[]).map(l => ({...l, _seg:'athlete'})),
-    ...(lifestyle||[]).map(l => ({...l, _seg:'lifestyle'}))
-  ].sort((a,b) => new Date(b['Created Time']||0) - new Date(a['Created Time']||0));
-
-  if (all.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">No leads yet</td></tr>';
-    return;
-  }
-
-  tbody.innerHTML = all.slice(0,100).map(lead => {
-    const name = ((lead['First Name']||'')+' '+(lead['Last Name']||'')).trim()||'Unknown';
-    const sport = lead['Athlete Sport']||lead['Primary Goal']||'—';
-    const stage = lead['Pipeline Stage']||'New Lead';
-    const stageClass = stageColors[stage]||'new';
-    const parentName = lead['Parent First Name'] ? 'Parent: '+lead['Parent First Name']+' '+(lead['Parent Last Name']||'') : (lead['_seg']==='lifestyle'?'Lifestyle':'Self');
-    return '<tr><td><div class="lead-name">'+name+'</div><div class="lead-sub">'+parentName+'</div></td><td><div style="font-size:12px;color:var(--navy)">'+sport+'</div></td><td><span class="pill '+stageClass+'"><span class="pill-dot"></span>'+stage.toUpperCase()+'</span></td><td><span class="source-tag">'+(lead['Source']||'—')+'</span></td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">'+(lead['Phone']||'—')+'</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">'+(lead['Created Time']?timeAgo(lead['Created Time']):'—')+'</td><td><div class="action-btns"><div class="act-btn success">📞</div><div class="act-btn">💬</div><div class="act-btn">📅</div><div class="act-btn danger">🗑</div></div></td></tr>';
-  }).join('');
-
-  // update CRM badge
+  // CRM table now handled by loadCrmLeads — just update badge
+  const all = [...(athletes||[]),...(lifestyle||[])];
   const badge = document.querySelector('.nav-item[onclick*="crm"] .nav-badge');
   if (badge) badge.textContent = all.length;
 }
@@ -1480,19 +1557,17 @@ function renderBookings(bookings) {
     return;
   }
   const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
-  const stageMap = {'confirmed':'booked','cancelled':'cold','pending':'new','no-show':'hot','showed up':'booked'};
+  const stageMap = {'confirmed':'booked','cancelled':'cold','pending':'new','no-show':'hot','showed up':'booked','scheduled':'new'};
   list.innerHTML = bookings.slice(0,10).map(b => {
-    const d = b['Date'] ? new Date(b['Date']) : null;
-    const dayStr = d ? days[d.getDay()] : '—';
-    const rawTime = b['Time']||'—';
+    const d = b.booking_date ? new Date(b.booking_date) : null;
+    const dayStr = d ? days[d.getUTCDay()] : '—';
+    const rawTime = b.booking_time||'—';
     const ampm = /pm/i.test(rawTime)?'PM':/am/i.test(rawTime)?'AM':'';
     const hrStr = rawTime.replace(/\s?(AM|PM)/gi,'').trim();
-    const status = (b['Status']||'Confirmed').toLowerCase();
+    const status = (b.status||'Scheduled').toLowerCase();
     const statusClass = stageMap[status]||'new';
-    return '<div class="booking-item"><div class="booking-time"><div class="booking-time-day">'+dayStr+'</div><div class="booking-time-hr">'+hrStr+'</div><div class="booking-time-ampm">'+ampm+'</div></div><div class="booking-info"><div class="booking-name">'+(b['Name']||'Unknown')+'</div><div class="booking-detail">'+(b['Session Type']||'Assessment')+' · '+(b['Segment']||'')+'</div></div><span class="pill '+statusClass+'"><span class="pill-dot"></span>'+(b['Status']||'CONFIRMED').toUpperCase()+'</span></div>';
+    return '<div class="booking-item"><div class="booking-time"><div class="booking-time-day">'+dayStr+'</div><div class="booking-time-hr">'+hrStr+'</div><div class="booking-time-ampm">'+ampm+'</div></div><div class="booking-info"><div class="booking-name">'+(b.full_name||'Unknown')+'</div><div class="booking-detail">'+(b.booking_type||'Assessment')+' · '+(b.segment||'')+'</div></div><span class="pill '+statusClass+'"><span class="pill-dot"></span>'+(b.status||'SCHEDULED').toUpperCase()+'</span></div>';
   }).join('');
-
-  // update bookings badge
   const badge = document.querySelector('.nav-item[onclick*="bookings"] .nav-badge');
   if (badge) badge.textContent = bookings.length;
 }
@@ -1514,13 +1589,13 @@ function renderCalls(calls) {
     return 'var(--muted2)';
   };
   container.innerHTML = calls.slice(0,30).map(c => {
-    const type = c['Interaction Type']||'Outbound';
+    const type = c.interaction_type||'Outbound';
     const cls = typeMap[type]||'out';
-    const secs = Number(c['Duration in Seconds']||0);
+    const secs = Number(c.duration_seconds||0);
     const dur = Math.floor(secs/60)+'m '+(secs%60)+'s';
-    const outcome = c['Call Outcome']||'—';
-    const linked = Array.isArray(c['Linked Lead'])?c['Linked Lead'][0]:(c['Linked Lead']||'Unknown');
-    return '<div class="call-item"><div class="call-icon '+cls+'">'+emojiMap[cls]+'</div><div class="call-body"><div class="call-name">'+linked+'</div><div class="call-detail">'+type+' · '+(c['Summary / Transcript']||'').slice(0,80)+'</div></div><div><div class="call-dur">'+dur+'</div><div class="call-outcome" style="color:'+outcomeColor(outcome)+'">'+outcome.toUpperCase()+'</div></div></div>';
+    const outcome = c.intent_detected||'—';
+    const linked = c.phone||'Unknown';
+    return '<div class="call-item"><div class="call-icon '+cls+'">'+emojiMap[cls]+'</div><div class="call-body"><div class="call-name">'+linked+'</div><div class="call-detail">'+type+' · '+(c.summary||'').slice(0,80)+'</div></div><div><div class="call-dur">'+dur+'</div><div class="call-outcome" style="color:'+outcomeColor(outcome)+'">'+outcome.toUpperCase()+'</div></div></div>';
   }).join('');
 }
 
@@ -1529,11 +1604,11 @@ function renderActivity(bookings, leads) {
   if (!feed) return;
   const items = [];
   (bookings||[]).slice(0,3).forEach(b => {
-    if (b['Created At']) items.push({ time: new Date(b['Created At']), html: '<div class="activity-item"><div class="act-icon book">📅</div><div class="act-body"><div class="act-text"><strong>'+(b['Name']||'Someone')+'</strong> booked a session</div><div class="act-time">'+timeAgo(b['Created At'])+' · '+(b['Session Type']||'Assessment')+'</div></div></div>' });
+    if (b.created_at) items.push({ time: new Date(b.created_at), html: '<div class="activity-item"><div class="act-icon book">📅</div><div class="act-body"><div class="act-text"><strong>'+(b.full_name||'Someone')+'</strong> booked a session</div><div class="act-time">'+timeAgo(b.created_at)+' · '+(b.booking_type||'Assessment')+'</div></div></div>' });
   });
   (leads||[]).slice(0,3).forEach(l => {
-    const name = ((l['First Name']||'')+' '+(l['Last Name']||'')).trim()||'Someone';
-    if (l['Created Time']) items.push({ time: new Date(l['Created Time']), html: '<div class="activity-item"><div class="act-icon lead">👤</div><div class="act-body"><div class="act-text"><strong>'+name+'</strong> submitted a form</div><div class="act-time">'+timeAgo(l['Created Time'])+' · '+(l['Source']||'Web Form')+'</div></div></div>' });
+    const name = ((l.first_name||'')+' '+(l.last_name||'')).trim()||'Someone';
+    if (l.created_at) items.push({ time: new Date(l.created_at), html: '<div class="activity-item"><div class="act-icon lead">👤</div><div class="act-body"><div class="act-text"><strong>'+name+'</strong> submitted a form</div><div class="act-time">'+timeAgo(l.created_at)+' · '+(l.source||'Web Form')+'</div></div></div>' });
   });
   items.sort((a,b) => b.time - a.time);
   if (items.length === 0) {
@@ -1544,28 +1619,33 @@ function renderActivity(bookings, leads) {
 }
 
 function updateKPIs(dash, athletes) {
-  const hotLeads = (athletes||[]).filter(l => l['Pipeline Stage']==='Hot').length;
+  const d = dash.data || dash;
+  const hotLeads = (athletes||[]).filter(l => l.lead_status==='New').length;
   const kpiLeads = document.getElementById('kpi-leads');
   const kpiBookings = document.getElementById('kpi-bookings');
   const kpiCommission = document.getElementById('kpi-commission');
   const kpiHot = document.getElementById('kpi-hot');
-  if (kpiLeads) kpiLeads.textContent = dash.totalLeads ?? 0;
-  if (kpiBookings) kpiBookings.textContent = dash.upcomingBookings ?? 0;
-  if (kpiCommission) kpiCommission.textContent = dash.commissionEarned != null ? '$'+Math.round(dash.commissionEarned).toLocaleString() : '$0';
+  if (kpiLeads) kpiLeads.textContent = d.totalLeads ?? 0;
+  if (kpiBookings) kpiBookings.textContent = d.upcomingBookings ?? 0;
+  if (kpiCommission) kpiCommission.textContent = d.commissionEarned != null ? '$'+Math.round(d.commissionEarned).toLocaleString() : '$0';
   if (kpiHot) kpiHot.textContent = hotLeads;
 }
 
 // ── LOAD ALL DATA ──
 async function loadAllData() {
   try {
-    const [dash, athletes, lifestyle, bookings, calls] = await Promise.all([
+    const [dashR, athR, lifR, bookR, callR] = await Promise.all([
       fetch('/api/dashboard', {credentials:'include'}).then(r=>r.ok?r.json():{}),
-      fetch('/api/leads-athlete', {credentials:'include'}).then(r=>r.ok?r.json():[]),
-      fetch('/api/leads-lifestyle', {credentials:'include'}).then(r=>r.ok?r.json():[]),
-      fetch('/api/bookings', {credentials:'include'}).then(r=>r.ok?r.json():[]),
-      fetch('/api/calls', {credentials:'include'}).then(r=>r.ok?r.json():[]),
+      fetch('/api/leads?segment=athlete', {credentials:'include'}).then(r=>r.ok?r.json():{data:[]}),
+      fetch('/api/leads?segment=lifestyle', {credentials:'include'}).then(r=>r.ok?r.json():{data:[]}),
+      fetch('/api/bookings?upcoming=true', {credentials:'include'}).then(r=>r.ok?r.json():{data:[]}),
+      fetch('/api/interactions', {credentials:'include'}).then(r=>r.ok?r.json():{data:[]}),
     ]);
-    updateKPIs(dash, athletes);
+    const athletes = athR.data||[];
+    const lifestyle = lifR.data||[];
+    const bookings = bookR.data||[];
+    const calls = callR.data||[];
+    updateKPIs(dashR, athletes);
     renderLeadsTable(athletes, lifestyle);
     renderBookings(bookings);
     renderCalls(calls);
@@ -1575,7 +1655,85 @@ async function loadAllData() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', loadAllData);
+document.addEventListener('DOMContentLoaded', () => { loadAllData(); loadCrmLeads(); });
+
+// ── CRM ENGINE ──
+let crmSegment='athlete',crmMode='leads',crmStatusFilter='All',crmSearch='',crmPage=1,crmSortBy='created_at',crmSortDir='desc',crmSearchTimer=null,crmDragData=null;
+const statusColorClass=s=>({New:'status-new',Contacted:'status-contacted',Booked:'status-booked',Showed:'status-showed',Closed:'status-closed',Lost:'status-lost'}[s]||'status-new');
+
+function setCrmSegment(seg,el){crmSegment=seg;crmPage=1;document.querySelectorAll('#view-crm [data-seg]').forEach(c=>c.classList.remove('active'));if(el)el.classList.add('active');document.getElementById('add-lead-athlete-fields').style.display=seg==='athlete'?'':'none';document.getElementById('add-lead-lifestyle-fields').style.display=seg==='lifestyle'?'':'none';if(crmMode==='leads')loadCrmLeads();else loadCrmPipeline();}
+function setCrmMode(mode,el){crmMode=mode;document.querySelectorAll('.crm-mode-tab').forEach(t=>t.classList.remove('active'));if(el)el.classList.add('active');document.getElementById('crm-leads-view').style.display=mode==='leads'?'':'none';document.getElementById('crm-pipeline-view').style.display=mode==='pipeline'?'':'none';if(mode==='leads')loadCrmLeads();else loadCrmPipeline();}
+function setCrmStatusFilter(status,el){crmStatusFilter=status;crmPage=1;document.querySelectorAll('#crm-status-filters .filter-chip').forEach(c=>c.classList.remove('active'));if(el)el.classList.add('active');loadCrmLeads();}
+function setCrmSort(col,el){if(crmSortBy===col){crmSortDir=crmSortDir==='asc'?'desc':'asc';}else{crmSortBy=col;crmSortDir='desc';}document.querySelectorAll('th.sortable').forEach(t=>{t.classList.remove('asc','desc');});if(el)el.classList.add(crmSortDir);crmPage=1;loadCrmLeads();}
+function debounceCrmSearch(){clearTimeout(crmSearchTimer);crmSearchTimer=setTimeout(()=>{crmSearch=document.getElementById('crm-search').value.trim();crmPage=1;loadCrmLeads();},300);}
+function crmPrevPage(){if(crmPage>1){crmPage--;loadCrmLeads();}}
+function crmNextPage(){crmPage++;loadCrmLeads();}
+
+async function loadCrmLeads(){
+  const tbody=document.getElementById('crm-leads-tbody');if(!tbody)return;
+  tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">Loading...</td></tr>';
+  const p=new URLSearchParams({segment:crmSegment,page:crmPage,sort_by:crmSortBy,sort_dir:crmSortDir});
+  if(crmStatusFilter!=='All')p.set('status',crmStatusFilter);if(crmSearch)p.set('search',crmSearch);
+  try{
+    const res=await fetch('/api/leads?'+p,{credentials:'include'});if(!res.ok)throw new Error('Failed');
+    const{data,total,page,perPage}=await res.json();
+    const sum=document.getElementById('crm-summary');if(sum)sum.textContent=total+' total leads';
+    const badge=document.querySelector('.nav-item[onclick*="crm"] .nav-badge');if(badge)badge.textContent=total;
+    if(!data||data.length===0){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">No leads found</td></tr>';}
+    else{tbody.innerHTML=data.map(lead=>{const name=((lead.first_name||'')+' '+(lead.last_name||'')).trim()||'Unknown';const st=lead.lead_status||'New';return'<tr onclick="openLeadDrawer(\''+lead.id+'\',\''+crmSegment+'\')"><td><div class="lead-name">'+name+'</div></td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">'+(lead.phone||'—')+'</td><td style="font-size:12px;color:var(--muted2)">'+(lead.email||'—')+'</td><td><span class="source-tag">'+(lead.source||'—')+'</span></td><td><select class="status-select '+statusColorClass(st)+'" onchange="updateLeadStatus(event,\''+lead.id+'\',\''+crmSegment+'\',this)" onclick="event.stopPropagation()"><option'+(st==='New'?' selected':'')+'>New</option><option'+(st==='Contacted'?' selected':'')+'>Contacted</option><option'+(st==='Booked'?' selected':'')+'>Booked</option><option'+(st==='Showed'?' selected':'')+'>Showed</option><option'+(st==='Closed'?' selected':'')+'>Closed</option><option'+(st==='Lost'?' selected':'')+'>Lost</option></select></td><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">'+(lead.created_at?timeAgo(lead.created_at):'—')+'</td><td><div class="action-btns"><div class="act-btn" onclick="event.stopPropagation();openLeadDrawer(\''+lead.id+'\',\''+crmSegment+'\')">👁</div></div></td></tr>';}).join('');}
+    const tp=Math.ceil(total/perPage);document.getElementById('crm-page-info').textContent='Page '+page+' of '+Math.max(1,tp)+' ('+total+' leads)';document.getElementById('crm-prev-btn').disabled=page<=1;document.getElementById('crm-next-btn').disabled=page>=tp;
+  }catch(err){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;padding:20px;color:var(--red);font-size:13px;">Error: '+err.message+'</td></tr>';}
+}
+
+async function updateLeadStatus(e,id,segment,sel){const ns=sel.value;sel.className='status-select '+statusColorClass(ns);try{await fetch('/api/leads?id='+id+'&segment='+segment,{method:'PUT',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({lead_status:ns})});}catch(err){console.error('Status update failed:',err);}}
+
+const athleteStages=['New Lead','Assessment Booked','Assessment Complete','Proposal Sent','Closed Won','Closed Lost'];
+const lifestyleStages=['New Lead','Consultation Booked','Consultation Complete','Proposal Sent','Closed Won','Closed Lost'];
+
+async function loadCrmPipeline(){
+  const kanban=document.getElementById('crm-kanban');if(!kanban)return;
+  kanban.innerHTML='<div style="padding:20px;color:var(--muted);">Loading pipeline...</div>';
+  const stages=crmSegment==='lifestyle'?lifestyleStages:athleteStages;
+  try{
+    const res=await fetch('/api/pipeline?segment='+crmSegment,{credentials:'include'});if(!res.ok)throw new Error('Failed');
+    const{data}=await res.json();
+    kanban.innerHTML=stages.map(stage=>{const cards=(data||[]).filter(d=>(d.stage||'New Lead')===stage);return'<div class="kanban-col" data-stage="'+stage+'"><div class="kanban-col-header"><span>'+stage.toUpperCase()+'</span><span class="kanban-col-count">'+cards.length+'</span></div><div class="kanban-col-body" ondragover="kanbanDragOver(event)" ondragleave="kanbanDragLeave(event)" ondrop="kanbanDrop(event,\''+stage+'\')">'+(cards.length===0?'<div style="padding:10px;text-align:center;color:var(--muted);font-size:11px;">No deals</div>':cards.map(c=>'<div class="kanban-card" draggable="true" ondragstart="kanbanDragStart(event,\''+c.id+'\')" onclick="openLeadDrawer(\''+(c.lead_id||'')+'\',\''+crmSegment+'\')"><div class="kanban-card-name">'+(c.full_name||'Unknown')+'</div><div class="kanban-card-phone">'+(c.phone||'—')+'</div><div class="kanban-card-meta"><span class="kanban-card-type">'+(c.program_type||'—')+'</span><span class="kanban-card-value">'+(c.deal_value?'$'+Number(c.deal_value).toLocaleString():'—')+'</span></div></div>').join(''))+'</div></div>';}).join('');
+  }catch(err){kanban.innerHTML='<div style="padding:20px;color:var(--red);">Error: '+err.message+'</div>';}
+}
+
+function kanbanDragStart(e,id){crmDragData=id;e.target.classList.add('dragging');e.dataTransfer.effectAllowed='move';}
+function kanbanDragOver(e){e.preventDefault();e.currentTarget.classList.add('drag-over');}
+function kanbanDragLeave(e){e.currentTarget.classList.remove('drag-over');}
+async function kanbanDrop(e,stage){e.preventDefault();e.currentTarget.classList.remove('drag-over');if(!crmDragData)return;try{await fetch('/api/pipeline?id='+crmDragData+'&segment='+crmSegment,{method:'PUT',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({stage})});loadCrmPipeline();}catch(err){console.error('Pipeline update failed:',err);}crmDragData=null;}
+
+async function openLeadDrawer(id,segment){
+  if(!id)return;document.getElementById('lead-drawer-overlay').style.display='';document.getElementById('lead-drawer').style.display='';
+  const body=document.getElementById('drawer-body');body.innerHTML='<div style="text-align:center;padding:40px;color:var(--muted);">Loading...</div>';
+  try{
+    const res=await fetch('/api/leads?id='+id+'&segment='+segment,{credentials:'include'});if(!res.ok)throw new Error('Failed');
+    const{data}=await res.json();const lead=data.lead;const pipeline=data.pipeline;const interactions=data.interactions||[];const bookings=data.bookings||[];
+    const name=((lead.first_name||'')+' '+(lead.last_name||'')).trim()||'Unknown';
+    document.getElementById('drawer-title').textContent=name;
+    const isA=segment==='athlete';
+    const fields=isA?[['first_name','First Name'],['last_name','Last Name'],['phone','Phone'],['email','Email'],['parent_name','Parent Name'],['parent_phone','Parent Phone'],['sport','Sport'],['position','Position'],['school','School'],['grad_year','Grad Year'],['athlete_age','Age'],['goals','Goals'],['source','Source'],['notes','Notes']]:[['first_name','First Name'],['last_name','Last Name'],['phone','Phone'],['email','Email'],['age','Age'],['goals','Goals'],['experience_level','Experience Level'],['source','Source'],['notes','Notes']];
+    let html='<form id="drawer-edit-form" onsubmit="saveDrawerLead(event,\''+id+'\',\''+segment+'\')">';
+    html+='<div class="drawer-section"><div class="drawer-section-title">Lead Information</div>';
+    fields.forEach(([key,label])=>{const val=lead[key]||'';const isTA=key==='goals'||key==='notes';html+='<div class="drawer-field"><label>'+label+'</label>';if(isTA)html+='<textarea name="'+key+'" rows="2">'+val+'</textarea>';else html+='<input type="text" name="'+key+'" value="'+String(val).replace(/"/g,'&quot;')+'">';html+='</div>';});
+    html+='<div class="drawer-field"><label>Lead Status</label><select name="lead_status" class="status-select '+statusColorClass(lead.lead_status||'New')+'"><option'+(lead.lead_status==='New'?' selected':'')+'>New</option><option'+(lead.lead_status==='Contacted'?' selected':'')+'>Contacted</option><option'+(lead.lead_status==='Booked'?' selected':'')+'>Booked</option><option'+(lead.lead_status==='Showed'?' selected':'')+'>Showed</option><option'+(lead.lead_status==='Closed'?' selected':'')+'>Closed</option><option'+(lead.lead_status==='Lost'?' selected':'')+'>Lost</option></select></div>';
+    html+='<button type="submit" class="sync-btn" style="width:100%;background:var(--green);border-color:var(--green);margin-top:8px;">Save Changes</button></div></form>';
+    if(pipeline){html+='<div class="drawer-section"><div class="drawer-section-title">Pipeline</div><div style="display:flex;gap:12px;flex-wrap:wrap;font-size:12px;"><div><strong>Stage:</strong> '+(pipeline.stage||'—')+'</div><div><strong>Deal Value:</strong> '+(pipeline.deal_value?'$'+Number(pipeline.deal_value).toLocaleString():'—')+'</div><div><strong>Program:</strong> '+(pipeline.program_type||'—')+'</div><div><strong>Assigned:</strong> '+(pipeline.assigned_to||'—')+'</div></div></div>';}
+    if(bookings.length>0){html+='<div class="drawer-section"><div class="drawer-section-title">Bookings ('+bookings.length+')</div>';bookings.forEach(b=>{html+='<div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:6px;font-size:12px;"><strong>'+(b.booking_type||'Booking')+'</strong> — '+(b.booking_date||'No date')+' at '+(b.booking_time||'TBD')+' <span class="pill '+(b.status==='Scheduled'?'new':'warm')+'"><span class="pill-dot"></span>'+(b.status||'Scheduled').toUpperCase()+'</span></div>';});html+='</div>';}
+    if(interactions.length>0){html+='<div class="drawer-section"><div class="drawer-section-title">Interactions ('+interactions.length+')</div>';interactions.forEach(i=>{html+='<div style="background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:10px;margin-bottom:6px;font-size:12px;"><strong>'+(i.interaction_type||'Call')+'</strong> — '+(i.created_at?timeAgo(i.created_at):'Unknown');if(i.summary)html+='<div style="color:var(--muted2);margin-top:4px;">'+i.summary+'</div>';html+='</div>';});html+='</div>';}
+    body.innerHTML=html;
+  }catch(err){body.innerHTML='<div style="padding:20px;color:var(--red);">Error: '+err.message+'</div>';}
+}
+function closeLeadDrawer(){document.getElementById('lead-drawer-overlay').style.display='none';document.getElementById('lead-drawer').style.display='none';}
+async function saveDrawerLead(e,id,segment){e.preventDefault();const fd=new FormData(e.target);const body={};fd.forEach((v,k)=>{if(v!=='')body[k]=v;});try{const res=await fetch('/api/leads?id='+id+'&segment='+segment,{method:'PUT',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});if(!res.ok)throw new Error('Save failed');closeLeadDrawer();loadCrmLeads();}catch(err){alert('Save failed: '+err.message);}}
+
+function openAddLeadModal(){document.getElementById('add-lead-modal-overlay').style.display='';document.getElementById('add-lead-modal').style.display='';document.getElementById('add-lead-form').reset();document.getElementById('add-lead-error').style.display='none';document.getElementById('add-lead-athlete-fields').style.display=crmSegment==='athlete'?'':'none';document.getElementById('add-lead-lifestyle-fields').style.display=crmSegment==='lifestyle'?'':'none';}
+function closeAddLeadModal(){document.getElementById('add-lead-modal-overlay').style.display='none';document.getElementById('add-lead-modal').style.display='none';}
+function formatPhoneInput(input){let v=input.value.replace(/\D/g,'');if(v.length>10)v=v.slice(0,11);if(v.length>=7)input.value='('+v.slice(0,3)+') '+v.slice(3,6)+'-'+v.slice(6);else if(v.length>=4)input.value='('+v.slice(0,3)+') '+v.slice(3);else if(v.length>0)input.value='('+v;}
+async function submitNewLead(e){e.preventDefault();const errEl=document.getElementById('add-lead-error');errEl.style.display='none';const fd=new FormData(e.target);const body={};fd.forEach((v,k)=>{if(v!=='')body[k]=v;});if(body.phone)body.phone=body.phone.replace(/\D/g,'');if(body.parent_phone)body.parent_phone=body.parent_phone.replace(/\D/g,'');if(!body.first_name||!body.last_name||!body.phone){errEl.textContent='First name, last name, and phone are required.';errEl.style.display='';return;}try{const res=await fetch('/api/leads?segment='+crmSegment,{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});if(!res.ok){const d=await res.json();throw new Error(d.error||'Failed');}closeAddLeadModal();loadCrmLeads();}catch(err){errEl.textContent=err.message;errEl.style.display='';}}
 
 // ── CALENDAR MANAGER ──
 let calWeekStart = getMonday(new Date());
@@ -1602,8 +1760,8 @@ async function renderCalendarManager() {
   const label = document.getElementById('cal-week-label');
   if (label) label.textContent = weekDates[0].toLocaleDateString('en-US',{month:'short',day:'numeric'})+' – '+weekDates[6].toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
   try {
-    const bookings = await fetch('/api/bookings',{credentials:'include'}).then(r=>r.json());
-    calBookings = Array.isArray(bookings)?bookings:[];
+    const bookingsRes = await fetch('/api/bookings?upcoming=true',{credentials:'include'}).then(r=>r.json());
+    calBookings = Array.isArray(bookingsRes.data)?bookingsRes.data:[];
   } catch(e) { calBookings=[]; }
   const today = new Date().toDateString();
   const statusColor = {'Confirmed':'var(--green-dim)','Pending':'var(--gold-dim)','Cancelled':'rgba(214,56,85,0.08)','No-Show':'rgba(214,56,85,0.08)','Showed Up':'var(--green-dim)'};
@@ -1611,7 +1769,7 @@ async function renderCalendarManager() {
   grid.innerHTML = weekDates.map((date,i) => {
     const dateStr = date.toISOString().split('T')[0];
     const isToday = date.toDateString()===today;
-    const dayBookings = calBookings.filter(b=>b['Date']===dateStr);
+    const dayBookings = calBookings.filter(b=>b.booking_date===dateStr);
     const isBlocked = calBlocked.includes(dateStr);
     return '<div style="border-right:1px solid var(--border);min-height:280px;'+(i===6?'border-right:none':'')+';background:'+(isToday?'rgba(26,32,53,0.03)':'transparent')+'">'
       +'<div style="padding:10px 12px;border-bottom:1px solid var(--border);background:'+(isToday?'var(--navy)':'var(--bg)')+';text-align:center;">'
@@ -1620,18 +1778,18 @@ async function renderCalendarManager() {
       +'</div>'
       +'<div style="padding:8px;">'
         +(isBlocked?'<div style="background:rgba(136,136,152,0.15);border:1px solid var(--border);border-radius:6px;padding:6px 8px;font-size:10px;font-family:var(--font-mono);color:var(--muted);text-align:center;">BLOCKED</div>':'')
-+dayBookings.map(function(b){ var bg=statusColor[b['Status']]||'var(--cyan-dim)'; var tc=statusText[b['Status']]||'var(--cyan-text)'; return '<div onclick="openApptDetail(\''+b.id+'\')" style="background:'+bg+';border:1px solid var(--border);border-radius:6px;padding:7px 8px;margin-bottom:5px;cursor:pointer;">'
-          +'<div style="font-size:12px;color:var(--navy);font-weight:500;margin-top:2px;">'+(b['Name']||'Unknown')+'</div>'
-          +'<div style="font-size:10px;color:var(--muted2);">'+(b['Session Type']||'').slice(0,20)+'</div>'
++dayBookings.map(function(b){ var bg=statusColor[b.status]||'var(--cyan-dim)'; var tc=statusText[b.status]||'var(--cyan-text)'; return '<div onclick="openApptDetail(\''+b.id+'\')" style="background:'+bg+';border:1px solid var(--border);border-radius:6px;padding:7px 8px;margin-bottom:5px;cursor:pointer;">'
+          +'<div style="font-size:12px;color:var(--navy);font-weight:500;margin-top:2px;">'+(b.full_name||'Unknown')+'</div>'
+          +'<div style="font-size:10px;color:var(--muted2);">'+(b.booking_type||'').slice(0,20)+'</div>'
         +'</div>').join('')
         +(dayBookings.length===0&&!isBlocked?'<div style="text-align:center;padding:16px 0;font-size:11px;color:var(--muted);font-family:var(--font-mono);">—</div>':'')
-      window._currentBooking = {id:bookingId,phone:booking['Phone']||'',name:(booking['Name']||'').split(' ')[0]};
+      window._currentBooking = {id:bookingId,phone:booking.phone||'',name:(booking.full_name||'').split(' ')[0]};
   setTimeout(function(){
     var r=document.getElementById('btn-reschedule'); if(r) r.addEventListener('click',function(){rescheduleBooking(window._currentBooking.id,window._currentBooking.phone);});
     var s=document.getElementById('btn-sms'); if(s) s.addEventListener('click',function(){sendApptSMS(window._currentBooking.phone,window._currentBooking.name);});
     var c=document.getElementById('btn-cancel'); if(c) c.addEventListener('click',function(){cancelBooking(window._currentBooking.id,window._currentBooking.phone,window._currentBooking.name);});
   },0);
-    window._currentBooking = {id:bookingId,phone:booking['Phone']||'',name:(booking['Name']||'').split(' ')[0]};
+    window._currentBooking = {id:bookingId,phone:booking.phone||'',name:(booking.full_name||'').split(' ')[0]};
   setTimeout(function(){
     var r=document.getElementById('btn-reschedule'); if(r) r.addEventListener('click',function(){rescheduleBooking(window._currentBooking.id,window._currentBooking.phone);});
     var s=document.getElementById('btn-sms'); if(s) s.addEventListener('click',function(){sendApptSMS(window._currentBooking.phone,window._currentBooking.name);});
@@ -1649,15 +1807,15 @@ async function openApptDetail(bookingId) {
   const booking = calBookings.find(b=>b.id===bookingId)||{};
   const statusClass = {'Confirmed':'booked','Pending':'warm','Cancelled':'cold','No-Show':'hot','Showed Up':'booked'};
   body.innerHTML = '<div style="display:flex;flex-direction:column;gap:14px;">'
-    +'<div style="display:flex;justify-content:space-between;align-items:center;"><div><div style="font-family:var(--font-display);font-size:22px;color:var(--navy);">'+(booking['Name']||'Unknown')+'</div><div style="font-size:12px;color:var(--muted2);">'+(booking['Session Type']||'—')+'</div></div><span class="pill '+(statusClass[booking['Status']]||'new')+'"><span class="pill-dot"></span>'+(booking['Status']||'UNKNOWN').toUpperCase()+'</span></div>'
+    +'<div style="display:flex;justify-content:space-between;align-items:center;"><div><div style="font-family:var(--font-display);font-size:22px;color:var(--navy);">'+(booking.full_name||'Unknown')+'</div><div style="font-size:12px;color:var(--muted2);">'+(booking.booking_type||'—')+'</div></div><span class="pill '+(statusClass[booking.status]||'new')+'"><span class="pill-dot"></span>'+(booking.status||'UNKNOWN').toUpperCase()+'</span></div>'
     +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">'
-      +'<div style="background:var(--bg);border-radius:8px;padding:10px 12px;"><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">DATE & TIME</div><div style="font-size:13px;font-weight:600;color:var(--navy);">'+(booking['Date']||'—')+' · '+(booking['Time']||'—')+'</div></div>'
-      +'<div style="background:var(--bg);border-radius:8px;padding:10px 12px;"><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">PHONE</div><div style="font-size:13px;font-weight:600;color:var(--navy);">'+(booking['Phone']||'—')+'</div></div>'
-      +'<div style="background:var(--bg);border-radius:8px;padding:10px 12px;"><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">EMAIL</div><div style="font-size:12px;color:var(--navy);">'+(booking['Email']||'—')+'</div></div>'
-      +'<div style="background:var(--bg);border-radius:8px;padding:10px 12px;"><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">SEGMENT</div><div style="font-size:13px;font-weight:600;color:var(--navy);">'+(booking['Segment']||'—')+'</div></div>'
+      +'<div style="background:var(--bg);border-radius:8px;padding:10px 12px;"><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">DATE & TIME</div><div style="font-size:13px;font-weight:600;color:var(--navy);">'+(booking.booking_date||'—')+' · '+(booking.booking_time||'—')+'</div></div>'
+      +'<div style="background:var(--bg);border-radius:8px;padding:10px 12px;"><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">PHONE</div><div style="font-size:13px;font-weight:600;color:var(--navy);">'+(booking.phone||'—')+'</div></div>'
+      +'<div style="background:var(--bg);border-radius:8px;padding:10px 12px;"><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">EMAIL</div><div style="font-size:12px;color:var(--navy);">'+(booking.email||'—')+'</div></div>'
+      +'<div style="background:var(--bg);border-radius:8px;padding:10px 12px;"><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">SEGMENT</div><div style="font-size:13px;font-weight:600;color:var(--navy);">'+(booking.segment||'—')+'</div></div>'
     +'</div>'
-    +'<div><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:6px;">NOTES</div><textarea id="appt-notes" rows="2" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);resize:none;">'+(booking['Notes']||'')+'</textarea></div>'
-    +'<div><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:8px;">RESCHEDULE</div><div style="display:flex;gap:8px;"><input type="date" id="appt-new-date" value="'+(booking['Date']||'')+'" style="flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);"><input type="text" id="appt-new-time" value="'+(booking['Time']||'')+'" placeholder="7:00 PM" style="flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);"></div></div>'
+    +'<div><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:6px;">NOTES</div><textarea id="appt-notes" rows="2" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);resize:none;">'+(booking.notes||'')+'</textarea></div>'
+    +'<div><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:8px;">RESCHEDULE</div><div style="display:flex;gap:8px;"><input type="date" id="appt-new-date" value="'+(booking.booking_date||'')+'" style="flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);"><input type="text" id="appt-new-time" value="'+(booking.booking_time||'')+'" placeholder="7:00 PM" style="flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);"></div></div>'
     +'<div style="display:flex;gap:8px;">'
 +'<button id="btn-reschedule" style="flex:1;padding:10px;background:var(--navy);color:white;border:none;border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;">RESCHEDULE</button>'
 +'<button id="btn-sms" style="flex:1;padding:10px;background:var(--white);color:var(--navy);border:1.5px solid var(--border);border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;">💬 SMS</button>'
@@ -1675,7 +1833,7 @@ async function rescheduleBooking(id, phone) {
   if (!newDate||!newTime) { alert('Please enter a new date and time.'); return; }
   if (!confirm('Reschedule to '+newDate+' at '+newTime+'?')) return;
   try {
-    const r = await fetch('/api/booking?id='+id,{method:'PATCH',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({date:newDate,time:newTime,notes})});
+    const r = await fetch('/api/bookings?id='+id,{method:'PUT',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({booking_date:newDate,booking_time:newTime,notes})});
     if (!r.ok) throw new Error('Update failed');
     if (phone) await fetch('/api/sms',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({to:phone,message:'Hi! Your appointment at The Flex Facility has been rescheduled to '+newDate+' at '+newTime+'. Questions? Call 1-877-515-FLEX. 💪🏾'})});
     closeApptDetail(); renderCalendarManager(); alert('Booking rescheduled and SMS sent.');
@@ -1685,7 +1843,7 @@ async function rescheduleBooking(id, phone) {
 async function cancelBooking(id, phone, firstName) {
   if (!confirm('Cancel appointment for '+firstName+'? An SMS will be sent.')) return;
   try {
-    const r = await fetch('/api/booking?id='+id,{method:'PATCH',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({status:'Cancelled'})});
+    const r = await fetch('/api/bookings?id='+id,{method:'PUT',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({status:'Cancelled'})});
     if (!r.ok) throw new Error('Cancel failed');
     if (phone) await fetch('/api/sms',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({to:phone,message:'Hi '+firstName+', your appointment at The Flex Facility has been cancelled. To rebook: book.theflexfacility.com or call 1-877-515-FLEX. 💪🏾'})});
     closeApptDetail(); renderCalendarManager();

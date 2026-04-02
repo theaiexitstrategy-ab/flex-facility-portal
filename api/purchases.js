@@ -12,12 +12,6 @@ function requireAuth(req) {
   try { jwt.verify(match[1], process.env.JWT_SECRET); return true; } catch { return false; }
 }
 
-function getTable(segment) {
-  if (segment === 'athlete') return 'pipeline_athlete';
-  if (segment === 'lifestyle') return 'pipeline_lifestyle';
-  return null;
-}
-
 export default async function handler(req, res) {
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
@@ -27,35 +21,35 @@ export default async function handler(req, res) {
     return res.status(401).json({ success: false, error: 'Unauthorized' });
   }
 
-  const table = getTable(req.query.segment);
-  if (!table) {
-    return res.status(400).json({ success: false, error: 'Missing or invalid segment parameter (athlete or lifestyle)' });
-  }
-
   try {
     if (req.method === 'GET') {
-      if (req.query.id) {
-        const { data, error } = await supabase
-          .from(table)
-          .select('*')
-          .eq('id', req.query.id)
-          .single();
-        if (error) return res.status(400).json({ success: false, error: error.message });
-        return res.status(200).json({ success: true, data });
-      }
-
       const { data, error } = await supabase
-        .from(table)
+        .from('purchases_ebook')
         .select('*')
-        .limit(500);
+        .order('created_at', { ascending: false })
+        .limit(200);
       if (error) return res.status(400).json({ success: false, error: error.message });
       return res.status(200).json({ success: true, data });
     }
 
     if (req.method === 'POST') {
+      const body = req.body;
+
+      if (body.stripe_session_id) {
+        const { data: existing } = await supabase
+          .from('purchases_ebook')
+          .select('*')
+          .eq('stripe_session_id', body.stripe_session_id)
+          .maybeSingle();
+
+        if (existing) {
+          return res.status(200).json({ success: true, data: existing });
+        }
+      }
+
       const { data, error } = await supabase
-        .from(table)
-        .insert(req.body)
+        .from('purchases_ebook')
+        .insert(body)
         .select()
         .single();
       if (error) return res.status(400).json({ success: false, error: error.message });
@@ -67,25 +61,13 @@ export default async function handler(req, res) {
         return res.status(400).json({ success: false, error: 'Missing id parameter' });
       }
       const { data, error } = await supabase
-        .from(table)
+        .from('purchases_ebook')
         .update(req.body)
         .eq('id', req.query.id)
         .select()
         .single();
       if (error) return res.status(400).json({ success: false, error: error.message });
       return res.status(200).json({ success: true, data });
-    }
-
-    if (req.method === 'DELETE') {
-      if (!req.query.id) {
-        return res.status(400).json({ success: false, error: 'Missing id parameter' });
-      }
-      const { error } = await supabase
-        .from(table)
-        .delete()
-        .eq('id', req.query.id);
-      if (error) return res.status(400).json({ success: false, error: error.message });
-      return res.status(200).json({ success: true, data: { id: req.query.id } });
     }
 
     return res.status(405).json({ success: false, error: 'Method not allowed' });
