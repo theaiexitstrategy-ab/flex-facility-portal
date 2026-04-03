@@ -11,8 +11,8 @@
   --navy2: #161616;
   --navy3: #1e1e1e;
   --bg: #0d0d0d;
-  --surface: #161616;
-  --card: #161616;
+  --surface: #141720;
+  --card: #141720;
   --border: rgba(255,255,255,0.08);
   --border2: rgba(255,255,255,0.12);
   --text: rgba(255,255,255,0.75);
@@ -23,10 +23,10 @@
   --navy-muted: rgba(255,255,255,0.35);
   --navy-dim: rgba(255,255,255,0.06);
   --navy-border: rgba(255,255,255,0.08);
-  --gold: #d4a017;
-  --gold-light: #f0c040;
-  --gold-dim: rgba(212,160,23,0.12);
-  --gold-text: #f0c040;
+  --gold: #c8a84b;
+  --gold-light: #d4b45c;
+  --gold-dim: rgba(200,168,75,0.12);
+  --gold-text: #c8a84b;
   --red: #e8200a;
   --red-dim: rgba(232,32,10,0.12);
   --red-text: #ff6b5a;
@@ -297,6 +297,18 @@ html, body { height: 100%; font-family: var(--font-body); background: #0a0a0a; c
   border: 2px solid #0a0a0a;
 }
 
+.credits-pill {
+  display: flex; align-items: center; gap: 4px;
+  background: #141720; border: 1px solid #c8a84b; border-radius: 20px;
+  padding: 6px 14px; font-size: 11px; font-family: var(--font-mono);
+  color: #c8a84b; font-weight: 700; cursor: pointer; transition: all 0.15s;
+  white-space: nowrap;
+}
+.credits-pill:hover { background: rgba(200,168,75,0.1); }
+.credits-pill.warning { color: #f59e0b; border-color: #f59e0b; }
+.credits-pill.danger { color: #ef4444; border-color: #ef4444; animation: creditPulse 2s ease-in-out infinite; }
+@keyframes creditPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
+
 .sync-btn {
   background: var(--gold);
   color: #0a0a0a;
@@ -331,15 +343,15 @@ html, body { height: 100%; font-family: var(--font-body); background: #0a0a0a; c
 .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
 
 .kpi-card {
-  background: #161616;
-  border: 1px solid rgba(255,255,255,0.06);
+  background: #141720;
+  border: 1px solid rgba(200,168,75,0.15);
   border-radius: 12px;
   padding: 18px 20px;
   position: relative;
   overflow: hidden;
   transition: box-shadow 0.2s;
 }
-.kpi-card:hover { box-shadow: 0 2px 16px rgba(212,160,23,0.08); border-color: rgba(212,160,23,0.15); }
+.kpi-card:hover { box-shadow: 0 2px 16px rgba(200,168,75,0.1); border-color: rgba(200,168,75,0.3); }
 
 .kpi-accent {
   position: absolute;
@@ -387,8 +399,8 @@ html, body { height: 100%; font-family: var(--font-body); background: #0a0a0a; c
 
 /* ── PANEL ── */
 .panel {
-  background: #161616;
-  border: 1px solid rgba(255,255,255,0.06);
+  background: #141720;
+  border: 1px solid rgba(200,168,75,0.15);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -752,8 +764,8 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 /* ── QUICK ACTIONS ── */
 .quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .qa-btn {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
+  background: #141720;
+  border: 1px solid rgba(200,168,75,0.2);
   border-radius: 10px;
   padding: 12px 14px;
   cursor: pointer;
@@ -761,10 +773,10 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
   transition: all 0.15s;
   display: flex; align-items: center; gap: 10px;
 }
-.qa-btn:hover { border-color: rgba(212,160,23,0.3); background: rgba(212,160,23,0.05); }
-.qa-icon { font-size: 18px; }
-.qa-text { font-size: 12px; font-weight: 600; color: var(--navy); }
-.qa-sub { font-size: 10px; color: var(--muted2); margin-top: 1px; }
+.qa-btn:hover { border-color: #c8a84b; background: #1a1a2e; box-shadow: 0 0 12px rgba(200,168,75,0.08); }
+.qa-icon { font-size: 18px; color: #c8a84b; }
+.qa-text { font-size: 12px; font-weight: 600; color: #ffffff; }
+.qa-sub { font-size: 10px; color: #a0a0a0; margin-top: 1px; }
 
 /* ── AI CARDS ── */
 .ai-card {
@@ -1173,7 +1185,10 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
     <div class="nav-section">
       <div class="nav-label">Automation</div>
       <div class="nav-item" onclick="showView('sms',this)">
-        <span class="nav-icon">💬</span> SMS Sequences
+        <span class="nav-icon">📣</span> Send a Message
+      </div>
+      <div class="nav-item" onclick="showView('credits',this)">
+        <span class="nav-icon">💳</span> Credits
       </div>
       <div class="nav-item" onclick="showView('ai',this)">
         <span class="nav-icon">🤖</span> AI Insights
@@ -1212,6 +1227,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
       <div class="topbar-btn">🔔<div class="notif-badge"></div></div>
       <div class="topbar-btn">🔄</div>
       <button class="topbar-btn" onclick="logout()" title="Sign out" style="font-size:13px;">🚪</button>
+      <button class="credits-pill" id="credits-pill" onclick="showView('credits',document.querySelector('.nav-item[onclick*=credits]'))" title="Click to add more credits">💳 <span id="credits-pill-num">—</span> Credits</button>
       <button class="sync-btn" onclick="flashSync(this)">⚡ SYNC DATA</button>
     </div>
   </div>
@@ -1263,6 +1279,9 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
         </div>
       </div>
 
+      <!-- Social Media Metrics -->
+      <div id="social-metrics-area" style="margin-bottom:18px;"></div>
+
       <div class="grid-2">
         <div class="panel">
           <div class="panel-header">
@@ -1312,7 +1331,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 
       <div class="grid-1-3">
         <div class="panel">
-          <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> QUICK ACTIONS</div></div>
+          <div class="panel-header"><div class="panel-title" style="color:#ffffff;font-weight:600"><div class="panel-dot"></div> QUICK ACTIONS</div></div>
           <div class="panel-body">
             <div class="quick-actions">
               <div class="qa-btn"><div class="qa-icon">📞</div><div><div class="qa-text">Trigger FLEX Call</div><div class="qa-sub">Call a hot lead now</div></div></div>
@@ -1655,11 +1674,11 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
       </div>
     </div>
 
-    <!-- ══ SMS ══ -->
+    <!-- ══ SEND A MESSAGE ══ -->
     <div class="view" id="view-sms">
-      <div class="section-header"><div class="section-title">SMS SEQUENCES</div><div class="section-sub">Mass messaging & nurture sequences · Twilio</div></div>
+      <div class="section-header"><div class="section-title">SEND A MESSAGE</div><div class="section-sub">Send a text from your AI number to anyone in your community — instantly.</div></div>
 
-      <div class="blast-tabs">
+      <div class="blast-tabs" style="display:none">
         <div class="blast-tab active" onclick="switchSmsTab('blast',this)">SMS BLAST</div>
         <div class="blast-tab" onclick="switchSmsTab('sequences',this)">SEQUENCES</div>
       </div>
@@ -1670,26 +1689,26 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
           <!-- LEFT: Audience Filters -->
           <div class="blast-filter-panel">
             <div class="blast-filter-group">
-              <div class="blast-filter-label">SEGMENT</div>
+              <div class="blast-filter-label">WHO GETS THIS MESSAGE?</div>
               <select id="blast-segment" onchange="updateBlastCount()">
-                <option value="all">All Contacts</option>
+                <option value="all">Everyone</option>
                 <option value="athlete">Athletes & Parents</option>
-                <option value="lifestyle">Lifestyle & Bodybuilding</option>
+                <option value="lifestyle">Lifestyle Members</option>
               </select>
             </div>
 
             <div class="blast-filter-group">
-              <div class="blast-filter-label">STATUS FILTER</div>
+              <div class="blast-filter-label">INCLUDE THESE PEOPLE</div>
               <div class="blast-cb-group">
-                <label class="blast-cb"><input type="checkbox" value="New" onchange="updateBlastCount()" class="blast-status-cb" checked> New Lead</label>
-                <label class="blast-cb"><input type="checkbox" value="Contacted" onchange="updateBlastCount()" class="blast-status-cb" checked> Contacted</label>
-                <label class="blast-cb"><input type="checkbox" value="Booked" onchange="updateBlastCount()" class="blast-status-cb" checked> Assessment Scheduled</label>
-                <label class="blast-cb"><input type="checkbox" value="Showed" onchange="updateBlastCount()" class="blast-status-cb" checked> Active Member</label>
-                <label class="blast-cb"><input type="checkbox" value="Closed" onchange="updateBlastCount()" class="blast-status-cb"> Inactive</label>
+                <label class="blast-cb"><input type="checkbox" value="New" onchange="updateBlastCount()" class="blast-status-cb" checked> ✅ New inquiries</label>
+                <label class="blast-cb"><input type="checkbox" value="Contacted" onchange="updateBlastCount()" class="blast-status-cb" checked> ✅ People I've contacted</label>
+                <label class="blast-cb"><input type="checkbox" value="Booked" onchange="updateBlastCount()" class="blast-status-cb" checked> ✅ Consultations scheduled</label>
+                <label class="blast-cb"><input type="checkbox" value="Showed" onchange="updateBlastCount()" class="blast-status-cb" checked> ✅ Current members</label>
+                <label class="blast-cb"><input type="checkbox" value="Closed" onchange="updateBlastCount()" class="blast-status-cb"> Past members</label>
               </div>
             </div>
 
-            <div class="blast-filter-group">
+            <div class="blast-filter-group" style="display:none;">
               <div class="blast-filter-label">TAGS</div>
               <div class="blast-cb-group" id="blast-tags-list">
                 <div style="font-size:11px;color:var(--muted);font-style:italic;">Loading tags...</div>
@@ -1699,7 +1718,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
             <div class="blast-filter-group" style="background:transparent;border:none;padding:0;">
               <div class="blast-count-bar">
                 <div class="blast-count-num" id="blast-eligible-count">—</div>
-                <div class="blast-count-label">CONTACTS SELECTED</div>
+                <div class="blast-count-label">PEOPLE WILL RECEIVE THIS MESSAGE</div>
                 <div class="blast-count-opted" id="blast-opted-out-count" style="display:none;"></div>
               </div>
             </div>
@@ -1708,24 +1727,24 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
           <!-- RIGHT: Composer -->
           <div class="blast-composer">
             <div class="panel">
-              <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> MESSAGE COMPOSER</div></div>
+              <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> WHAT DO YOU WANT TO SAY?</div></div>
               <div class="panel-body">
                 <div class="blast-textarea-wrap">
-                  <textarea id="blast-message" class="blast-textarea" maxlength="160" placeholder="Type your SMS message here..." oninput="updateBlastPreview()"></textarea>
+                  <textarea id="blast-message" class="blast-textarea" maxlength="160" placeholder="Type your message here... Keep it personal and direct." oninput="updateBlastPreview()"></textarea>
                   <div class="blast-char-count" id="blast-char-count">0 / 160</div>
                 </div>
 
                 <div style="margin-top:10px;">
-                  <div style="font-size:9px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted);margin-bottom:6px;">MERGE TAGS</div>
+                  <div style="font-size:9px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted);margin-bottom:6px;">PERSONALIZE IT</div>
                   <div class="blast-merge-btns">
-                    <button type="button" class="blast-merge-btn" onclick="insertMergeTag('[First Name]')">[First Name]</button>
-                    <button type="button" class="blast-merge-btn" onclick="insertMergeTag('[Last Name]')">[Last Name]</button>
-                    <button type="button" class="blast-merge-btn" onclick="insertMergeTag('[Coach Name]')">[Coach Name]</button>
+                    <button type="button" class="blast-merge-btn" onclick="insertMergeTag('[First Name]')">First Name</button>
+                    <button type="button" class="blast-merge-btn" onclick="insertMergeTag('[Last Name]')">Last Name</button>
+                    <button type="button" class="blast-merge-btn" onclick="insertMergeTag('[Coach Name]')">My Name</button>
                   </div>
                 </div>
 
                 <div class="blast-preview-box" style="margin-top:14px;">
-                  <div class="blast-preview-label">MESSAGE PREVIEW</div>
+                  <div class="blast-preview-label">PREVIEW — THIS IS HOW IT LOOKS</div>
                   <div class="blast-preview-bubble" id="blast-preview-bubble">Your message will appear here...</div>
                 </div>
 
@@ -1734,15 +1753,19 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
                   <input type="datetime-local" id="blast-schedule-dt" style="display:none;" />
                 </div>
 
+                <div id="blast-credit-warning" style="display:none;margin-top:14px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:10px;padding:14px;text-align:center;">
+                  <div style="font-size:13px;color:#f59e0b;margin-bottom:8px;" id="blast-credit-warning-text"></div>
+                  <button onclick="showView('credits',document.querySelector('.nav-item[onclick*=credits]'))" style="padding:8px 16px;background:#c8a84b;color:#0d0d0d;border:none;border-radius:8px;font-family:var(--font-display);font-size:13px;letter-spacing:1px;cursor:pointer;font-weight:700;">ADD CREDITS →</button>
+                </div>
                 <button class="blast-send-btn" id="blast-send-btn" onclick="openBlastConfirmModal()" style="margin-top:14px;width:100%;" disabled>
-                  SEND BLAST TO 0 CONTACTS
+                  SEND TO 0 PEOPLE →
                 </button>
               </div>
             </div>
 
             <!-- Blast History -->
             <div class="panel blast-history-table">
-              <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> BLAST HISTORY</div></div>
+              <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> RECENT MESSAGES SENT</div></div>
               <div class="panel-body">
                 <div class="table-wrap">
                   <table>
@@ -1792,7 +1815,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
                 <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;opacity:0.6;"><span style="font-size:12px;color:var(--white)">Lifestyle / Bodybuilding Sequence</span><span style="font-size:10px;font-family:var(--font-mono);color:var(--muted)">PENDING BUILD</span></div>
                 <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;opacity:0.6;"><span style="font-size:12px;color:var(--white)">Re-engagement (Cold Leads)</span><span style="font-size:10px;font-family:var(--font-mono);color:var(--muted)">PENDING BUILD</span></div>
               </div>
-              <div class="warn-banner"><div class="warn-title">⚠️ Action Needed</div><div class="warn-text">TidyCal webhook not connected. Booked leads may still receive nudge SMS. Connect booking webhook to stop sequence on booking.</div></div>
+              <div class="warn-banner"><div class="warn-title">⚠️ Action Needed</div><div class="warn-text">Booking notifications not connected. People who book may still receive follow-up texts. Connect booking notifications to stop messages after someone books.</div></div>
             </div>
           </div>
         </div>
@@ -1859,18 +1882,108 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
       </div>
     </div>
 
+    <!-- ══ CREDITS ══ -->
+    <div class="view" id="view-credits">
+      <div class="section-header"><div class="section-title">CREDITS</div><div class="section-sub">Purchase and manage your messaging credits</div></div>
+
+      <!-- Balance Card -->
+      <div style="background:linear-gradient(135deg,#141720,rgba(200,168,75,0.08));border:1px solid rgba(200,168,75,0.2);border-radius:14px;padding:24px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+        <div>
+          <div style="font-family:var(--font-display);font-size:52px;color:#c8a84b;line-height:1;" id="credits-balance-lg">—</div>
+          <div style="font-size:12px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-top:4px;">CREDITS REMAINING</div>
+          <div id="credits-status-msg" style="font-size:12px;margin-top:6px;color:var(--muted2);"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;min-width:200px;">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-family:var(--font-mono);"><span>USED</span><span><span id="cr-used">0</span> / <span id="cr-total">0</span></span></div>
+          <div style="height:6px;background:rgba(255,255,255,0.06);border-radius:10px;overflow:hidden;"><div id="cr-bar" style="height:100%;background:#c8a84b;border-radius:10px;width:0%;transition:width 0.5s;"></div></div>
+          <div id="cr-autoreload-badge" style="font-size:10px;font-family:var(--font-mono);padding:3px 8px;border-radius:4px;display:inline-block;width:fit-content;background:rgba(255,255,255,0.06);color:var(--muted);">Auto-refill is OFF</div>
+        </div>
+      </div>
+
+      <!-- Purchase Packages (hidden for Aaron) -->
+      <div class="credits-purchase-only" style="margin-bottom:18px;">
+        <div style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted);margin-bottom:10px;">ADD CREDITS</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+          <div style="background:#141720;border:1px solid rgba(200,168,75,0.2);border-radius:12px;padding:20px;text-align:center;">
+            <div style="font-size:10px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:8px;">STARTER</div>
+            <div style="font-family:var(--font-display);font-size:36px;color:#c8a84b;line-height:1;">$25</div>
+            <div style="font-size:13px;color:var(--white);margin:8px 0;">250 texts included</div>
+            <div style="font-size:10px;color:var(--muted);font-family:var(--font-mono);margin-bottom:14px;">10¢ per text</div>
+            <button onclick="purchaseCredits('25')" style="width:100%;padding:10px;background:#c8a84b;color:#0d0d0d;border:none;border-radius:8px;font-family:var(--font-display);font-size:13px;letter-spacing:1px;cursor:pointer;font-weight:700;">BUY 250 CREDITS</button>
+          </div>
+          <div style="background:#141720;border:1px solid rgba(200,168,75,0.4);border-radius:12px;padding:20px;text-align:center;position:relative;">
+            <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#c8a84b;color:#0d0d0d;font-size:9px;font-family:var(--font-mono);font-weight:700;padding:3px 10px;border-radius:10px;letter-spacing:1px;">MOST POPULAR</div>
+            <div style="font-size:10px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:8px;">GROWTH</div>
+            <div style="font-family:var(--font-display);font-size:36px;color:#c8a84b;line-height:1;">$50</div>
+            <div style="font-size:13px;color:var(--white);margin:8px 0;">625 texts included</div>
+            <div style="font-size:10px;color:var(--muted);font-family:var(--font-mono);margin-bottom:14px;">8¢ per text</div>
+            <button onclick="purchaseCredits('50')" style="width:100%;padding:10px;background:#c8a84b;color:#0d0d0d;border:none;border-radius:8px;font-family:var(--font-display);font-size:13px;letter-spacing:1px;cursor:pointer;font-weight:700;">BUY 625 CREDITS</button>
+          </div>
+          <div style="background:#141720;border:1px solid rgba(200,168,75,0.2);border-radius:12px;padding:20px;text-align:center;">
+            <div style="font-size:10px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:8px;">PRO</div>
+            <div style="font-family:var(--font-display);font-size:36px;color:#c8a84b;line-height:1;">$100</div>
+            <div style="font-size:13px;color:var(--white);margin:8px 0;">2,000 texts included</div>
+            <div style="font-size:10px;color:var(--muted);font-family:var(--font-mono);margin-bottom:14px;">5¢ per text</div>
+            <button onclick="purchaseCredits('100')" style="width:100%;padding:10px;background:#c8a84b;color:#0d0d0d;border:none;border-radius:8px;font-family:var(--font-display);font-size:13px;letter-spacing:1px;cursor:pointer;font-weight:700;">BUY 2,000 CREDITS</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Auto-Refill -->
+      <div class="credits-purchase-only" style="margin-bottom:18px;">
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> AUTO-REFILL SETTINGS</div></div>
+          <div class="panel-body">
+            <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;">
+              <div style="flex:1;min-width:160px;"><div style="font-size:10px;font-family:var(--font-mono);color:var(--muted);margin-bottom:4px;">AUTOMATICALLY REFILL</div><label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--white);"><input type="checkbox" id="ar-toggle" style="accent-color:#c8a84b;width:18px;height:18px;"> Automatically refill my credits</label></div>
+              <div style="flex:1;min-width:140px;"><div style="font-size:10px;font-family:var(--font-mono);color:var(--muted);margin-bottom:4px;">REFILL WITH</div><select id="ar-package" style="width:100%;padding:8px 10px;border:1.5px solid rgba(255,255,255,0.1);border-radius:8px;font-size:13px;color:var(--white);background:#141720;font-family:var(--font-body);outline:none;"><option value="25">$25 — 250 credits</option><option value="50">$50 — 625 credits</option><option value="100">$100 — 2,000 credits</option></select></div>
+              <div style="flex:1;min-width:140px;"><div style="font-size:10px;font-family:var(--font-mono);color:var(--muted);margin-bottom:4px;">WHEN I HAVE FEWER THAN</div><input type="number" id="ar-threshold" value="20" min="1" style="width:100%;padding:8px 10px;border:1.5px solid rgba(255,255,255,0.1);border-radius:8px;font-size:13px;color:var(--white);background:#141720;font-family:var(--font-body);outline:none;"> </div>
+              <button onclick="saveAutoReload()" style="padding:10px 20px;background:#c8a84b;color:#0d0d0d;border:none;border-radius:8px;font-family:var(--font-display);font-size:13px;letter-spacing:1px;cursor:pointer;font-weight:700;">SAVE SETTINGS</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Credit History -->
+      <div class="panel">
+        <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> CREDIT HISTORY</div></div>
+        <div class="panel-body">
+          <div class="table-wrap"><table><thead><tr><th>DATE</th><th>WHAT HAPPENED</th><th>CREDITS</th><th>BALANCE</th></tr></thead><tbody id="cr-history-tbody"><tr><td colspan="4" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">Loading...</td></tr></tbody></table></div>
+          <div style="display:flex;justify-content:center;gap:8px;margin-top:12px;">
+            <button onclick="loadCreditHistory(Math.max(1,crHistPage-1))" id="cr-prev" style="padding:5px 12px;background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.1);border-radius:6px;font-size:10px;cursor:pointer;" disabled>← Prev</button>
+            <span id="cr-page-info" style="font-size:11px;color:var(--muted);font-family:var(--font-mono);padding:5px 8px;">Page 1</span>
+            <button onclick="loadCreditHistory(crHistPage+1)" id="cr-next" style="padding:5px 12px;background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.1);border-radius:6px;font-size:10px;cursor:pointer;">Next →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stripe Payment Modal -->
+      <div id="stripe-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center;">
+        <div style="background:#141720;border:1px solid rgba(200,168,75,0.2);border-radius:14px;padding:28px;max-width:440px;width:90%;">
+          <div style="font-family:var(--font-display);font-size:20px;color:#c8a84b;letter-spacing:1px;margin-bottom:4px;">ADD CREDITS</div>
+          <div id="stripe-modal-sub" style="font-size:13px;color:var(--muted);margin-bottom:18px;">Processing...</div>
+          <div id="stripe-card-element" style="padding:14px;background:#0d0d0d;border:1px solid rgba(255,255,255,0.1);border-radius:8px;margin-bottom:14px;"></div>
+          <div id="stripe-error" style="font-size:12px;color:#ef4444;margin-bottom:10px;display:none;"></div>
+          <div style="display:flex;gap:10px;">
+            <button onclick="closeStripeModal()" style="flex:1;padding:10px;background:rgba(255,255,255,0.06);color:var(--muted2);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;">CANCEL</button>
+            <button onclick="confirmStripePayment()" id="stripe-pay-btn" style="flex:1;padding:10px;background:#c8a84b;color:#0d0d0d;border:none;border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;font-weight:700;">PAY</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- ══ SETTINGS ══ -->
     <div class="view" id="view-settings">
-      <div class="section-header"><div class="section-title">SETTINGS</div><div class="section-sub">Integrations, notifications, system config</div></div>
+      <div class="section-header"><div class="section-title">SETTINGS</div><div class="section-sub">Connections, notifications, and system info</div></div>
       <div class="settings-grid">
         <div class="panel">
           <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> INTEGRATIONS</div></div>
           <div class="panel-body">
-            <div class="setting-row"><div><div class="setting-label">🤖 VAPI — FLEX AI</div><div class="setting-sub" style="color:var(--green-text)">Connected · Assistant ID active</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-            <div class="setting-row"><div><div class="setting-label">📋 Supabase CRM</div><div class="setting-sub" style="color:var(--green-text)">Connected · 9 tables syncing</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-            <div class="setting-row"><div><div class="setting-label">⚡ Make.com Webhooks</div><div class="setting-sub" style="color:var(--green-text)">Connected · 3 webhooks active</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-            <div class="setting-row"><div><div class="setting-label">💬 Twilio SMS</div><div class="setting-sub" style="color:var(--green-text)">Connected · Sending enabled</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-            <div class="setting-row"><div><div class="setting-label">📅 Booking Webhook</div><div class="setting-sub" style="color:var(--red-text)">⚠️ Not connected — action needed</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+            <div class="setting-row"><div><div class="setting-label">🤖 FLEX AI Assistant</div><div class="setting-sub" style="color:var(--green-text)">Connected</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="setting-row"><div><div class="setting-label">📋 Your Data</div><div class="setting-sub" style="color:var(--green-text)">Connected · Syncing</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="setting-row"><div><div class="setting-label">⚡ Automations</div><div class="setting-sub" style="color:var(--green-text)">Connected · 3 active</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="setting-row"><div><div class="setting-label">💬 Text Messaging</div><div class="setting-sub" style="color:var(--green-text)">Connected · Sending enabled</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="setting-row"><div><div class="setting-label">📅 Booking Notifications</div><div class="setting-sub" style="color:var(--red-text)">⚠️ Not connected — action needed</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
           </div>
         </div>
         <div class="panel">
@@ -1878,7 +1991,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
           <div class="panel-body">
             <div class="setting-row"><div><div class="setting-label">New Lead Alert (SMS to Coach)</div><div class="setting-sub">Text when a new form is submitted</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
             <div class="setting-row"><div><div class="setting-label">Booking Confirmation Alert</div><div class="setting-sub">Notify when a lead books</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-            <div class="setting-row"><div><div class="setting-label">FLEX AI Call Summary</div><div class="setting-sub">Send recap after each VAPI call</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="setting-row"><div><div class="setting-label">FLEX AI Call Summary</div><div class="setting-sub">Send recap after each AI call</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
             <div class="setting-row"><div><div class="setting-label">Daily Funnel Report</div><div class="setting-sub">Morning summary at 8 AM daily</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
           </div>
         </div>
@@ -1896,16 +2009,16 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
           <div class="panel-body">
             <div class="status-row"><div class="status-label">Website (Vercel)</div><div class="status-live">LIVE</div></div>
             <div class="status-row"><div class="status-label">VAPI Assistant (FLEX)</div><div class="status-live">LIVE</div></div>
-            <div class="status-row"><div class="status-label">Make.com Automation</div><div class="status-live">LIVE</div></div>
-            <div class="status-row"><div class="status-label">Supabase Sync</div><div class="status-live">LIVE</div></div>
-            <div class="status-row"><div class="status-label">Booking Webhook</div><div class="status-offline">OFFLINE</div></div>
+            <div class="status-row"><div class="status-label">Automations</div><div class="status-live">LIVE</div></div>
+            <div class="status-row"><div class="status-label">Data Sync</div><div class="status-live">LIVE</div></div>
+            <div class="status-row"><div class="status-label">Booking Notifications</div><div class="status-offline">OFFLINE</div></div>
           </div>
         </div>
       </div>
       <div class="panel" style="margin-top:14px;">
-        <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> TWILIO OPT-OUT WEBHOOK</div></div>
+        <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> OPT-OUT HANDLER</div></div>
         <div class="panel-body">
-          <div style="font-size:12px;color:var(--muted2);line-height:1.6;margin-bottom:12px;">Copy this URL and paste it into your Twilio Console under <strong>Messaging → Services → Incoming Messages webhook</strong>. When a contact replies STOP, they will automatically be opted out of SMS blasts.</div>
+          <div style="font-size:12px;color:var(--muted2);line-height:1.6;margin-bottom:12px;">When someone replies STOP to your messages, they'll automatically be removed from future texts. Share this link with your messaging provider:</div>
           <div style="display:flex;gap:8px;align-items:center;">
             <input type="text" id="optout-webhook-url" readonly value="https://portal.theflexfacility.com/api/twilio-opt-out" style="flex:1;padding:10px 12px;font-family:var(--font-mono);font-size:12px;color:var(--cyan-text);background:var(--bg);border:1.5px solid var(--border);border-radius:8px;outline:none;">
             <button onclick="copyOptOutUrl()" style="padding:10px 16px;background:var(--gold);color:#0a0a0a;border:none;border-radius:8px;font-weight:700;font-family:var(--font-display);font-size:13px;letter-spacing:1px;cursor:pointer;white-space:nowrap;">COPY URL</button>
@@ -1948,7 +2061,7 @@ function timeAgo(date) {
 }
 
 // ── NAV ──
-const titles = { dashboard:'DASHBOARD', funnel:'FUNNEL ANALYTICS', crm:'CRM — LEAD PIPELINE', bookings:'BOOKINGS', calendar:'CALENDAR MANAGER', 'sms-center':'SMS CENTER', calls:'CALL LOG', sms:'SMS SEQUENCES', ai:'AI INSIGHTS', settings:'SETTINGS' };
+const titles = { dashboard:'DASHBOARD', funnel:'FUNNEL ANALYTICS', crm:'CRM — LEAD PIPELINE', bookings:'BOOKINGS', calendar:'CALENDAR MANAGER', calls:'CALL LOG', sms:'SEND A MESSAGE', credits:'CREDITS', ai:'AI INSIGHTS', settings:'SETTINGS' };
 
 function showView(id, el) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -2829,6 +2942,183 @@ document.querySelectorAll('.nav-item').forEach(function(item) {
 document.querySelectorAll('.toggle').forEach(t => {
   t.addEventListener('click', function() { this.classList.toggle('on'); });
 });
+
+// ── CREDITS PILL (header) ──
+function updateCreditsPill() {
+  fetch('/api/credits?action=balance',{credentials:'include'}).then(r=>r.json()).then(function(json){
+    var d = json.data || {};
+    var bal = d.balance ?? 0;
+    var pill = document.getElementById('credits-pill');
+    var num = document.getElementById('credits-pill-num');
+    if(num) num.textContent = bal;
+    if(pill) {
+      pill.className = 'credits-pill';
+      if(bal <= 50) pill.classList.add('danger');
+      else if(bal <= 100) pill.classList.add('warning');
+    }
+  }).catch(function(){});
+}
+updateCreditsPill();
+setInterval(updateCreditsPill, 60000);
+
+// ── CREDITS PAGE ──
+var crHistPage = 1;
+function loadCreditsPage() {
+  fetch('/api/credits?action=balance',{credentials:'include'}).then(r=>r.json()).then(function(json){
+    var d = json.data || {};
+    var el;
+    el = document.getElementById('credits-balance-lg'); if(el) el.textContent = d.balance ?? 0;
+    el = document.getElementById('cr-used'); if(el) el.textContent = d.lifetime_used ?? 0;
+    el = document.getElementById('cr-total'); if(el) el.textContent = d.lifetime_purchased ?? 0;
+    el = document.getElementById('cr-bar'); if(el && d.lifetime_purchased>0) el.style.width = Math.min(100,Math.round((d.lifetime_used/d.lifetime_purchased)*100))+'%';
+    el = document.getElementById('cr-autoreload-badge');
+    if(el) { if(d.auto_reload_enabled) { el.textContent='Auto-refill is ON ✓'; el.style.background='var(--green-dim)'; el.style.color='var(--green-text)'; } else { el.textContent='Auto-refill is OFF'; el.style.background='rgba(255,255,255,0.06)'; el.style.color='var(--muted)'; }}
+    el = document.getElementById('credits-status-msg');
+    if(el) { if(d.balance>100) el.innerHTML="You're in good shape 👍🏾"; else if(d.balance>50) el.innerHTML="Running low — consider topping up ⚠️"; else el.innerHTML="Almost out! Add credits to keep messaging 🚨"; }
+    var tog = document.getElementById('ar-toggle'); if(tog) tog.checked = !!d.auto_reload_enabled;
+    var pkg = document.getElementById('ar-package'); if(pkg) pkg.value = d.auto_reload_package || '25';
+    var thr = document.getElementById('ar-threshold'); if(thr) thr.value = d.auto_reload_threshold || 20;
+  }).catch(function(){});
+}
+function loadCreditHistory(page) {
+  crHistPage = page || 1;
+  var tbody = document.getElementById('cr-history-tbody'); if(!tbody) return;
+  tbody.innerHTML='<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--muted);">Loading...</td></tr>';
+  fetch('/api/credits?action=transactions&page='+crHistPage+'&per_page=20',{credentials:'include'}).then(r=>r.json()).then(function(json){
+    var txns = json.data || [];
+    var total = json.total || 0;
+    if(!txns.length) { tbody.innerHTML='<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--muted);">No history yet</td></tr>'; return; }
+    var eventLabels = {'blast':'Text blast sent','booking':'Booking confirmation sent','nudge':'Follow-up message sent','funnel':'New inquiry notification','purchase':'Credits added','blocked_low_credits':'Blocked — low credits'};
+    tbody.innerHTML = txns.map(function(t){
+      var date = t.created_at ? new Date(t.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
+      var label = eventLabels[t.event_type] || eventLabels[t.type] || (t.type==='purchase'?'Credits added':t.event_type||t.type||'—');
+      var amtColor = t.amount>0?'color:var(--green-text)':'color:var(--red-text)';
+      var amtStr = t.amount>0?'+'+t.amount:''+t.amount;
+      return '<tr><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2);">'+date+'</td><td style="font-size:12px;color:var(--text);">'+label+'</td><td style="font-family:var(--font-mono);font-size:12px;'+amtColor+';font-weight:700;">'+amtStr+'</td><td style="font-family:var(--font-mono);font-size:12px;color:var(--white);">'+(t.balance_after??'—')+'</td></tr>';
+    }).join('');
+    var totalPages = Math.ceil(total/20)||1;
+    var info = document.getElementById('cr-page-info'); if(info) info.textContent='Page '+crHistPage+' of '+totalPages;
+    document.getElementById('cr-prev').disabled = crHistPage<=1;
+    document.getElementById('cr-next').disabled = crHistPage>=totalPages;
+  }).catch(function(){});
+}
+function saveAutoReload() {
+  var body = {enabled:document.getElementById('ar-toggle').checked, package:document.getElementById('ar-package').value, threshold:parseInt(document.getElementById('ar-threshold').value)||20};
+  fetch('/api/credits?action=auto-reload',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify(body)}).then(r=>r.json()).then(function(json){
+    if(json.success) { alert('Settings saved.'); loadCreditsPage(); } else alert('Error: '+(json.error||'Failed'));
+  });
+}
+
+// ── STRIPE PAYMENT ──
+var stripeInst=null, stripeEls=null, stripeCard=null, pendingPkg=null, pendingSecret=null;
+async function purchaseCredits(pkg) {
+  pendingPkg=pkg;
+  var labels={'25':'$25 — 250 credits','50':'$50 — 625 credits','100':'$100 — 2,000 credits'};
+  document.getElementById('stripe-modal-sub').textContent=labels[pkg]||pkg;
+  document.getElementById('stripe-modal').style.display='flex';
+  document.getElementById('stripe-error').style.display='none';
+  try {
+    var r=await fetch('/api/credits?action=create-payment-intent',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({package:pkg})});
+    var j=await r.json(); if(!j.clientSecret) throw new Error(j.error||'Failed'); pendingSecret=j.clientSecret;
+    if(!stripeInst){var pk=await fetch('/api/credits?action=stripe-config',{credentials:'include'}).then(r=>r.json()); stripeInst=Stripe(pk.publishableKey);}
+    stripeEls=stripeInst.elements({clientSecret:pendingSecret,appearance:{theme:'night',variables:{colorPrimary:'#c8a84b',colorBackground:'#141720',colorText:'#ffffff',colorDanger:'#ef4444'}}});
+    stripeCard=stripeEls.create('payment'); stripeCard.mount('#stripe-card-element');
+  } catch(e){document.getElementById('stripe-error').textContent=e.message;document.getElementById('stripe-error').style.display='block';}
+}
+function closeStripeModal(){document.getElementById('stripe-modal').style.display='none';if(stripeCard){stripeCard.unmount();stripeCard=null;}stripeEls=null;pendingSecret=null;pendingPkg=null;}
+async function confirmStripePayment(){
+  if(!stripeInst||!stripeEls||!pendingSecret)return;
+  var btn=document.getElementById('stripe-pay-btn');btn.textContent='PROCESSING...';btn.disabled=true;
+  try{
+    var result=await stripeInst.confirmPayment({elements:stripeEls,confirmParams:{return_url:window.location.origin+'/dashboard'},redirect:'if_required'});
+    if(result.error) throw new Error(result.error.message);
+    var cr=await fetch('/api/credits?action=confirm-purchase',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({paymentIntentId:result.paymentIntent.id,package:pendingPkg})});
+    var cj=await cr.json(); if(!cj.success) throw new Error(cj.error||'Failed');
+    closeStripeModal(); alert('Credits added! New balance: '+cj.newBalance); loadCreditsPage(); loadCreditHistory(1); updateCreditsPill();
+  } catch(e){document.getElementById('stripe-error').textContent=e.message;document.getElementById('stripe-error').style.display='block';}
+  finally{btn.textContent='PAY';btn.disabled=false;}
+}
+
+// ── SOCIAL MEDIA ──
+function loadSocialStatus() {
+  fetch('/api/meta?action=status',{credentials:'include'}).then(r=>r.json()).then(function(json){
+    var socialArea = document.getElementById('social-metrics-area');
+    if(!socialArea) return;
+    if(!json.connected) {
+      socialArea.innerHTML='<div class="panel" style="border-color:rgba(200,168,75,0.2);"><div class="panel-body" style="text-align:center;padding:30px;"><div style="font-size:18px;color:var(--white);font-weight:600;margin-bottom:8px;">Connect Your Social Media</div><div style="font-size:13px;color:var(--muted);margin-bottom:18px;max-width:360px;margin-left:auto;margin-right:auto;">See your real follower counts, post reach, and top content — updated every day automatically.</div><a href="/api/meta?action=connect" style="display:inline-block;padding:12px 24px;background:#c8a84b;color:#0d0d0d;border-radius:9px;font-family:var(--font-display);font-size:15px;letter-spacing:1px;text-decoration:none;font-weight:700;">CONNECT FACEBOOK & INSTAGRAM</a><div style="font-size:10px;color:var(--muted);margin-top:12px;font-family:var(--font-mono);">Powered by Meta</div></div></div>';
+      return;
+    }
+    // Load metrics
+    loadSocialMetrics();
+  });
+}
+function loadSocialMetrics() {
+  fetch('/api/meta?action=metrics',{credentials:'include'}).then(r=>r.json()).then(function(json){
+    var area = document.getElementById('social-metrics-area');
+    if(!area) return;
+    var ig = (json.data||[]).find(d=>d.platform==='instagram') || {};
+    var fb = (json.data||[]).find(d=>d.platform==='facebook') || {};
+    var syncTime = ig.fetched_at || fb.fetched_at;
+    var syncLabel = syncTime ? 'Updated '+timeAgo(syncTime) : 'Waiting for first sync';
+    area.innerHTML='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;"><div style="display:flex;align-items:center;gap:8px;"><span style="font-size:10px;font-family:var(--font-mono);color:var(--green-text);display:flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;background:var(--green);border-radius:50%;display:inline-block;"></span>Connected ✓</span><span style="font-size:10px;color:var(--muted);font-family:var(--font-mono);">'+syncLabel+'</span></div><div style="display:flex;gap:8px;"><button onclick="syncSocialNow(this)" style="padding:5px 12px;background:transparent;color:#c8a84b;border:1px solid rgba(200,168,75,0.3);border-radius:6px;font-size:10px;font-family:var(--font-mono);cursor:pointer;">Sync Now</button><button onclick="disconnectSocial()" style="padding:5px 12px;background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.1);border-radius:6px;font-size:10px;cursor:pointer;">Disconnect</button></div></div>'
+    +'<div class="kpi-grid" style="margin-bottom:14px;">'
+    +'<div class="kpi-card"><div class="kpi-accent" style="--accent:#c8a84b"></div><div class="kpi-label">Instagram Followers</div><div class="kpi-value">'+(ig.followers||'--')+'</div></div>'
+    +'<div class="kpi-card"><div class="kpi-accent" style="--accent:#1877f2"></div><div class="kpi-label">Facebook Followers</div><div class="kpi-value">'+(fb.followers||'--')+'</div></div>'
+    +'<div class="kpi-card"><div class="kpi-accent" style="--accent:var(--cyan)"></div><div class="kpi-label">Reach Today</div><div class="kpi-value">'+((ig.reach||0)+(fb.reach||0)||'--')+'</div></div>'
+    +'<div class="kpi-card"><div class="kpi-accent" style="--accent:var(--purple)"></div><div class="kpi-label">Profile Views Today</div><div class="kpi-value">'+((ig.profile_views||0)+(fb.profile_views||0)||'--')+'</div></div>'
+    +'</div>'
+    +'<div class="kpi-grid">'
+    +'<div class="kpi-card"><div class="kpi-label">Total Impressions</div><div class="kpi-value">'+((ig.impressions||0)+(fb.impressions||0)||'--')+'</div></div>'
+    +'<div class="kpi-card"><div class="kpi-label">Link Clicks</div><div class="kpi-value">'+((ig.link_clicks||0)+(fb.link_clicks||0)||'--')+'</div></div>'
+    +'<div class="kpi-card"><div class="kpi-label">Posts This Month</div><div class="kpi-value">'+(ig.post_count||'--')+'</div></div>'
+    +'<div class="kpi-card"><div class="kpi-label">Engagement Rate</div><div class="kpi-value">'+(ig.followers>0?((((ig.reach||0))/ig.followers)*100).toFixed(1)+'%':'--')+'</div></div>'
+    +'</div>';
+    // Top posts
+    var posts = ig.top_posts || [];
+    if(posts.length) {
+      area.innerHTML += '<div style="margin-top:14px;font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted);margin-bottom:8px;">TOP POSTS</div><div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:8px;">'
+      +posts.slice(0,6).map(function(p){
+        var thumb = p.thumbnail_url || '';
+        var cap = (p.caption||'').slice(0,40);
+        return '<div style="min-width:180px;background:#141720;border:1px solid rgba(200,168,75,0.15);border-radius:10px;overflow:hidden;flex-shrink:0;">'
+        +(thumb?'<div style="height:120px;background:url('+thumb+') center/cover;"></div>':'<div style="height:120px;background:#0d0d0d;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;">No image</div>')
+        +'<div style="padding:10px;"><div style="font-size:11px;color:var(--text);margin-bottom:6px;line-height:1.4;">'+cap+'</div><div style="font-size:10px;color:var(--muted);">❤️ '+(p.like_count||0)+' · 💬 '+(p.comments_count||0)+'</div>'
+        +(p.permalink?'<a href="'+p.permalink+'" target="_blank" style="font-size:10px;color:#c8a84b;text-decoration:none;margin-top:4px;display:block;">View Post →</a>':'')
+        +'</div></div>';
+      }).join('')+'</div>';
+    }
+  });
+}
+function syncSocialNow(btn) {
+  btn.textContent='Syncing...'; btn.disabled=true;
+  fetch('/api/meta?action=sync-now',{method:'POST',credentials:'include'}).then(r=>r.json()).then(function(){
+    btn.textContent='Sync Now'; btn.disabled=false; loadSocialMetrics();
+  }).catch(function(){ btn.textContent='Sync Now'; btn.disabled=false; });
+}
+function disconnectSocial() {
+  if(!confirm('This removes your social data from the portal. You can reconnect anytime.')) return;
+  fetch('/api/meta?action=disconnect',{method:'POST',credentials:'include'}).then(r=>r.json()).then(function(){ loadSocialStatus(); });
+}
+
+// Load credits+social when views open
+var _origShow = showView;
+showView = function(id, el) { _origShow(id, el); if(id==='credits'){loadCreditsPage();loadCreditHistory(1);} };
+
+// Check for ?connected=true toast
+(function(){
+  var p = new URLSearchParams(window.location.search);
+  if(p.get('connected')==='true') {
+    var toast = document.createElement('div');
+    toast.style.cssText='position:fixed;top:20px;right:20px;background:#141720;border:1px solid rgba(200,168,75,0.3);color:#c8a84b;padding:14px 20px;border-radius:10px;font-size:13px;z-index:9999;animation:fadeUp 0.3s ease;';
+    toast.textContent="You're connected! 🎉 Pulling in your data now...";
+    document.body.appendChild(toast);
+    setTimeout(function(){ toast.remove(); }, 5000);
+    // Trigger immediate sync
+    fetch('/api/meta?action=sync-now',{method:'POST',credentials:'include'});
+    history.replaceState(null,'','/dashboard');
+  }
+})();
 </script>
+<script src="https://js.stripe.com/v3/" async></script>
 </body>
 </html>
