@@ -887,6 +887,70 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 .stat-mini { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; }
 .stat-mini-val { font-family: var(--font-display); font-size: 30px; color: var(--navy); }
 .stat-mini-label { font-size: 9px; color: var(--muted); font-family: var(--font-mono); letter-spacing: 1px; margin-top: 4px; }
+
+/* ── SMS BLAST ── */
+.blast-tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 18px; }
+.blast-tab { padding: 10px 20px; font-size: 12px; font-family: var(--font-mono); letter-spacing: 1px; cursor: pointer; color: var(--muted2); border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; }
+.blast-tab:hover { color: var(--navy); }
+.blast-tab.active { color: var(--gold); border-bottom-color: var(--gold); font-weight: 700; }
+
+.blast-layout { display: grid; grid-template-columns: 340px 1fr; gap: 14px; }
+@media (max-width: 900px) { .blast-layout { grid-template-columns: 1fr; } }
+
+.blast-filter-panel { display: flex; flex-direction: column; gap: 14px; }
+.blast-filter-group { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.blast-filter-label { font-size: 9px; font-family: var(--font-mono); letter-spacing: 1.5px; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; }
+.blast-filter-group select { width: 100%; padding: 8px 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; color: var(--navy); background: white; font-family: var(--font-body); outline: none; }
+.blast-filter-group select:focus { border-color: var(--gold); }
+
+.blast-cb-group { display: flex; flex-direction: column; gap: 6px; }
+.blast-cb { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 12px; color: var(--navy); }
+.blast-cb input[type="checkbox"] { accent-color: var(--gold); width: 16px; height: 16px; cursor: pointer; }
+
+.blast-count-bar { background: var(--navy); border-radius: 10px; padding: 14px; text-align: center; }
+.blast-count-num { font-family: var(--font-display); font-size: 36px; color: #c8a84b; line-height: 1; }
+.blast-count-label { font-size: 10px; font-family: var(--font-mono); color: rgba(255,255,255,0.5); letter-spacing: 1px; margin-top: 4px; }
+.blast-count-opted { font-size: 10px; color: var(--red-text); font-family: var(--font-mono); margin-top: 6px; background: var(--red-dim); display: inline-block; padding: 2px 8px; border-radius: 4px; }
+
+.blast-composer { display: flex; flex-direction: column; gap: 14px; }
+.blast-textarea-wrap { position: relative; }
+.blast-textarea { width: 100%; min-height: 110px; padding: 14px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; color: var(--navy); font-family: var(--font-body); outline: none; resize: vertical; background: white; line-height: 1.6; }
+.blast-textarea:focus { border-color: var(--gold); }
+.blast-char-count { position: absolute; bottom: 10px; right: 14px; font-size: 10px; font-family: var(--font-mono); color: var(--muted); }
+.blast-char-count.warn { color: var(--gold-text); font-weight: 700; }
+.blast-char-count.over { color: var(--red-text); font-weight: 700; }
+
+.blast-merge-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+.blast-merge-btn { padding: 5px 12px; font-size: 11px; font-family: var(--font-mono); color: var(--navy); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; transition: all 0.15s; }
+.blast-merge-btn:hover { background: var(--gold-dim); border-color: var(--gold); color: var(--gold-text); }
+
+.blast-preview-box { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.blast-preview-label { font-size: 9px; font-family: var(--font-mono); letter-spacing: 1.5px; color: var(--muted); margin-bottom: 8px; }
+.blast-preview-bubble { background: var(--navy); border-radius: 12px 12px 12px 2px; padding: 12px 16px; color: rgba(255,255,255,0.9); font-size: 13px; line-height: 1.6; max-width: 320px; }
+
+.blast-schedule-row { display: flex; align-items: center; gap: 12px; }
+.blast-schedule-row label { font-size: 12px; color: var(--navy); font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+.blast-schedule-row input[type="datetime-local"] { padding: 8px 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; color: var(--navy); background: white; font-family: var(--font-body); outline: none; }
+
+.blast-send-btn { padding: 14px 28px; background: #c8a84b; color: #0d0d0d; border: none; border-radius: 10px; font-family: var(--font-display); font-size: 18px; letter-spacing: 2px; cursor: pointer; font-weight: 700; transition: all 0.15s; text-align: center; }
+.blast-send-btn:hover { background: #d4b45c; transform: translateY(-1px); }
+.blast-send-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.blast-history-table { margin-top: 24px; }
+.blast-history-table table { width: 100%; }
+
+/* ── CONFIRMATION MODAL ── */
+.blast-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 9999; align-items: center; justify-content: center; }
+.blast-modal-overlay.open { display: flex; }
+.blast-modal { background: white; border-radius: 14px; padding: 28px; max-width: 440px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+.blast-modal-title { font-family: var(--font-display); font-size: 22px; color: var(--navy); letter-spacing: 1px; margin-bottom: 8px; }
+.blast-modal-warn { font-size: 13px; color: var(--red-text); margin-bottom: 16px; line-height: 1.5; }
+.blast-modal-preview { background: var(--bg); border-radius: 8px; padding: 12px; margin-bottom: 16px; }
+.blast-modal-preview-item { font-size: 12px; color: var(--navy); padding: 4px 0; border-bottom: 1px solid var(--border); }
+.blast-modal-preview-item:last-child { border-bottom: none; }
+.blast-modal-btns { display: flex; gap: 10px; justify-content: flex-end; }
+.blast-modal-cancel { padding: 10px 20px; background: var(--bg); color: var(--muted2); border: 1px solid var(--border); border-radius: 8px; font-family: var(--font-display); font-size: 14px; letter-spacing: 1px; cursor: pointer; }
+.blast-modal-confirm { padding: 10px 20px; background: #c8a84b; color: #0d0d0d; border: none; border-radius: 8px; font-family: var(--font-display); font-size: 14px; letter-spacing: 1px; cursor: pointer; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -1422,35 +1486,157 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 
     <!-- ══ SMS ══ -->
     <div class="view" id="view-sms">
-      <div class="section-header"><div class="section-title">SMS SEQUENCES</div><div class="section-sub">4-stage nurture · Twilio / Make.com</div></div>
-      <div class="grid-2">
-        <div class="panel">
-          <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> ATHLETE NUDGE SEQUENCE</div><div class="panel-action">EDIT IN MAKE →</div></div>
-          <div class="panel-body">
-            <div class="sms-flow">
-              <div class="sms-node"><div class="sms-node-icon done">✅</div><div class="sms-node-body"><div class="sms-node-title">Stage 1 — Immediate Welcome</div><div class="sms-node-text">"Hey [Name]! Coach Kenny here from The Flex Facility 💪🏾 Just saw your info. Let's set up your free athlete assessment!"</div><div class="sms-node-meta">Fires immediately after form submit</div><div class="sms-stats"><div class="sms-stat sent">Sent: 87</div><div class="sms-stat replied">Replied: 52</div><div class="sms-stat clicked">Clicked: 34</div></div></div></div>
-              <div class="sms-node"><div class="sms-node-icon done">✅</div><div class="sms-node-body"><div class="sms-node-title">Stage 2 — Social Proof (Day 1)</div><div class="sms-node-text">"Real results happen at The Flex Facility. Spots filling up — book your free session 👉🏾 [link]"</div><div class="sms-node-meta">24 hrs after Stage 1 · If not booked</div><div class="sms-stats"><div class="sms-stat sent">Sent: 53</div><div class="sms-stat replied">Replied: 28</div><div class="sms-stat clicked">Clicked: 19</div></div></div></div>
-              <div class="sms-node"><div class="sms-node-icon active">⚡</div><div class="sms-node-body"><div class="sms-node-title">Stage 3 — Urgency (Day 3)</div><div class="sms-node-text">"[Name], your free assessment slot is still open — but not for long. Claim it: [link]"</div><div class="sms-node-meta" style="color:var(--navy);font-weight:600">⚡ ACTIVE — 14 leads in this stage</div><div class="sms-stats"><div class="sms-stat sent">Sent: 14</div><div class="sms-stat replied">Replied: 7</div></div></div></div>
-              <div class="sms-node"><div class="sms-node-icon">🔒</div><div class="sms-node-body"><div class="sms-node-title">Stage 4 — Final Attempt (Day 7)</div><div class="sms-node-text">"Last message — The Flex Facility will be here when you're ready. Coach Kenny, 1-877-515-FLEX."</div><div class="sms-node-meta" style="color:var(--muted)">Pending · Booking webhook needed first</div></div></div>
+      <div class="section-header"><div class="section-title">SMS SEQUENCES</div><div class="section-sub">Mass messaging & nurture sequences · Twilio</div></div>
+
+      <div class="blast-tabs">
+        <div class="blast-tab active" onclick="switchSmsTab('blast',this)">SMS BLAST</div>
+        <div class="blast-tab" onclick="switchSmsTab('sequences',this)">SEQUENCES</div>
+      </div>
+
+      <!-- ── SMS BLAST TAB ── -->
+      <div id="sms-blast-tab">
+        <div class="blast-layout">
+          <!-- LEFT: Audience Filters -->
+          <div class="blast-filter-panel">
+            <div class="blast-filter-group">
+              <div class="blast-filter-label">SEGMENT</div>
+              <select id="blast-segment" onchange="updateBlastCount()">
+                <option value="all">All Contacts</option>
+                <option value="athlete">Athletes & Parents</option>
+                <option value="lifestyle">Lifestyle & Bodybuilding</option>
+              </select>
+            </div>
+
+            <div class="blast-filter-group">
+              <div class="blast-filter-label">STATUS FILTER</div>
+              <div class="blast-cb-group">
+                <label class="blast-cb"><input type="checkbox" value="New" onchange="updateBlastCount()" class="blast-status-cb" checked> New Lead</label>
+                <label class="blast-cb"><input type="checkbox" value="Contacted" onchange="updateBlastCount()" class="blast-status-cb" checked> Contacted</label>
+                <label class="blast-cb"><input type="checkbox" value="Booked" onchange="updateBlastCount()" class="blast-status-cb" checked> Assessment Scheduled</label>
+                <label class="blast-cb"><input type="checkbox" value="Showed" onchange="updateBlastCount()" class="blast-status-cb" checked> Active Member</label>
+                <label class="blast-cb"><input type="checkbox" value="Closed" onchange="updateBlastCount()" class="blast-status-cb"> Inactive</label>
+              </div>
+            </div>
+
+            <div class="blast-filter-group">
+              <div class="blast-filter-label">TAGS</div>
+              <div class="blast-cb-group" id="blast-tags-list">
+                <div style="font-size:11px;color:var(--muted);font-style:italic;">Loading tags...</div>
+              </div>
+            </div>
+
+            <div class="blast-filter-group" style="background:transparent;border:none;padding:0;">
+              <div class="blast-count-bar">
+                <div class="blast-count-num" id="blast-eligible-count">—</div>
+                <div class="blast-count-label">CONTACTS SELECTED</div>
+                <div class="blast-count-opted" id="blast-opted-out-count" style="display:none;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RIGHT: Composer -->
+          <div class="blast-composer">
+            <div class="panel">
+              <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> MESSAGE COMPOSER</div></div>
+              <div class="panel-body">
+                <div class="blast-textarea-wrap">
+                  <textarea id="blast-message" class="blast-textarea" maxlength="160" placeholder="Type your SMS message here..." oninput="updateBlastPreview()"></textarea>
+                  <div class="blast-char-count" id="blast-char-count">0 / 160</div>
+                </div>
+
+                <div style="margin-top:10px;">
+                  <div style="font-size:9px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted);margin-bottom:6px;">MERGE TAGS</div>
+                  <div class="blast-merge-btns">
+                    <button type="button" class="blast-merge-btn" onclick="insertMergeTag('[First Name]')">[First Name]</button>
+                    <button type="button" class="blast-merge-btn" onclick="insertMergeTag('[Last Name]')">[Last Name]</button>
+                    <button type="button" class="blast-merge-btn" onclick="insertMergeTag('[Coach Name]')">[Coach Name]</button>
+                  </div>
+                </div>
+
+                <div class="blast-preview-box" style="margin-top:14px;">
+                  <div class="blast-preview-label">MESSAGE PREVIEW</div>
+                  <div class="blast-preview-bubble" id="blast-preview-bubble">Your message will appear here...</div>
+                </div>
+
+                <div class="blast-schedule-row" style="margin-top:14px;">
+                  <label><input type="checkbox" id="blast-schedule-toggle" onchange="toggleBlastSchedule()"> Schedule for later</label>
+                  <input type="datetime-local" id="blast-schedule-dt" style="display:none;" />
+                </div>
+
+                <button class="blast-send-btn" id="blast-send-btn" onclick="openBlastConfirmModal()" style="margin-top:14px;width:100%;" disabled>
+                  SEND BLAST TO 0 CONTACTS
+                </button>
+              </div>
+            </div>
+
+            <!-- Blast History -->
+            <div class="panel blast-history-table">
+              <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> BLAST HISTORY</div></div>
+              <div class="panel-body">
+                <div class="table-wrap">
+                  <table>
+                    <thead><tr>
+                      <th>DATE SENT</th>
+                      <th>MESSAGE PREVIEW</th>
+                      <th>RECIPIENTS</th>
+                      <th>SEGMENT</th>
+                      <th>STATUS</th>
+                    </tr></thead>
+                    <tbody id="blast-history-tbody">
+                      <tr><td colspan="5" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">Loading history...</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="panel">
-          <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> SEQUENCE PERFORMANCE</div></div>
-          <div class="panel-body">
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px;">
-              <div class="stat-mini"><div class="stat-mini-val" style="color:var(--cyan-text)">154</div><div class="stat-mini-label">SENT</div></div>
-              <div class="stat-mini"><div class="stat-mini-val" style="color:var(--green)">87</div><div class="stat-mini-label">REPLIED</div></div>
-              <div class="stat-mini"><div class="stat-mini-val" style="color:var(--gold)">53</div><div class="stat-mini-label">CLICKED</div></div>
+      </div>
+
+      <!-- ── SEQUENCES TAB (original content) ── -->
+      <div id="sms-sequences-tab" style="display:none;">
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> ATHLETE NUDGE SEQUENCE</div><div class="panel-action">EDIT IN MAKE →</div></div>
+            <div class="panel-body">
+              <div class="sms-flow">
+                <div class="sms-node"><div class="sms-node-icon done">✅</div><div class="sms-node-body"><div class="sms-node-title">Stage 1 — Immediate Welcome</div><div class="sms-node-text">"Hey [Name]! Coach Kenny here from The Flex Facility 💪🏾 Just saw your info. Let's set up your free athlete assessment!"</div><div class="sms-node-meta">Fires immediately after form submit</div><div class="sms-stats"><div class="sms-stat sent">Sent: 87</div><div class="sms-stat replied">Replied: 52</div><div class="sms-stat clicked">Clicked: 34</div></div></div></div>
+                <div class="sms-node"><div class="sms-node-icon done">✅</div><div class="sms-node-body"><div class="sms-node-title">Stage 2 — Social Proof (Day 1)</div><div class="sms-node-text">"Real results happen at The Flex Facility. Spots filling up — book your free session 👉🏾 [link]"</div><div class="sms-node-meta">24 hrs after Stage 1 · If not booked</div><div class="sms-stats"><div class="sms-stat sent">Sent: 53</div><div class="sms-stat replied">Replied: 28</div><div class="sms-stat clicked">Clicked: 19</div></div></div></div>
+                <div class="sms-node"><div class="sms-node-icon active">⚡</div><div class="sms-node-body"><div class="sms-node-title">Stage 3 — Urgency (Day 3)</div><div class="sms-node-text">"[Name], your free assessment slot is still open — but not for long. Claim it: [link]"</div><div class="sms-node-meta" style="color:var(--navy);font-weight:600">⚡ ACTIVE — 14 leads in this stage</div><div class="sms-stats"><div class="sms-stat sent">Sent: 14</div><div class="sms-stat replied">Replied: 7</div></div></div></div>
+                <div class="sms-node"><div class="sms-node-icon">🔒</div><div class="sms-node-body"><div class="sms-node-title">Stage 4 — Final Attempt (Day 7)</div><div class="sms-node-text">"Last message — The Flex Facility will be here when you're ready. Coach Kenny, 1-877-515-FLEX."</div><div class="sms-node-meta" style="color:var(--muted)">Pending · Booking webhook needed first</div></div></div>
+              </div>
             </div>
-            <div style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted);margin-bottom:10px;">ACTIVE SEQUENCES</div>
-            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;"><span style="font-size:12px;color:var(--navy)">Athlete Nurture Sequence</span><span style="font-size:10px;font-family:var(--font-mono);color:var(--green-text);display:flex;align-items:center;gap:4px"><span style="width:6px;height:6px;background:var(--green);border-radius:50%;display:inline-block"></span>ACTIVE</span></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;opacity:0.6;"><span style="font-size:12px;color:var(--navy)">Lifestyle / Bodybuilding Sequence</span><span style="font-size:10px;font-family:var(--font-mono);color:var(--muted)">PENDING BUILD</span></div>
-              <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;opacity:0.6;"><span style="font-size:12px;color:var(--navy)">Re-engagement (Cold Leads)</span><span style="font-size:10px;font-family:var(--font-mono);color:var(--muted)">PENDING BUILD</span></div>
-            </div>
-            <div class="warn-banner"><div class="warn-title">⚠️ Action Needed</div><div class="warn-text">TidyCal webhook not connected. Booked leads may still receive nudge SMS. Connect booking webhook to stop sequence on booking.</div></div>
           </div>
+          <div class="panel">
+            <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> SEQUENCE PERFORMANCE</div></div>
+            <div class="panel-body">
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px;">
+                <div class="stat-mini"><div class="stat-mini-val" style="color:var(--cyan-text)">154</div><div class="stat-mini-label">SENT</div></div>
+                <div class="stat-mini"><div class="stat-mini-val" style="color:var(--green)">87</div><div class="stat-mini-label">REPLIED</div></div>
+                <div class="stat-mini"><div class="stat-mini-val" style="color:var(--gold)">53</div><div class="stat-mini-label">CLICKED</div></div>
+              </div>
+              <div style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted);margin-bottom:10px;">ACTIVE SEQUENCES</div>
+              <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;"><span style="font-size:12px;color:var(--navy)">Athlete Nurture Sequence</span><span style="font-size:10px;font-family:var(--font-mono);color:var(--green-text);display:flex;align-items:center;gap:4px"><span style="width:6px;height:6px;background:var(--green);border-radius:50%;display:inline-block"></span>ACTIVE</span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;opacity:0.6;"><span style="font-size:12px;color:var(--navy)">Lifestyle / Bodybuilding Sequence</span><span style="font-size:10px;font-family:var(--font-mono);color:var(--muted)">PENDING BUILD</span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;opacity:0.6;"><span style="font-size:12px;color:var(--navy)">Re-engagement (Cold Leads)</span><span style="font-size:10px;font-family:var(--font-mono);color:var(--muted)">PENDING BUILD</span></div>
+              </div>
+              <div class="warn-banner"><div class="warn-title">⚠️ Action Needed</div><div class="warn-text">TidyCal webhook not connected. Booked leads may still receive nudge SMS. Connect booking webhook to stop sequence on booking.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SMS BLAST CONFIRM MODAL ── -->
+    <div class="blast-modal-overlay" id="blast-confirm-modal">
+      <div class="blast-modal">
+        <div class="blast-modal-title">CONFIRM SMS BLAST</div>
+        <div class="blast-modal-warn" id="blast-modal-warn">You're about to send to X contacts. This cannot be undone.</div>
+        <div class="blast-modal-preview" id="blast-modal-preview"></div>
+        <div class="blast-modal-btns">
+          <button class="blast-modal-cancel" onclick="closeBlastConfirmModal()">CANCEL</button>
+          <button class="blast-modal-confirm" onclick="sendBlast()">CONFIRM SEND</button>
         </div>
       </div>
     </div>
@@ -1543,6 +1729,17 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
             <div class="status-row"><div class="status-label">Supabase Sync</div><div class="status-live">LIVE</div></div>
             <div class="status-row"><div class="status-label">Booking Webhook</div><div class="status-offline">OFFLINE</div></div>
           </div>
+        </div>
+      </div>
+      <div class="panel" style="margin-top:14px;">
+        <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> TWILIO OPT-OUT WEBHOOK</div></div>
+        <div class="panel-body">
+          <div style="font-size:12px;color:var(--muted2);line-height:1.6;margin-bottom:12px;">Copy this URL and paste it into your Twilio Console under <strong>Messaging → Services → Incoming Messages webhook</strong>. When a contact replies STOP, they will automatically be opted out of SMS blasts.</div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <input type="text" id="optout-webhook-url" readonly value="https://portal.theflexfacility.com/api/twilio-opt-out" style="flex:1;padding:10px 12px;font-family:var(--font-mono);font-size:12px;color:var(--cyan-text);background:var(--bg);border:1.5px solid var(--border);border-radius:8px;outline:none;">
+            <button onclick="copyOptOutUrl()" style="padding:10px 16px;background:var(--navy);color:white;border:none;border-radius:8px;font-family:var(--font-display);font-size:13px;letter-spacing:1px;cursor:pointer;white-space:nowrap;">COPY URL</button>
+          </div>
+          <div id="optout-copy-msg" style="font-size:11px;color:var(--green-text);margin-top:6px;display:none;">Copied to clipboard!</div>
         </div>
       </div>
     </div>
@@ -2227,7 +2424,219 @@ async function sendSingleSMS() {
   } catch(err) { alert('SMS failed: '+err.message); }
 }
 
-function openBlastModal() { alert('SMS Blast coming soon.'); }
+// ── SMS BLAST SYSTEM ──
+let blastEligibleCount = 0;
+let blastPreviewRecipients = [];
+
+function switchSmsTab(tab, el) {
+  document.querySelectorAll('.blast-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('sms-blast-tab').style.display = tab === 'blast' ? '' : 'none';
+  document.getElementById('sms-sequences-tab').style.display = tab === 'sequences' ? '' : 'none';
+  if (tab === 'blast') { updateBlastCount(); loadBlastHistory(); loadBlastTags(); }
+}
+
+function getBlastFilters() {
+  var segment = document.getElementById('blast-segment').value;
+  var statuses = [];
+  document.querySelectorAll('.blast-status-cb:checked').forEach(function(cb) { statuses.push(cb.value); });
+  var tags = [];
+  document.querySelectorAll('.blast-tag-cb:checked').forEach(function(cb) { tags.push(cb.value); });
+  return { segment: segment, statuses: statuses.join(','), tags: tags.join(',') };
+}
+
+var blastCountTimer = null;
+function updateBlastCount() {
+  clearTimeout(blastCountTimer);
+  blastCountTimer = setTimeout(async function() {
+    var f = getBlastFilters();
+    try {
+      var url = '/api/sms-blast?action=count&segment='+f.segment;
+      if (f.statuses) url += '&statuses='+encodeURIComponent(f.statuses);
+      if (f.tags) url += '&tags='+encodeURIComponent(f.tags);
+      var res = await fetch(url, {credentials:'include'});
+      var json = await res.json();
+      blastEligibleCount = json.eligible || 0;
+      var countEl = document.getElementById('blast-eligible-count');
+      if (countEl) countEl.textContent = blastEligibleCount;
+      var optedEl = document.getElementById('blast-opted-out-count');
+      if (optedEl) {
+        if (json.optedOut > 0) { optedEl.textContent = json.optedOut + ' opted out (excluded)'; optedEl.style.display = 'inline-block'; }
+        else { optedEl.style.display = 'none'; }
+      }
+      updateBlastSendBtn();
+    } catch(e) { console.error('Blast count error:', e); }
+  }, 300);
+}
+
+function updateBlastSendBtn() {
+  var btn = document.getElementById('blast-send-btn');
+  var msg = (document.getElementById('blast-message')?.value || '').trim();
+  if (btn) {
+    btn.textContent = 'SEND BLAST TO ' + blastEligibleCount + ' CONTACTS';
+    btn.disabled = blastEligibleCount === 0 || msg.length === 0;
+  }
+}
+
+function updateBlastPreview() {
+  var msg = document.getElementById('blast-message').value;
+  var len = msg.length;
+  var countEl = document.getElementById('blast-char-count');
+  if (countEl) {
+    countEl.textContent = len + ' / 160';
+    countEl.className = 'blast-char-count' + (len > 160 ? ' over' : len >= 140 ? ' warn' : '');
+  }
+  var preview = msg
+    .replace(/\[First Name\]/g, 'Marcus')
+    .replace(/\[Last Name\]/g, 'Williams')
+    .replace(/\[Coach Name\]/g, 'Coach Kenny');
+  var bubble = document.getElementById('blast-preview-bubble');
+  if (bubble) bubble.textContent = preview || 'Your message will appear here...';
+  updateBlastSendBtn();
+}
+
+function insertMergeTag(tag) {
+  var ta = document.getElementById('blast-message');
+  if (!ta) return;
+  var start = ta.selectionStart;
+  var end = ta.selectionEnd;
+  var text = ta.value;
+  ta.value = text.slice(0, start) + tag + text.slice(end);
+  ta.selectionStart = ta.selectionEnd = start + tag.length;
+  ta.focus();
+  updateBlastPreview();
+}
+
+function toggleBlastSchedule() {
+  var checked = document.getElementById('blast-schedule-toggle').checked;
+  document.getElementById('blast-schedule-dt').style.display = checked ? '' : 'none';
+}
+
+async function loadBlastTags() {
+  try {
+    var res = await fetch('/api/sms-blast?action=tags', {credentials:'include'});
+    var json = await res.json();
+    var tags = json.data || [];
+    var container = document.getElementById('blast-tags-list');
+    if (!container) return;
+    if (tags.length === 0) {
+      container.innerHTML = '<div style="font-size:11px;color:var(--muted);font-style:italic;">No tags found</div>';
+      return;
+    }
+    container.innerHTML = tags.map(function(t) {
+      return '<label class="blast-cb"><input type="checkbox" value="'+t+'" onchange="updateBlastCount()" class="blast-tag-cb"> '+t+'</label>';
+    }).join('');
+  } catch(e) { console.error('Tags load error:', e); }
+}
+
+async function loadBlastHistory() {
+  var tbody = document.getElementById('blast-history-tbody');
+  if (!tbody) return;
+  try {
+    var res = await fetch('/api/sms-blast?action=history', {credentials:'include'});
+    var json = await res.json();
+    var history = json.data || [];
+    if (history.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">No blasts sent yet</td></tr>';
+      return;
+    }
+    tbody.innerHTML = history.map(function(b) {
+      var date = b.sent_at ? new Date(b.sent_at).toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
+      var preview = (b.message_preview || '').slice(0, 50) + (b.message_preview && b.message_preview.length > 50 ? '...' : '');
+      var segLabel = b.segment === 'athlete' ? 'Athletes' : b.segment === 'lifestyle' ? 'Lifestyle' : 'All';
+      var statusClass = b.failed > 0 ? 'hot' : 'booked';
+      var statusText = b.failed > 0 ? b.sent+' SENT / '+b.failed+' FAILED' : b.sent+' SENT';
+      return '<tr>'
+        +'<td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2);white-space:nowrap;">'+date+'</td>'
+        +'<td style="font-size:12px;color:var(--navy);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+preview+'</td>'
+        +'<td style="font-family:var(--font-mono);font-size:12px;color:var(--navy);font-weight:600;">'+b.recipients+'</td>'
+        +'<td><span class="source-tag">'+segLabel+'</span></td>'
+        +'<td><span class="pill '+statusClass+'"><span class="pill-dot"></span>'+statusText+'</span></td>'
+      +'</tr>';
+    }).join('');
+  } catch(e) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--red-text);font-size:13px;">Error loading history</td></tr>';
+  }
+}
+
+async function openBlastConfirmModal() {
+  var f = getBlastFilters();
+  try {
+    var url = '/api/sms-blast?action=preview&segment='+f.segment;
+    if (f.statuses) url += '&statuses='+encodeURIComponent(f.statuses);
+    if (f.tags) url += '&tags='+encodeURIComponent(f.tags);
+    var res = await fetch(url, {credentials:'include'});
+    var json = await res.json();
+    blastPreviewRecipients = json.preview || [];
+    var warnEl = document.getElementById('blast-modal-warn');
+    if (warnEl) warnEl.textContent = "You're about to send to " + (json.eligible||0) + " contacts. This cannot be undone.";
+    var previewEl = document.getElementById('blast-modal-preview');
+    if (previewEl) {
+      previewEl.innerHTML = '<div style="font-size:9px;font-family:var(--font-mono);letter-spacing:1px;color:var(--muted);margin-bottom:6px;">FIRST RECIPIENTS</div>'
+        + blastPreviewRecipients.map(function(r) {
+          return '<div class="blast-modal-preview-item">' + r.name + ' · ' + r.phone + '</div>';
+        }).join('')
+        + (json.eligible > 5 ? '<div style="font-size:11px;color:var(--muted);padding-top:6px;font-style:italic;">...and '+(json.eligible-5)+' more</div>' : '');
+    }
+    document.getElementById('blast-confirm-modal').classList.add('open');
+  } catch(e) { alert('Error loading preview: '+e.message); }
+}
+
+function closeBlastConfirmModal() {
+  document.getElementById('blast-confirm-modal').classList.remove('open');
+}
+
+async function sendBlast() {
+  closeBlastConfirmModal();
+  var btn = document.getElementById('blast-send-btn');
+  var origText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'SENDING...';
+  var f = getBlastFilters();
+  var message = document.getElementById('blast-message').value;
+  var scheduledAt = null;
+  if (document.getElementById('blast-schedule-toggle').checked) {
+    scheduledAt = document.getElementById('blast-schedule-dt').value || null;
+  }
+  try {
+    var res = await fetch('/api/sms-blast', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ message: message, filters: f, scheduledAt: scheduledAt })
+    });
+    var json = await res.json();
+    if (!res.ok) throw new Error(json.error || 'Blast failed');
+    var d = json.data || {};
+    alert('SMS Blast Complete!\n\nSent: ' + d.sent + '\nFailed: ' + d.failed + '\nTotal: ' + d.total);
+    document.getElementById('blast-message').value = '';
+    updateBlastPreview();
+    loadBlastHistory();
+  } catch(e) {
+    alert('SMS Blast Error: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = origText;
+    updateBlastSendBtn();
+  }
+}
+
+function copyOptOutUrl() {
+  var input = document.getElementById('optout-webhook-url');
+  if (input) {
+    navigator.clipboard.writeText(input.value).then(function() {
+      var msg = document.getElementById('optout-copy-msg');
+      if (msg) { msg.style.display = 'block'; setTimeout(function(){ msg.style.display = 'none'; }, 2000); }
+    });
+  }
+}
+
+// Initialize blast data when SMS view loads
+var _origShowView = showView;
+showView = function(id, el) {
+  _origShowView(id, el);
+  if (id === 'sms') { updateBlastCount(); loadBlastHistory(); loadBlastTags(); }
+};
 
 // toggle settings
 document.querySelectorAll('.toggle').forEach(t => {
