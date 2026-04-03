@@ -12,6 +12,15 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (!requireAuth(req)) return res.status(401).json({ success: false, error: 'Unauthorized' });
 
+  // Health check (merged from /api/health)
+  if (req.query.action === 'health') {
+    try {
+      const { data, error } = await supabase.from('contacts_master').select('id').limit(1);
+      if (error) throw error;
+      return res.status(200).json({ success: true, message: 'Connection confirmed' });
+    } catch (err) { return res.status(500).json({ success: false, error: err.message }); }
+  }
+
   if (req.method !== 'GET') return res.status(405).json({ success: false, error: 'Method not allowed' });
 
   try {
@@ -33,6 +42,13 @@ export default async function handler(req, res) {
       supabase.from('contacts_master').select('id, source, segment, contact_type').limit(500)
     ]);
     for (const e of [e1, e2, e3, e4, e5, e6, e7]) { if (e) throw e; }
+
+    // Also fetch credit balance
+    let creditBalance = 0;
+    try {
+      const { data: creditData } = await supabase.from('sms_credits').select('balance').limit(1).single();
+      creditBalance = creditData?.balance ?? 0;
+    } catch {}
 
     const allPipeline = [...(pipelineA || []), ...(pipelineL || [])];
     const today = new Date().toISOString().split('T')[0];
@@ -66,7 +82,8 @@ export default async function handler(req, res) {
         topSources,
         statusCounts,
         recentActivity,
-        recentBookings: (bookings || []).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 5)
+        recentBookings: (bookings || []).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 5),
+        creditBalance
       }
     });
   } catch (err) { return res.status(500).json({ success: false, error: err.message }); }

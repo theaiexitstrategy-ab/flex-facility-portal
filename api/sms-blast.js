@@ -28,6 +28,17 @@ export default async function handler(req, res) {
   if (!requireAuth(req)) return res.status(401).json({ success: false, error: 'Unauthorized' });
 
   try {
+    // Single SMS send (merged from /api/sms)
+    if (req.query.action === 'send-single' && req.method === 'POST') {
+      const { to, message } = req.body || {};
+      if (!to || !message) return res.status(400).json({ success: false, error: 'Missing to or message' });
+      const twilio = (await import('twilio')).default;
+      const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+      const fromNumber = process.env.TWILIO_PHONE_NUMBER || process.env.TWILIO_FROM_NUMBER;
+      const result = await client.messages.create({ body: message, from: fromNumber, to });
+      return res.status(200).json({ success: true, sid: result.sid, status: result.status });
+    }
+
     // GET — blast history or contact count
     if (req.method === 'GET') {
       const action = req.query.action;
@@ -119,6 +130,13 @@ export default async function handler(req, res) {
 
       if (eligible.length === 0) {
         return res.status(400).json({ success: false, error: 'No eligible contacts match the selected filters' });
+      }
+
+      // Check and deduct credits
+      const { deductCredit } = await import('../lib/deductCredit.js');
+      const creditResult = await deductCredit({ count: eligible.length, eventType: 'blast' });
+      if (!creditResult.allowed) {
+        return res.status(402).json({ success: false, error: 'Insufficient credits', balance: creditResult.balance });
       }
 
       // Generate blast_id for grouping
