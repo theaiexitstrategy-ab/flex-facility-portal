@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import supabase from '../lib/supabase.js';
+import { deductCredit } from './utils/deductCredit.js';
 
 function requireAuth(req) {
   const cookie = req.headers.cookie || '';
@@ -32,9 +33,15 @@ export default async function handler(req, res) {
     }
 
     if (req.method === 'POST') {
+      // Deduct 2 credits for booking SMS (client + coach notification)
+      const creditResult = await deductCredit({ count: 2, eventType: 'booking', contactName: req.body?.full_name || req.body?.name });
+      if (!creditResult.allowed) {
+        // Still create the booking but skip SMS
+        console.warn('Low credits — booking SMS skipped. Balance:', creditResult.balance);
+      }
       const { data, error } = await supabase.from('bookings_master').insert(req.body).select().single();
       if (error) return res.status(400).json({ success: false, error: error.message });
-      return res.status(201).json({ success: true, data });
+      return res.status(201).json({ success: true, data, creditsDeducted: creditResult.allowed });
     }
 
     if (req.method === 'PUT') {

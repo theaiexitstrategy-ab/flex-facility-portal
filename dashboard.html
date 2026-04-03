@@ -895,20 +895,15 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 
 <!-- ── SIDEBAR ── -->
 <aside class="sidebar">
-  <div class="brand">
-    <div class="brand-logo-row">
-      <div class="brand-icon">F</div>
-      <div>
-        <div class="brand-name">THE FLEX<br>FACILITY</div>
-      </div>
-    </div>
-    <div class="brand-sub">Command Center</div>
+  <div class="brand" style="text-align:center;">
+    <img src="https://theflexfacility.com/images/logo.png" alt="The Flex Facility" style="max-width:140px;height:auto;display:block;margin:0 auto;" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+    <div style="display:none;font-family:var(--font-display);font-size:17px;letter-spacing:2px;color:var(--white);line-height:1.1;">THE FLEX<br>FACILITY</div>
   </div>
 
   <div class="coach-badge">
-    <div class="coach-av">K</div>
+    <div class="coach-av" id="user-avatar">K</div>
     <div class="coach-info">
-      <div class="coach-name">Coach Kenny Sims</div>
+      <div class="coach-name" id="user-display-name">Coach Kenny</div>
       <div class="coach-status">● Online</div>
     </div>
     <div class="online-dot"></div>
@@ -949,6 +944,13 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
       <div class="nav-item" onclick="showView('ai',this)">
         <span class="nav-icon">🤖</span> AI Insights
         <span class="nav-badge gold">3</span>
+      </div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Billing</div>
+      <div class="nav-item" onclick="showView('credits',this)">
+        <span class="nav-icon">💳</span> Credits
+        <span class="nav-badge gold" id="credits-badge" style="display:none;">0</span>
       </div>
     </div>
     <div class="nav-section">
@@ -999,32 +1001,32 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 
       <div class="kpi-grid">
         <div class="kpi-card">
-          <div class="kpi-accent" style="--accent:var(--navy)"></div>
+          <div class="kpi-accent" style="--accent:var(--gold)"></div>
           <div class="kpi-label">Total Leads</div>
           <div class="kpi-value" id="kpi-leads">—</div>
-          <div class="kpi-change up">▲ 23% vs last month</div>
+          <div class="kpi-change flat" id="kpi-leads-sub">Loading...</div>
           <div class="kpi-bg">👤</div>
         </div>
         <div class="kpi-card">
-          <div class="kpi-accent" style="--accent:var(--gold)"></div>
-          <div class="kpi-label">Assessments Booked</div>
+          <div class="kpi-accent" style="--accent:var(--cyan)"></div>
+          <div class="kpi-label">Upcoming Bookings</div>
           <div class="kpi-value" id="kpi-bookings">—</div>
-          <div class="kpi-change up">▲ 18% vs last month</div>
+          <div class="kpi-change flat" id="kpi-bookings-sub">Loading...</div>
           <div class="kpi-bg">📅</div>
         </div>
         <div class="kpi-card">
           <div class="kpi-accent" style="--accent:var(--green)"></div>
-          <div class="kpi-label">Clients Closed</div>
-          <div class="kpi-value" id="kpi-commission">—</div>
-          <div class="kpi-change up">▲ 10% vs last month</div>
-          <div class="kpi-bg">✅</div>
+          <div class="kpi-label">SMS Sent</div>
+          <div class="kpi-value" id="kpi-sms">—</div>
+          <div class="kpi-change flat" id="kpi-sms-sub">Loading...</div>
+          <div class="kpi-bg">💬</div>
         </div>
         <div class="kpi-card">
-          <div class="kpi-accent" style="--accent:var(--red)"></div>
-          <div class="kpi-label">Hot Leads</div>
-          <div class="kpi-value" id="kpi-hot">—</div>
-          <div class="kpi-change flat">→ Action needed</div>
-          <div class="kpi-bg">🔥</div>
+          <div class="kpi-accent" style="--accent:var(--gold)"></div>
+          <div class="kpi-label">Blast Credits</div>
+          <div class="kpi-value" id="kpi-credits">—</div>
+          <div class="kpi-change flat" id="kpi-credits-sub">Loading...</div>
+          <div class="kpi-bg">💳</div>
         </div>
       </div>
 
@@ -1502,6 +1504,102 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
       </div>
     </div>
 
+    <!-- ══ CREDITS ══ -->
+    <div class="view" id="view-credits">
+      <div class="section-header"><div class="section-title">SMS CREDITS</div><div class="section-sub">Purchase & manage SMS blast credits</div></div>
+
+      <div id="credits-admin-note" style="display:none;background:rgba(212,160,23,0.1);border:1px solid rgba(212,160,23,0.2);border-radius:10px;padding:14px 18px;margin-bottom:16px;font-size:13px;color:var(--gold-text);">Admin view — read-only. Credit purchases are managed by Coach Kenny's account.</div>
+
+      <!-- Balance Card -->
+      <div style="background:linear-gradient(135deg,#161616,rgba(212,160,23,0.08));border:1px solid rgba(212,160,23,0.15);border-radius:14px;padding:24px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+        <div>
+          <div style="font-family:var(--font-display);font-size:52px;color:#f0c040;line-height:1;" id="credits-balance-display">—</div>
+          <div style="font-size:12px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-top:4px;">CREDITS REMAINING</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;min-width:200px;">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);font-family:var(--font-mono);"><span>USED</span><span id="credits-used-display">0</span> / <span id="credits-purchased-display">0</span></div>
+          <div style="height:6px;background:rgba(255,255,255,0.06);border-radius:10px;overflow:hidden;"><div id="credits-usage-bar" style="height:100%;background:var(--gold);border-radius:10px;width:0%;transition:width 0.5s;"></div></div>
+          <div id="credits-autoreload-badge" style="font-size:10px;font-family:var(--font-mono);padding:3px 8px;border-radius:4px;display:inline-block;width:fit-content;background:rgba(255,255,255,0.06);color:var(--muted);">Auto-Reload OFF</div>
+        </div>
+      </div>
+
+      <!-- Purchase Packages -->
+      <div class="credits-purchase-only" style="margin-bottom:18px;">
+        <div style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted);margin-bottom:10px;">PURCHASE CREDITS</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+          <div style="background:#141720;border:1px solid rgba(200,168,75,0.2);border-radius:12px;padding:20px;text-align:center;">
+            <div style="font-size:10px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:8px;">STARTER</div>
+            <div style="font-family:var(--font-display);font-size:36px;color:var(--gold);line-height:1;">$25</div>
+            <div style="font-size:13px;color:var(--white);margin:8px 0;">250 texts</div>
+            <div style="font-size:10px;color:var(--muted);font-family:var(--font-mono);margin-bottom:14px;">$0.10 per text</div>
+            <button onclick="purchaseCredits('25')" style="width:100%;padding:10px;background:var(--gold);color:#0a0a0a;border:none;border-radius:8px;font-family:var(--font-display);font-size:13px;letter-spacing:1px;cursor:pointer;font-weight:700;">BUY 250 CREDITS</button>
+          </div>
+          <div style="background:#141720;border:1px solid rgba(200,168,75,0.4);border-radius:12px;padding:20px;text-align:center;position:relative;">
+            <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--gold);color:#0a0a0a;font-size:9px;font-family:var(--font-mono);font-weight:700;padding:3px 10px;border-radius:10px;letter-spacing:1px;">MOST POPULAR</div>
+            <div style="font-size:10px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:8px;">GROWTH</div>
+            <div style="font-family:var(--font-display);font-size:36px;color:var(--gold);line-height:1;">$50</div>
+            <div style="font-size:13px;color:var(--white);margin:8px 0;">625 texts</div>
+            <div style="font-size:10px;color:var(--muted);font-family:var(--font-mono);margin-bottom:14px;">$0.08 per text</div>
+            <button onclick="purchaseCredits('50')" style="width:100%;padding:10px;background:var(--gold);color:#0a0a0a;border:none;border-radius:8px;font-family:var(--font-display);font-size:13px;letter-spacing:1px;cursor:pointer;font-weight:700;">BUY 625 CREDITS</button>
+          </div>
+          <div style="background:#141720;border:1px solid rgba(200,168,75,0.2);border-radius:12px;padding:20px;text-align:center;">
+            <div style="font-size:10px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:8px;">PRO</div>
+            <div style="font-family:var(--font-display);font-size:36px;color:var(--gold);line-height:1;">$100</div>
+            <div style="font-size:13px;color:var(--white);margin:8px 0;">2,000 texts</div>
+            <div style="font-size:10px;color:var(--muted);font-family:var(--font-mono);margin-bottom:14px;">$0.05 per text</div>
+            <button onclick="purchaseCredits('100')" style="width:100%;padding:10px;background:var(--gold);color:#0a0a0a;border:none;border-radius:8px;font-family:var(--font-display);font-size:13px;letter-spacing:1px;cursor:pointer;font-weight:700;">BUY 2,000 CREDITS</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Auto-Reload Settings -->
+      <div class="credits-purchase-only" style="margin-bottom:18px;">
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> AUTO-RELOAD SETTINGS</div></div>
+          <div class="panel-body">
+            <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;">
+              <div style="flex:1;min-width:140px;"><div style="font-size:10px;font-family:var(--font-mono);color:var(--muted);margin-bottom:4px;">AUTO-RELOAD</div><label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--white);"><input type="checkbox" id="autoreload-toggle" style="accent-color:var(--gold);width:18px;height:18px;"> Enable auto-reload</label></div>
+              <div style="flex:1;min-width:140px;"><div style="font-size:10px;font-family:var(--font-mono);color:var(--muted);margin-bottom:4px;">RELOAD PACKAGE</div><select id="autoreload-package" style="width:100%;padding:8px 10px;border:1.5px solid rgba(255,255,255,0.1);border-radius:8px;font-size:13px;color:var(--white);background:#1a1a1a;font-family:var(--font-body);outline:none;"><option value="25">$25 — 250 credits</option><option value="50">$50 — 625 credits</option><option value="100">$100 — 2,000 credits</option></select></div>
+              <div style="flex:1;min-width:140px;"><div style="font-size:10px;font-family:var(--font-mono);color:var(--muted);margin-bottom:4px;">RELOAD THRESHOLD</div><input type="number" id="autoreload-threshold" value="50" min="1" style="width:100%;padding:8px 10px;border:1.5px solid rgba(255,255,255,0.1);border-radius:8px;font-size:13px;color:var(--white);background:#1a1a1a;font-family:var(--font-body);outline:none;"></div>
+              <button onclick="saveAutoReload()" style="padding:10px 20px;background:var(--gold);color:#0a0a0a;border:none;border-radius:8px;font-family:var(--font-display);font-size:13px;letter-spacing:1px;cursor:pointer;font-weight:700;">SAVE</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transaction History -->
+      <div class="panel">
+        <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> TRANSACTION HISTORY</div></div>
+        <div class="panel-body">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>DATE</th><th>TYPE</th><th>EVENT</th><th>CREDITS</th><th>BALANCE AFTER</th></tr></thead>
+              <tbody id="credits-history-tbody"><tr><td colspan="5" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">Loading...</td></tr></tbody>
+            </table>
+          </div>
+          <div style="display:flex;justify-content:center;gap:8px;margin-top:12px;">
+            <button onclick="loadCreditsHistory(Math.max(1,creditsHistoryPage-1))" id="credits-prev" style="padding:5px 12px;background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.1);border-radius:6px;font-size:10px;cursor:pointer;" disabled>← Prev</button>
+            <span id="credits-page-info" style="font-size:11px;color:var(--muted);font-family:var(--font-mono);padding:5px 8px;">Page 1</span>
+            <button onclick="loadCreditsHistory(creditsHistoryPage+1)" id="credits-next" style="padding:5px 12px;background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.1);border-radius:6px;font-size:10px;cursor:pointer;">Next →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stripe Payment Modal -->
+    <div id="stripe-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;align-items:center;justify-content:center;">
+      <div style="background:#1a1a1a;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:28px;max-width:440px;width:90%;">
+        <div style="font-family:var(--font-display);font-size:20px;color:var(--gold);letter-spacing:1px;margin-bottom:4px;">PURCHASE CREDITS</div>
+        <div id="stripe-modal-sub" style="font-size:13px;color:var(--muted);margin-bottom:18px;">Processing...</div>
+        <div id="stripe-card-element" style="padding:14px;background:#141720;border:1px solid rgba(255,255,255,0.1);border-radius:8px;margin-bottom:14px;"></div>
+        <div id="stripe-error" style="font-size:12px;color:var(--red-text);margin-bottom:10px;display:none;"></div>
+        <div style="display:flex;gap:10px;">
+          <button onclick="closeStripeModal()" style="flex:1;padding:10px;background:rgba(255,255,255,0.06);color:var(--muted2);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;">CANCEL</button>
+          <button onclick="confirmStripePayment()" id="stripe-pay-btn" style="flex:1;padding:10px;background:var(--gold);color:#0a0a0a;border:none;border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;font-weight:700;">PAY</button>
+        </div>
+      </div>
+    </div>
+
     <!-- ══ SETTINGS ══ -->
     <div class="view" id="view-settings">
       <div class="section-header"><div class="section-title">SETTINGS</div><div class="section-sub">Integrations, notifications, system config</div></div>
@@ -1553,14 +1651,29 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 
 <script>
 // ── AUTH GUARD ──
+var currentUserRole = 'owner';
+var currentUserEmail = '';
 (async function checkAuth() {
   try {
     const res = await fetch('/api/auth?action=verify', { credentials: 'include' });
     const data = await res.json();
     if (!res.ok || !data.authenticated) { window.location.replace('/login'); return; }
-    if (data.user?.name) {
-      const nameEl = document.querySelector('.coach-name');
-      if (nameEl) nameEl.textContent = data.user.name;
+    currentUserRole = data.user?.role || 'owner';
+    currentUserEmail = data.user?.email || '';
+    var nameEl = document.getElementById('user-display-name');
+    var avEl = document.getElementById('user-avatar');
+    if (data.user?.role === 'admin') {
+      if (nameEl) nameEl.textContent = 'Aaron';
+      if (avEl) { avEl.textContent = 'A'; avEl.style.background = '#c8a84b'; avEl.style.color = '#0a0a0a'; }
+    } else {
+      if (nameEl) nameEl.textContent = data.user?.name || 'Coach Kenny';
+      if (avEl) { avEl.textContent = 'K'; avEl.style.background = '#141720'; avEl.style.color = '#c8a84b'; }
+    }
+    // Hide purchase buttons for admin (Aaron sees read-only)
+    if (currentUserRole === 'admin') {
+      document.querySelectorAll('.credits-purchase-only').forEach(function(el) { el.style.display = 'none'; });
+      var adminNote = document.getElementById('credits-admin-note');
+      if (adminNote) adminNote.style.display = 'block';
     }
   } catch { window.location.replace('/login'); }
 })();
@@ -1580,7 +1693,7 @@ function timeAgo(date) {
 }
 
 // ── NAV ──
-const titles = { dashboard:'DASHBOARD', funnel:'FUNNEL ANALYTICS', crm:'CRM — LEAD PIPELINE', bookings:'BOOKINGS', calendar:'CALENDAR MANAGER', 'sms-center':'SMS CENTER', calls:'CALL LOG', sms:'SMS SEQUENCES', ai:'AI INSIGHTS', settings:'SETTINGS' };
+const titles = { dashboard:'DASHBOARD', funnel:'FUNNEL ANALYTICS', crm:'CRM — LEAD PIPELINE', bookings:'BOOKINGS', calendar:'CALENDAR MANAGER', 'sms-center':'SMS CENTER', calls:'CALL LOG', sms:'SMS SEQUENCES', ai:'AI INSIGHTS', credits:'SMS CREDITS', settings:'SETTINGS' };
 
 function showView(id, el) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -1695,16 +1808,29 @@ function renderActivity(bookings, leads) {
   }
 }
 
-function updateKPIs(dash, athletes) {
-  const hotLeads = (athletes||[]).filter(l => l.lead_status==='Hot').length;
-  const kpiLeads = document.getElementById('kpi-leads');
-  const kpiBookings = document.getElementById('kpi-bookings');
-  const kpiCommission = document.getElementById('kpi-commission');
-  const kpiHot = document.getElementById('kpi-hot');
-  if (kpiLeads) kpiLeads.textContent = dash.totalLeads ?? 0;
-  if (kpiBookings) kpiBookings.textContent = dash.upcomingBookings ?? 0;
-  if (kpiCommission) kpiCommission.textContent = dash.commissionEarned != null ? '$'+Math.round(dash.commissionEarned).toLocaleString() : '$0';
-  if (kpiHot) kpiHot.textContent = hotLeads;
+function updateKPIs(dash) {
+  var el;
+  el = document.getElementById('kpi-leads');
+  if (el) el.textContent = dash.totalLeads ?? 0;
+  el = document.getElementById('kpi-leads-sub');
+  if (el) el.textContent = (dash.athleteLeads||0)+' athletes · '+(dash.lifestyleLeads||0)+' lifestyle';
+
+  el = document.getElementById('kpi-bookings');
+  if (el) el.textContent = dash.upcomingBookings ?? 0;
+  el = document.getElementById('kpi-bookings-sub');
+  if (el) el.textContent = (dash.totalBookings||0)+' total bookings';
+
+  el = document.getElementById('kpi-sms');
+  if (el) el.textContent = dash.smsSent ?? 0;
+  el = document.getElementById('kpi-sms-sub');
+  if (el) el.textContent = 'From SMS log';
+
+  el = document.getElementById('kpi-credits');
+  if (el) el.textContent = dash.creditBalance ?? 0;
+  el = document.getElementById('kpi-credits-sub');
+  if (el) el.textContent = 'remaining credits';
+  var badge = document.getElementById('credits-badge');
+  if (badge && dash.creditBalance != null) { badge.textContent = dash.creditBalance; badge.style.display = ''; }
 }
 
 // ── LOAD ALL DATA ──
@@ -1722,7 +1848,7 @@ async function loadAllData() {
     const lifestyle = lifestyleRes.data || [];
     const bookings = bookingsRes.data || [];
     const calls = callsRes.data || [];
-    updateKPIs(dash, athletes);
+    updateKPIs(dash);
     renderLeadsTable(athletes, lifestyle);
     renderBookings(bookings);
     renderCalls(calls);
@@ -2233,6 +2359,114 @@ function openBlastModal() { alert('SMS Blast coming soon.'); }
 document.querySelectorAll('.toggle').forEach(t => {
   t.addEventListener('click', function() { this.classList.toggle('on'); });
 });
+
+// ── CREDITS SYSTEM ──
+var creditsHistoryPage = 1;
+var stripeInstance = null;
+var stripeElements = null;
+var stripeCardElement = null;
+var pendingPackage = null;
+var pendingClientSecret = null;
+
+function loadCreditsData() {
+  fetch('/api/credits/balance', {credentials:'include'}).then(function(r){return r.json();}).then(function(json){
+    if (!json.success) return;
+    var d = json.data || {};
+    var el;
+    el = document.getElementById('credits-balance-display'); if(el) el.textContent = d.balance ?? 0;
+    el = document.getElementById('credits-used-display'); if(el) el.textContent = d.lifetime_used ?? 0;
+    el = document.getElementById('credits-purchased-display'); if(el) el.textContent = d.lifetime_purchased ?? 0;
+    el = document.getElementById('credits-usage-bar');
+    if(el && d.lifetime_purchased > 0) el.style.width = Math.min(100, Math.round((d.lifetime_used/d.lifetime_purchased)*100))+'%';
+    el = document.getElementById('credits-autoreload-badge');
+    if(el) { if(d.auto_reload_enabled) { el.textContent = 'Auto-Reload ON ✓'; el.style.background='var(--green-dim)'; el.style.color='var(--green-text)'; } else { el.textContent = 'Auto-Reload OFF'; el.style.background='rgba(255,255,255,0.06)'; el.style.color='var(--muted)'; } }
+    var tog = document.getElementById('autoreload-toggle'); if(tog) tog.checked = !!d.auto_reload_enabled;
+    var pkg = document.getElementById('autoreload-package'); if(pkg) pkg.value = d.auto_reload_package || '25';
+    var thr = document.getElementById('autoreload-threshold'); if(thr) thr.value = d.auto_reload_threshold || 50;
+  }).catch(function(){});
+}
+
+function loadCreditsHistory(page) {
+  creditsHistoryPage = page || 1;
+  var tbody = document.getElementById('credits-history-tbody'); if(!tbody) return;
+  tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">Loading...</td></tr>';
+  fetch('/api/credits/transactions?page='+creditsHistoryPage+'&per_page=20', {credentials:'include'}).then(function(r){return r.json();}).then(function(json){
+    var txns = json.data || [];
+    var total = json.total || 0;
+    if(txns.length===0) { tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">No transactions yet</td></tr>'; return; }
+    tbody.innerHTML = txns.map(function(t){
+      var date = t.created_at ? new Date(t.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
+      var typeClass = t.type==='purchase' ? 'color:var(--green-text)' : t.type==='usage' ? 'color:var(--red-text)' : 'color:var(--muted)';
+      var amtStr = t.amount > 0 ? '+'+t.amount : ''+t.amount;
+      return '<tr><td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2);">'+date+'</td><td style="font-size:12px;'+typeClass+';font-weight:600;text-transform:uppercase;">'+t.type+'</td><td style="font-size:12px;color:var(--text);">'+(t.event_type||t.package||'—')+'</td><td style="font-family:var(--font-mono);font-size:12px;'+typeClass+';font-weight:700;">'+amtStr+'</td><td style="font-family:var(--font-mono);font-size:12px;color:var(--white);">'+(t.balance_after??'—')+'</td></tr>';
+    }).join('');
+    var totalPages = Math.ceil(total/20) || 1;
+    var info = document.getElementById('credits-page-info'); if(info) info.textContent = 'Page '+creditsHistoryPage+' of '+totalPages;
+    var prev = document.getElementById('credits-prev'); if(prev) prev.disabled = creditsHistoryPage <= 1;
+    var next = document.getElementById('credits-next'); if(next) next.disabled = creditsHistoryPage >= totalPages;
+  }).catch(function(){ tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--red-text);">Error loading</td></tr>'; });
+}
+
+function saveAutoReload() {
+  var enabled = document.getElementById('autoreload-toggle').checked;
+  var pkg = document.getElementById('autoreload-package').value;
+  var threshold = parseInt(document.getElementById('autoreload-threshold').value) || 50;
+  fetch('/api/credits/auto-reload', {method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include', body:JSON.stringify({enabled:enabled,package:pkg,threshold:threshold})}).then(function(r){return r.json();}).then(function(json){
+    if(json.success) { alert('Auto-reload settings saved.'); loadCreditsData(); } else { alert('Error: '+(json.error||'Failed')); }
+  }).catch(function(e){ alert('Error: '+e.message); });
+}
+
+async function purchaseCredits(pkg) {
+  pendingPackage = pkg;
+  var labels = {'25':'$25 — 250 credits','50':'$50 — 625 credits','100':'$100 — 2,000 credits'};
+  document.getElementById('stripe-modal-sub').textContent = labels[pkg] || pkg;
+  document.getElementById('stripe-modal').style.display = 'flex';
+  document.getElementById('stripe-error').style.display = 'none';
+  try {
+    var res = await fetch('/api/credits/create-payment-intent', {method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include', body:JSON.stringify({package:pkg})});
+    var json = await res.json();
+    if(!json.clientSecret) throw new Error(json.error||'Failed to create payment');
+    pendingClientSecret = json.clientSecret;
+    if(!stripeInstance) {
+      var pkRes = await fetch('/api/credits/stripe-config',{credentials:'include'});
+      var pkJson = await pkRes.json();
+      stripeInstance = Stripe(pkJson.publishableKey);
+    }
+    stripeElements = stripeInstance.elements({clientSecret:pendingClientSecret, appearance:{theme:'night', variables:{colorPrimary:'#c8a84b',colorBackground:'#141720',colorText:'#ffffff'}}});
+    stripeCardElement = stripeElements.create('payment');
+    stripeCardElement.mount('#stripe-card-element');
+  } catch(e) { document.getElementById('stripe-error').textContent = e.message; document.getElementById('stripe-error').style.display = 'block'; }
+}
+
+function closeStripeModal() {
+  document.getElementById('stripe-modal').style.display = 'none';
+  if(stripeCardElement) { stripeCardElement.unmount(); stripeCardElement = null; }
+  stripeElements = null; pendingClientSecret = null; pendingPackage = null;
+}
+
+async function confirmStripePayment() {
+  if(!stripeInstance || !stripeElements || !pendingClientSecret) return;
+  var btn = document.getElementById('stripe-pay-btn');
+  btn.textContent = 'PROCESSING...'; btn.disabled = true;
+  try {
+    var result = await stripeInstance.confirmPayment({elements:stripeElements, confirmParams:{return_url:window.location.origin+'/dashboard'}, redirect:'if_required'});
+    if(result.error) throw new Error(result.error.message);
+    var confirmRes = await fetch('/api/credits/confirm-purchase', {method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include', body:JSON.stringify({paymentIntentId:result.paymentIntent.id, package:pendingPackage})});
+    var confirmJson = await confirmRes.json();
+    if(!confirmJson.success) throw new Error(confirmJson.error||'Confirmation failed');
+    closeStripeModal();
+    alert('Credits purchased! New balance: '+confirmJson.newBalance);
+    loadCreditsData(); loadCreditsHistory(1); loadAllData();
+  } catch(e) {
+    document.getElementById('stripe-error').textContent = e.message;
+    document.getElementById('stripe-error').style.display = 'block';
+  } finally { btn.textContent = 'PAY'; btn.disabled = false; }
+}
+
+// Load credits when tab opens
+var _origShowView2 = showView;
+showView = function(id, el) { _origShowView2(id, el); if(id==='credits') { loadCreditsData(); loadCreditsHistory(1); } };
 </script>
+<script src="https://js.stripe.com/v3/" async></script>
 </body>
 </html>

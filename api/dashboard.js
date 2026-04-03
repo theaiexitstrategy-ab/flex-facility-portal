@@ -22,7 +22,9 @@ export default async function handler(req, res) {
       { data: pipelineA, error: e4 },
       { data: pipelineL, error: e5 },
       { data: purchases, error: e6 },
-      { data: contacts, error: e7 }
+      { data: contacts, error: e7 },
+      { data: smsLogs },
+      { data: creditData }
     ] = await Promise.all([
       supabase.from('leads_athlete').select('id, created_at, first_name, last_name, source, lead_status', { count: 'exact' }).limit(500),
       supabase.from('leads_lifestyle').select('id, created_at, first_name, last_name, source, lead_status', { count: 'exact' }).limit(500),
@@ -30,7 +32,9 @@ export default async function handler(req, res) {
       supabase.from('pipeline_athlete').select('*').limit(200),
       supabase.from('pipeline_lifestyle').select('*').limit(200),
       supabase.from('purchases_ebook').select('id, amount_paid').limit(500),
-      supabase.from('contacts_master').select('id, source, segment, contact_type').limit(500)
+      supabase.from('contacts_master').select('id, source, segment, contact_type').limit(500),
+      supabase.from('sms_blast_log').select('id', { count: 'exact' }).limit(1),
+      supabase.from('sms_credits').select('balance').limit(1).single()
     ]);
     for (const e of [e1, e2, e3, e4, e5, e6, e7]) { if (e) throw e; }
 
@@ -66,7 +70,9 @@ export default async function handler(req, res) {
         topSources,
         statusCounts,
         recentActivity,
-        recentBookings: (bookings || []).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 5)
+        recentBookings: (bookings || []).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 5),
+        smsSent: (smsLogs || []).length || 0,
+        creditBalance: creditData?.balance ?? 0
       }
     });
   } catch (err) { return res.status(500).json({ success: false, error: err.message }); }

@@ -3,26 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Flex Facility — Command Center</title>
+<title>The Flex Facility — Portal</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 :root {
-  --navy: #1a2035;
-  --navy2: #232d47;
-  --navy3: #2e3a56;
-  --bg: #f4f4f0;
+  --navy: #0d0d0d;
+  --navy2: #141720;
+  --navy3: #1e1e1e;
+  --bg: #0d0d0d;
   --white: #ffffff;
-  --border: #e6e6e0;
-  --border2: #d0d0c8;
-  --text: #3a3a4a;
-  --muted: #888898;
-  --muted2: #6a6a7a;
-  --red: #d63855;
-  --red-dim: #fde9ed;
-  --red-text: #a82540;
-  --green: #1a8050;
-  --green-dim: #e3f5ed;
-  --green-text: #115535;
+  --gold: #c8a84b;
+  --gold-dim: rgba(200,168,75,0.12);
+  --border: rgba(200,168,75,0.2);
+  --border2: rgba(255,255,255,0.08);
+  --text: rgba(255,255,255,0.75);
+  --muted: rgba(255,255,255,0.35);
+  --muted2: rgba(255,255,255,0.5);
+  --red: #e8200a;
+  --red-dim: rgba(232,32,10,0.12);
+  --red-text: #ff6b5a;
+  --green: #22c55e;
+  --green-dim: rgba(34,197,94,0.12);
+  --green-text: #4ade80;
   --font-body: 'DM Sans', sans-serif;
   --font-mono: 'Space Mono', monospace;
   --font-display: 'Bebas Neue', sans-serif;
@@ -33,7 +35,7 @@
 html, body {
   height: 100%;
   font-family: var(--font-body);
-  background: var(--bg);
+  background: #0d0d0d;
   color: var(--text);
 }
 
@@ -46,7 +48,7 @@ html, body {
 
 /* ── LEFT PANEL — NAVY BRAND ── */
 .left {
-  background: var(--navy);
+  background: #0a0a0a;
   display: flex;
   flex-direction: column;
   padding: 48px 52px;
@@ -208,7 +210,7 @@ html, body {
 }
 
 .feature-item.active { color: rgba(255,255,255,0.9); }
-.feature-item.active .feature-dot { background: #7ee8b8; }
+.feature-item.active .feature-dot { background: var(--gold); }
 
 .left-footer {
   position: relative;
@@ -241,7 +243,7 @@ html, body {
 
 /* ── RIGHT PANEL — LOGIN FORM ── */
 .right {
-  background: var(--white);
+  background: #0d0d0d;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -254,10 +256,9 @@ html, body {
   content: '';
   position: absolute;
   top: 0; left: 0;
-  width: 3px;
+  width: 1px;
   height: 100%;
-  background: var(--navy);
-  opacity: 0.08;
+  background: rgba(200,168,75,0.15);
 }
 
 .login-wrap {
@@ -279,7 +280,7 @@ html, body {
   font-family: var(--font-display);
   font-size: 38px;
   letter-spacing: 2px;
-  color: var(--navy);
+  color: var(--white);
   line-height: 1.1;
   margin-bottom: 6px;
 }
@@ -309,20 +310,20 @@ html, body {
 .form-input {
   width: 100%;
   padding: 12px 16px;
-  background: var(--bg);
-  border: 1.5px solid var(--border);
+  background: #141720;
+  border: 1.5px solid var(--gold);
   border-radius: 9px;
   font-family: var(--font-body);
   font-size: 14px;
-  color: var(--navy);
+  color: var(--white);
   outline: none;
   transition: all 0.15s;
 }
 
 .form-input:focus {
-  border-color: var(--navy);
-  background: white;
-  box-shadow: 0 0 0 3px rgba(26,32,53,0.06);
+  border-color: var(--gold);
+  background: #1a1a2a;
+  box-shadow: 0 0 0 3px rgba(200,168,75,0.12);
 }
 
 .form-input::placeholder { color: var(--muted); }
@@ -354,7 +355,7 @@ html, body {
   padding: 4px;
   transition: color 0.15s;
 }
-.password-toggle:hover { color: var(--navy); }
+.password-toggle:hover { color: var(--gold); }
 
 /* remember row */
 .remember-row {
@@ -374,7 +375,7 @@ html, body {
 .remember-check input[type="checkbox"] {
   width: 16px;
   height: 16px;
-  accent-color: var(--navy);
+  accent-color: var(--gold);
   cursor: pointer;
 }
 
@@ -392,14 +393,14 @@ html, body {
   letter-spacing: 0.5px;
   transition: color 0.15s;
 }
-.forgot-link:hover { color: var(--navy); }
+.forgot-link:hover { color: var(--gold); }
 
 /* submit button */
 .submit-btn {
   width: 100%;
   padding: 14px;
-  background: var(--navy);
-  color: white;
+  background: var(--gold);
+  color: #0d0d0d;
   border: none;
   border-radius: 9px;
   font-family: var(--font-display);
@@ -409,9 +410,10 @@ html, body {
   transition: all 0.15s;
   position: relative;
   overflow: hidden;
+  font-weight: 700;
 }
 
-.submit-btn:hover { background: var(--navy2); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(26,32,53,0.2); }
+.submit-btn:hover { background: #d4b45c; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(200,168,75,0.3); }
 .submit-btn:active { transform: translateY(0); box-shadow: none; }
 
 .submit-btn:disabled {
@@ -480,7 +482,7 @@ html, body {
   font-family: var(--font-display);
   font-size: 26px;
   letter-spacing: 2px;
-  color: var(--navy);
+  color: var(--gold);
 }
 
 .success-sub {
@@ -499,7 +501,7 @@ html, body {
 
 .progress-fill {
   height: 100%;
-  background: var(--navy);
+  background: var(--gold);
   border-radius: 10px;
   width: 0%;
   transition: width 1.5s ease;
@@ -582,34 +584,14 @@ html, body {
 
   <!-- ── LEFT: BRAND PANEL ── -->
   <div class="left">
-    <div class="brand-mark">
-      <div class="brand-icon">F</div>
-      <div class="brand-text-wrap">
-        <div class="brand-name">THE FLEX FACILITY</div>
-        <div class="brand-sub">Command Center</div>
-      </div>
+    <div class="brand-mark" style="flex-direction:column;align-items:flex-start;">
+      <img src="https://theflexfacility.com/images/logo.png" alt="The Flex Facility" style="max-width:140px;height:auto;margin-bottom:8px;" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+      <div style="display:none;font-family:var(--font-display);font-size:18px;letter-spacing:2.5px;color:white;line-height:1.1;">THE FLEX FACILITY</div>
     </div>
 
     <div class="left-body">
       <div class="left-headline">YOUR<br>FUNNEL.<br><span>YOUR</span><br>DATA.</div>
-      <p class="left-desc">Real-time visibility into every lead, booking, and call — so Coach Kenny can focus on closing, not chasing.</p>
-
-      <div class="left-stats">
-        <div>
-          <div class="left-stat-val">87</div>
-          <div class="left-stat-label">ACTIVE LEADS</div>
-        </div>
-        <div class="left-stat-divider"></div>
-        <div>
-          <div class="left-stat-val">78%</div>
-          <div class="left-stat-label">CLOSE RATE</div>
-        </div>
-        <div class="left-stat-divider"></div>
-        <div>
-          <div class="left-stat-val">34</div>
-          <div class="left-stat-label">BOOKED</div>
-        </div>
-      </div>
+      <p class="left-desc" style="font-style:italic;color:rgba(200,168,75,0.7);font-size:15px;">Your results are waiting. Log in to see them.</p>
 
       <div class="feature-list">
         <div class="feature-item active"><div class="feature-dot"></div> Live CRM — Athletes & Lifestyle</div>
@@ -633,7 +615,7 @@ html, body {
 
       <div class="login-greeting">Welcome back</div>
       <div class="login-title">SIGN IN TO<br>YOUR HUB</div>
-      <p class="login-sub">Enter your credentials to access the Flex Facility Command Center.</p>
+      <p class="login-sub">Enter your credentials to access your portal.</p>
 
       <!-- error message -->
       <div class="error-msg" id="error-msg">
