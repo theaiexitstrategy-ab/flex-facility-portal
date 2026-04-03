@@ -7,37 +7,38 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 :root {
-  --navy: #1a2035;
-  --navy2: #232d47;
-  --navy3: #2e3a56;
-  --bg: #f4f4f0;
-  --surface: #ffffff;
-  --card: #ffffff;
-  --border: #e6e6e0;
-  --border2: #d8d8d0;
-  --text: #3a3a4a;
-  --muted: #888898;
-  --muted2: #6a6a7a;
+  --navy: #0a0a0a;
+  --navy2: #161616;
+  --navy3: #1e1e1e;
+  --bg: #0d0d0d;
+  --surface: #161616;
+  --card: #161616;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.12);
+  --text: rgba(255,255,255,0.75);
+  --muted: rgba(255,255,255,0.35);
+  --muted2: rgba(255,255,255,0.5);
   --white: #ffffff;
   --navy-text: #ffffff;
-  --navy-muted: rgba(255,255,255,0.45);
-  --navy-dim: rgba(255,255,255,0.08);
-  --navy-border: rgba(255,255,255,0.1);
-  --red: #d63855;
-  --red-dim: #fde9ed;
-  --red-text: #a82540;
-  --gold: #c88a00;
-  --gold-dim: #fef5df;
-  --gold-text: #8a5e00;
-  --green: #1a8050;
-  --green-dim: #e3f5ed;
-  --green-text: #115535;
-  --cyan: #0e7fc2;
-  --cyan-dim: #e6f3fb;
-  --cyan-text: #085a8a;
-  --purple: #6b41c9;
-  --purple-dim: #f0ebfd;
-  --purple-text: #4a2d9a;
+  --navy-muted: rgba(255,255,255,0.35);
+  --navy-dim: rgba(255,255,255,0.06);
+  --navy-border: rgba(255,255,255,0.08);
+  --gold: #d4a017;
+  --gold-light: #f0c040;
+  --gold-dim: rgba(212,160,23,0.12);
+  --gold-text: #f0c040;
+  --red: #e8200a;
+  --red-dim: rgba(232,32,10,0.12);
+  --red-text: #ff6b5a;
+  --green: #22c55e;
+  --green-dim: rgba(34,197,94,0.12);
+  --green-text: #4ade80;
+  --cyan: #38bdf8;
+  --cyan-dim: rgba(56,189,248,0.12);
+  --cyan-text: #7dd3fc;
+  --purple: #a78bfa;
+  --purple-dim: rgba(167,139,250,0.12);
+  --purple-text: #c4b5fd;
   --sidebar-w: 230px;
   --font-body: 'DM Sans', sans-serif;
   --font-mono: 'Space Mono', monospace;
@@ -45,7 +46,7 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html, body { height: 100%; font-family: var(--font-body); background: var(--bg); color: var(--text); overflow: hidden; }
+html, body { height: 100%; font-family: var(--font-body); background: #0a0a0a; color: var(--text); overflow: hidden; }
 
 .layout { display: flex; height: 100vh; }
 
@@ -53,11 +54,12 @@ html, body { height: 100%; font-family: var(--font-body); background: var(--bg);
 .sidebar {
   width: var(--sidebar-w);
   min-width: var(--sidebar-w);
-  background: var(--navy);
+  background: #050505;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
+  border-right: 1px solid rgba(255,255,255,0.06);
 }
 
 .sidebar::after {
@@ -141,7 +143,7 @@ html, body { height: 100%; font-family: var(--font-body); background: var(--bg);
 
 .online-dot {
   width: 7px; height: 7px;
-  background: #7ee8b8;
+  background: var(--gold);
   border-radius: 50%;
   flex-shrink: 0;
   animation: blink 2.5s ease-in-out infinite;
@@ -248,8 +250,8 @@ html, body { height: 100%; font-family: var(--font-body); background: var(--bg);
 
 .topbar {
   height: 56px;
-  background: var(--white);
-  border-bottom: 1px solid var(--border);
+  background: #0a0a0a;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
   display: flex;
   align-items: center;
   padding: 0 24px;
@@ -261,7 +263,7 @@ html, body { height: 100%; font-family: var(--font-body); background: var(--bg);
   font-family: var(--font-display);
   font-size: 21px;
   letter-spacing: 2px;
-  color: var(--navy);
+  color: var(--white);
 }
 
 .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
@@ -276,7 +278,7 @@ html, body { height: 100%; font-family: var(--font-body); background: var(--bg);
   width: 34px; height: 34px;
   border-radius: 7px;
   border: 1px solid var(--border);
-  background: var(--white);
+  background: rgba(255,255,255,0.04);
   color: var(--muted);
   font-size: 14px;
   cursor: pointer;
@@ -284,7 +286,7 @@ html, body { height: 100%; font-family: var(--font-body); background: var(--bg);
   transition: all 0.15s;
   position: relative;
 }
-.topbar-btn:hover { border-color: var(--navy); color: var(--navy); }
+.topbar-btn:hover { border-color: var(--gold); color: var(--gold); }
 
 .notif-badge {
   position: absolute;
@@ -292,12 +294,12 @@ html, body { height: 100%; font-family: var(--font-body); background: var(--bg);
   width: 8px; height: 8px;
   background: var(--red);
   border-radius: 50%;
-  border: 2px solid var(--white);
+  border: 2px solid #0a0a0a;
 }
 
 .sync-btn {
-  background: var(--navy);
-  color: var(--white);
+  background: var(--gold);
+  color: #0a0a0a;
   font-size: 11px;
   font-family: var(--font-mono);
   padding: 7px 16px;
@@ -306,8 +308,9 @@ html, body { height: 100%; font-family: var(--font-body); background: var(--bg);
   cursor: pointer;
   letter-spacing: 1px;
   transition: all 0.15s;
+  font-weight: 700;
 }
-.sync-btn:hover { background: var(--navy2); }
+.sync-btn:hover { background: var(--gold-light); }
 
 /* ── CONTENT ── */
 .content {
@@ -318,7 +321,7 @@ html, body { height: 100%; font-family: var(--font-body); background: var(--bg);
 }
 .content::-webkit-scrollbar { width: 5px; }
 .content::-webkit-scrollbar-track { background: transparent; }
-.content::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 10px; }
+.content::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 10px; }
 
 .view { display: none; }
 .view.active { display: block; animation: fadeUp 0.2s ease; }
@@ -328,15 +331,15 @@ html, body { height: 100%; font-family: var(--font-body); background: var(--bg);
 .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 20px; }
 
 .kpi-card {
-  background: var(--white);
-  border: 1px solid var(--border);
+  background: #161616;
+  border: 1px solid rgba(255,255,255,0.06);
   border-radius: 12px;
   padding: 18px 20px;
   position: relative;
   overflow: hidden;
   transition: box-shadow 0.2s;
 }
-.kpi-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+.kpi-card:hover { box-shadow: 0 2px 16px rgba(212,160,23,0.08); border-color: rgba(212,160,23,0.15); }
 
 .kpi-accent {
   position: absolute;
@@ -360,7 +363,7 @@ html, body { height: 100%; font-family: var(--font-body); background: var(--bg);
   font-size: 38px;
   letter-spacing: 1px;
   line-height: 1;
-  color: var(--navy);
+  color: var(--white);
   margin-bottom: 6px;
 }
 
@@ -384,8 +387,8 @@ html, body { height: 100%; font-family: var(--font-body); background: var(--bg);
 
 /* ── PANEL ── */
 .panel {
-  background: var(--white);
-  border: 1px solid var(--border);
+  background: #161616;
+  border: 1px solid rgba(255,255,255,0.06);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -402,7 +405,7 @@ html, body { height: 100%; font-family: var(--font-body); background: var(--bg);
   font-family: var(--font-display);
   font-size: 14px;
   letter-spacing: 2px;
-  color: var(--navy);
+  color: var(--gold);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -411,7 +414,7 @@ html, body { height: 100%; font-family: var(--font-body); background: var(--bg);
 .panel-dot {
   width: 6px; height: 6px;
   border-radius: 50%;
-  background: var(--navy);
+  background: var(--gold);
 }
 
 .panel-action {
@@ -427,12 +430,13 @@ html, body { height: 100%; font-family: var(--font-body); background: var(--bg);
 
 /* ── SECTION HEADER ── */
 .section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
-.section-title { font-family: var(--font-display); font-size: 20px; letter-spacing: 2px; color: var(--navy); }
-.section-sub { font-size: 12px; color: var(--muted2); }
+.section-title { font-family: var(--font-display); font-size: 20px; letter-spacing: 2px; color: var(--white); }
+.section-sub { font-size: 12px; color: var(--muted); }
 
 /* ── BANNER ── */
 .dash-banner {
-  background: var(--navy);
+  background: linear-gradient(135deg, #161616 0%, rgba(212,160,23,0.08) 100%);
+  border: 1px solid rgba(212,160,23,0.15);
   border-radius: 12px;
   padding: 18px 22px;
   margin-bottom: 18px;
@@ -444,7 +448,7 @@ html, body { height: 100%; font-family: var(--font-body); background: var(--bg);
 .banner-text h2 { font-family: var(--font-display); font-size: 20px; letter-spacing: 2px; color: var(--white); }
 .banner-text p { font-size: 12px; color: var(--navy-muted); margin-top: 3px; }
 .banner-stat { margin-left: auto; text-align: right; }
-.banner-stat-val { font-family: var(--font-display); font-size: 32px; color: #7ee8b8; line-height: 1; }
+.banner-stat-val { font-family: var(--font-display); font-size: 32px; color: var(--gold-light); line-height: 1; }
 .banner-stat-label { font-size: 9px; font-family: var(--font-mono); color: var(--navy-muted); letter-spacing: 1px; }
 
 /* ── TABLE ── */
@@ -458,16 +462,16 @@ thead th {
   color: var(--muted);
   font-family: var(--font-mono);
   padding: 8px 12px;
-  border-bottom: 1px solid var(--border);
-  background: var(--bg);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  background: #0d0d0d;
   white-space: nowrap;
 }
-tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; cursor: pointer; }
+tbody tr { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.1s; cursor: pointer; }
 tbody tr:last-child { border-bottom: none; }
-tbody tr:hover { background: #f8f8f5; }
+tbody tr:hover { background: rgba(212,160,23,0.05); }
 tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 
-.lead-name { font-weight: 600; color: var(--navy); font-size: 13px; }
+.lead-name { font-weight: 600; color: var(--white); font-size: 13px; }
 .lead-sub { font-size: 11px; color: var(--muted2); margin-top: 1px; }
 
 /* ── STATUS PILLS ── */
@@ -487,14 +491,14 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 .pill.warm { background: var(--gold-dim); color: var(--gold-text); }
 .pill.new { background: var(--cyan-dim); color: var(--cyan-text); }
 .pill.booked { background: var(--green-dim); color: var(--green-text); }
-.pill.cold { background: #f0f0ec; color: var(--muted2); }
-.pill.closed { background: var(--navy); color: white; }
+.pill.cold { background: rgba(255,255,255,0.06); color: var(--muted2); }
+.pill.closed { background: var(--gold-dim); color: var(--gold); }
 
 /* ── SOURCE TAG ── */
 .source-tag {
   font-size: 10px;
   color: var(--muted2);
-  background: var(--bg);
+  background: rgba(255,255,255,0.06);
   padding: 2px 7px;
   border-radius: 4px;
   font-family: var(--font-mono);
@@ -514,7 +518,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
   display: flex; align-items: center; justify-content: center;
   transition: all 0.15s;
 }
-.act-btn:hover { border-color: var(--navy); color: var(--navy); background: var(--bg); }
+.act-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(212,160,23,0.06); }
 .act-btn.danger:hover { border-color: var(--red); color: var(--red-text); background: var(--red-dim); }
 .act-btn.success:hover { border-color: var(--green); color: var(--green-text); background: var(--green-dim); }
 
@@ -522,8 +526,8 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 .search-bar {
   display: flex;
   align-items: center;
-  background: var(--white);
-  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 8px;
   padding: 0 12px;
   gap: 8px;
@@ -533,7 +537,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
   flex: 1;
   background: none;
   border: none;
-  color: var(--navy);
+  color: var(--white);
   font-family: var(--font-body);
   font-size: 13px;
   padding: 9px 0;
@@ -549,37 +553,37 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
   font-family: var(--font-mono);
   padding: 4px 10px;
   border-radius: 20px;
-  border: 1px solid var(--border);
-  background: var(--white);
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.04);
   color: var(--muted2);
   cursor: pointer;
   letter-spacing: 0.5px;
   transition: all 0.15s;
 }
-.filter-chip:hover { border-color: var(--navy); color: var(--navy); }
-.filter-chip.active { border-color: var(--navy); color: var(--white); background: var(--navy); }
+.filter-chip:hover { border-color: var(--gold); color: var(--gold); }
+.filter-chip.active { border-color: var(--gold); color: #0a0a0a; background: var(--gold); font-weight: 700; }
 
 /* ── CRM SYSTEM ── */
 .crm-mode-tab {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 11px; font-family: var(--font-mono); padding: 6px 14px;
-  border-radius: 8px; border: 1px solid var(--border); background: var(--white);
+  border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04);
   color: var(--muted2); cursor: pointer; letter-spacing: 0.5px; transition: all 0.15s;
 }
-.crm-mode-tab:hover { border-color: var(--navy); color: var(--navy); }
-.crm-mode-tab.active { border-color: var(--navy); color: var(--white); background: var(--navy); }
+.crm-mode-tab:hover { border-color: var(--gold); color: var(--gold); }
+.crm-mode-tab.active { border-color: var(--gold); color: #0a0a0a; background: var(--gold); }
 
 .status-select {
   font-size: 10px; font-family: var(--font-mono); padding: 3px 6px; border-radius: 14px;
-  border: 1px solid var(--border); background: var(--white); cursor: pointer; font-weight: 700;
-  letter-spacing: 0.5px; outline: none; appearance: auto;
+  border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); cursor: pointer; font-weight: 700;
+  letter-spacing: 0.5px; outline: none; appearance: auto; color: var(--text);
 }
-.status-select.status-new { border-color: #c8a84b; color: #c8a84b; background: var(--gold-dim); }
+.status-select.status-new { border-color: var(--gold); color: var(--gold); background: var(--gold-dim); }
 .status-select.status-contacted { border-color: var(--cyan); color: var(--cyan-text); background: var(--cyan-dim); }
 .status-select.status-booked { border-color: var(--purple); color: var(--purple-text); background: var(--purple-dim); }
 .status-select.status-showed { border-color: var(--gold); color: var(--gold-text); background: var(--gold-dim); }
 .status-select.status-closed { border-color: var(--green); color: var(--green-text); background: var(--green-dim); }
-.status-select.status-lost { border-color: var(--muted); color: var(--muted2); background: #f0f0ec; }
+.status-select.status-lost { border-color: rgba(255,255,255,0.1); color: var(--muted2); background: rgba(255,255,255,0.04); }
 
 .drawer-overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 999; display: none;
@@ -588,8 +592,9 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 
 .lead-drawer {
   position: fixed; top: 0; right: -480px; width: 460px; height: 100vh;
-  background: var(--white); z-index: 1000; box-shadow: -6px 0 30px rgba(0,0,0,0.15);
+  background: #161616; z-index: 1000; box-shadow: -6px 0 30px rgba(0,0,0,0.5);
   transition: right 0.3s ease; display: flex; flex-direction: column; overflow: hidden;
+  border-left: 1px solid rgba(255,255,255,0.06);
 }
 .lead-drawer.open { right: 0; }
 
@@ -597,7 +602,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
   padding: 18px 20px; border-bottom: 1px solid var(--border);
   display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
 }
-.drawer-title { font-family: var(--font-display); font-size: 18px; letter-spacing: 2px; color: var(--navy); }
+.drawer-title { font-family: var(--font-display); font-size: 18px; letter-spacing: 2px; color: var(--gold); }
 .drawer-body { flex: 1; overflow-y: auto; padding: 18px 20px; }
 .drawer-section { margin-bottom: 18px; }
 .drawer-section-title {
@@ -610,13 +615,13 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
   color: var(--muted2); margin-bottom: 4px;
 }
 .drawer-field input, .drawer-field select, .drawer-field textarea {
-  width: 100%; padding: 8px 12px; border: 1.5px solid var(--border); border-radius: 8px;
-  font-size: 13px; color: var(--navy); background: var(--bg); outline: none; font-family: var(--font-body);
+  width: 100%; padding: 8px 12px; border: 1.5px solid rgba(255,255,255,0.1); border-radius: 8px;
+  font-size: 13px; color: var(--white); background: rgba(255,255,255,0.04); outline: none; font-family: var(--font-body);
 }
 .drawer-field textarea { resize: vertical; }
 
 .add-lead-modal {
-  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
   z-index: 1000; align-items: center; justify-content: center;
 }
 .add-lead-modal.open { display: flex; }
@@ -626,13 +631,13 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
   color: var(--muted2); margin-bottom: 5px;
 }
 .form-group input, .form-group select {
-  width: 100%; padding: 10px 12px; border: 1.5px solid var(--border); border-radius: 8px;
-  font-size: 13px; color: var(--navy); background: var(--bg); outline: none; font-family: var(--font-body);
+  width: 100%; padding: 10px 12px; border: 1.5px solid rgba(255,255,255,0.1); border-radius: 8px;
+  font-size: 13px; color: var(--white); background: rgba(255,255,255,0.04); outline: none; font-family: var(--font-body);
 }
 
 .crm-kanban { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 12px; min-height: 400px; }
 .kanban-col {
-  flex: 1; min-width: 180px; background: var(--bg); border: 1px solid var(--border);
+  flex: 1; min-width: 180px; background: #161616; border: 1px solid rgba(255,255,255,0.06);
   border-radius: 10px; display: flex; flex-direction: column;
 }
 .kanban-col-header {
@@ -641,28 +646,28 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
   font-size: 10px; font-family: var(--font-mono); letter-spacing: 1.5px; color: var(--muted2);
 }
 .kanban-col-count {
-  font-size: 10px; font-family: var(--font-mono); background: var(--white);
-  border: 1px solid var(--border); border-radius: 10px; padding: 1px 6px; color: var(--muted);
+  font-size: 10px; font-family: var(--font-mono); background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 1px 6px; color: var(--muted);
 }
 .kanban-col-body { flex: 1; padding: 8px; display: flex; flex-direction: column; gap: 6px; min-height: 60px; }
-.kanban-col-body.drag-over { background: rgba(26,32,53,0.06); }
+.kanban-col-body.drag-over { background: rgba(212,160,23,0.06); }
 .kanban-card {
-  background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;
   padding: 10px 12px; cursor: grab; transition: box-shadow 0.15s, transform 0.15s;
 }
-.kanban-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); transform: translateY(-1px); }
+.kanban-card:hover { box-shadow: 0 2px 8px rgba(212,160,23,0.1); transform: translateY(-1px); border-color: rgba(212,160,23,0.2); }
 .kanban-card:active { cursor: grabbing; }
 
 #view-crm table thead th.sortable { cursor: pointer; user-select: none; }
-#view-crm table thead th.sortable:hover { color: var(--navy); }
+#view-crm table thead th.sortable:hover { color: var(--gold); }
 #view-crm table thead th.sorted-asc::after { content: ' ▲'; }
 #view-crm table thead th.sorted-desc::after { content: ' ▼'; }
 
 /* ── BOOKINGS ── */
 .booking-list { display: flex; flex-direction: column; gap: 8px; }
 .booking-item {
-  background: var(--bg);
-  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
   border-radius: 10px;
   padding: 11px 14px;
   display: flex;
@@ -671,10 +676,10 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
   transition: border-color 0.15s;
   cursor: pointer;
 }
-.booking-item:hover { border-color: var(--navy); }
+.booking-item:hover { border-color: rgba(212,160,23,0.3); }
 
 .booking-time {
-  background: var(--navy);
+  background: rgba(212,160,23,0.12);
   border-radius: 8px;
   padding: 8px 10px;
   text-align: center;
@@ -682,11 +687,11 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
   flex-shrink: 0;
 }
 .booking-time-day { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: var(--navy-muted); font-family: var(--font-mono); }
-.booking-time-hr { font-family: var(--font-display); font-size: 18px; color: var(--white); line-height: 1.2; }
+.booking-time-hr { font-family: var(--font-display); font-size: 18px; color: var(--gold); line-height: 1.2; }
 .booking-time-ampm { font-size: 9px; color: var(--navy-muted); font-family: var(--font-mono); }
 
 .booking-info { flex: 1; }
-.booking-name { font-weight: 600; font-size: 13px; color: var(--navy); }
+.booking-name { font-weight: 600; font-size: 13px; color: var(--white); }
 .booking-detail { font-size: 11px; color: var(--muted2); margin-top: 2px; }
 
 /* ── ACTIVITY FEED ── */
@@ -714,20 +719,20 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 .sparkline { display: flex; align-items: flex-end; gap: 5px; height: 56px; }
 .spark-bar {
   flex: 1; border-radius: 4px 4px 0 0;
-  background: var(--bg);
-  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
   transition: all 0.2s;
   cursor: pointer;
 }
-.spark-bar:hover { background: var(--navy); border-color: var(--navy); }
-.spark-bar.today { background: var(--navy); border-color: var(--navy); }
+.spark-bar:hover { background: var(--gold); border-color: var(--gold); }
+.spark-bar.today { background: var(--gold); border-color: var(--gold); }
 .spark-label { display: flex; justify-content: space-between; margin-top: 5px; }
 .spark-day { flex: 1; text-align: center; font-size: 9px; color: var(--muted); font-family: var(--font-mono); }
-.spark-day.today { color: var(--navy); font-weight: 700; }
+.spark-day.today { color: var(--gold); font-weight: 700; }
 
 /* ── PROGRESS ── */
-.progress-wrap { height: 6px; background: var(--bg); border-radius: 10px; overflow: hidden; margin-top: 6px; }
-.progress-fill { height: 100%; border-radius: 10px; background: var(--navy); }
+.progress-wrap { height: 6px; background: rgba(255,255,255,0.06); border-radius: 10px; overflow: hidden; margin-top: 6px; }
+.progress-fill { height: 100%; border-radius: 10px; background: var(--gold); }
 .progress-fill.green { background: var(--green); }
 .progress-fill.gold { background: var(--gold); }
 .progress-fill.red { background: var(--red); }
@@ -736,19 +741,19 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 .score-ring-wrap { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 8px 0; }
 .score-ring {
   width: 82px; height: 82px; border-radius: 50%;
-  background: conic-gradient(var(--navy) 0deg, var(--navy) calc(var(--pct,78) * 3.6deg), var(--bg) calc(var(--pct,78) * 3.6deg));
+  background: conic-gradient(var(--gold) 0deg, var(--gold) calc(var(--pct,78) * 3.6deg), rgba(255,255,255,0.06) calc(var(--pct,78) * 3.6deg));
   display: flex; align-items: center; justify-content: center;
   position: relative;
 }
-.score-ring::before { content: ''; position: absolute; inset: 9px; background: var(--white); border-radius: 50%; }
-.score-val { position: relative; z-index: 1; font-family: var(--font-display); font-size: 22px; color: var(--navy); }
+.score-ring::before { content: ''; position: absolute; inset: 9px; background: #161616; border-radius: 50%; }
+.score-val { position: relative; z-index: 1; font-family: var(--font-display); font-size: 22px; color: var(--gold); }
 .score-label { font-size: 11px; color: var(--muted2); font-family: var(--font-mono); text-align: center; }
 
 /* ── QUICK ACTIONS ── */
 .quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .qa-btn {
-  background: var(--bg);
-  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
   border-radius: 10px;
   padding: 12px 14px;
   cursor: pointer;
@@ -756,7 +761,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
   transition: all 0.15s;
   display: flex; align-items: center; gap: 10px;
 }
-.qa-btn:hover { border-color: var(--navy); background: var(--white); }
+.qa-btn:hover { border-color: rgba(212,160,23,0.3); background: rgba(212,160,23,0.05); }
 .qa-icon { font-size: 18px; }
 .qa-text { font-size: 12px; font-weight: 600; color: var(--navy); }
 .qa-sub { font-size: 10px; color: var(--muted2); margin-top: 1px; }
@@ -847,36 +852,36 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .setting-row { display: flex; align-items: center; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid var(--border); }
 .setting-row:last-child { border-bottom: none; }
-.setting-label { font-size: 13px; color: var(--navy); font-weight: 500; }
+.setting-label { font-size: 13px; color: var(--white); font-weight: 500; }
 .setting-sub { font-size: 11px; color: var(--muted2); margin-top: 2px; }
-.toggle { width: 38px; height: 20px; background: var(--border); border-radius: 20px; position: relative; cursor: pointer; transition: all 0.2s; flex-shrink: 0; border: none; }
-.toggle.on { background: var(--navy); }
+.toggle { width: 38px; height: 20px; background: rgba(255,255,255,0.12); border-radius: 20px; position: relative; cursor: pointer; transition: all 0.2s; flex-shrink: 0; border: none; }
+.toggle.on { background: var(--gold); }
 .toggle::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; background: white; border-radius: 50%; transition: transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
 .toggle.on::after { transform: translateX(18px); }
 
 /* ── WARNING BANNER ── */
 .warn-banner {
   padding: 11px 14px;
-  background: var(--red-dim);
-  border: 1px solid rgba(214,56,85,0.2);
+  background: rgba(232,32,10,0.08);
+  border: 1px solid rgba(232,32,10,0.15);
   border-radius: 8px;
 }
 .warn-title { font-size: 11px; font-weight: 600; color: var(--red-text); margin-bottom: 4px; }
 .warn-text { font-size: 11px; color: var(--muted2); line-height: 1.5; }
 
 /* ── REVENUE CARD ── */
-.rev-card { background: var(--navy); border-radius: 12px; padding: 18px 20px; color: var(--white); }
+.rev-card { background: linear-gradient(135deg, #161616 0%, rgba(212,160,23,0.08) 100%); border: 1px solid rgba(212,160,23,0.15); border-radius: 12px; padding: 18px 20px; color: var(--white); }
 .rev-label { font-size: 9px; font-family: var(--font-mono); letter-spacing: 1.5px; color: var(--navy-muted); margin-bottom: 8px; }
-.rev-value { font-family: var(--font-display); font-size: 40px; color: #7ee8b8; line-height: 1; margin-bottom: 6px; }
+.rev-value { font-family: var(--font-display); font-size: 40px; color: var(--gold-light); line-height: 1; margin-bottom: 6px; }
 .rev-sub { font-size: 12px; color: var(--navy-muted); line-height: 1.5; }
 .rev-row { display: flex; gap: 16px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--navy-border); }
 .rev-mini-label { font-size: 9px; color: var(--navy-muted); font-family: var(--font-mono); margin-bottom: 3px; }
 .rev-mini-val { font-family: var(--font-display); font-size: 20px; color: var(--white); }
 
 /* ── STATUS INDICATORS ── */
-.status-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg); border-radius: 8px; margin-bottom: 6px; }
+.status-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: rgba(255,255,255,0.03); border-radius: 8px; margin-bottom: 6px; }
 .status-row:last-child { margin-bottom: 0; }
-.status-label { font-size: 12px; color: var(--navy); }
+.status-label { font-size: 12px; color: var(--white); }
 .status-live { font-size: 10px; font-family: var(--font-mono); color: var(--green-text); display: flex; align-items: center; gap: 4px; }
 .status-live::before { content: ''; width: 6px; height: 6px; background: var(--green); border-radius: 50%; }
 .status-offline { font-size: 10px; font-family: var(--font-mono); color: var(--red-text); display: flex; align-items: center; gap: 4px; }
@@ -884,53 +889,54 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 
 /* ── STAT MINI GRID ── */
 .stat-mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.stat-mini { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; }
-.stat-mini-val { font-family: var(--font-display); font-size: 30px; color: var(--navy); }
+.stat-mini { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 14px; text-align: center; }
+.stat-mini-val { font-family: var(--font-display); font-size: 30px; color: var(--white); }
 .stat-mini-label { font-size: 9px; color: var(--muted); font-family: var(--font-mono); letter-spacing: 1px; margin-top: 4px; }
 
 /* ── SMS BLAST ── */
 .blast-tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 18px; }
 .blast-tab { padding: 10px 20px; font-size: 12px; font-family: var(--font-mono); letter-spacing: 1px; cursor: pointer; color: var(--muted2); border-bottom: 2px solid transparent; margin-bottom: -2px; transition: all 0.2s; }
 .blast-tab:hover { color: var(--navy); }
-.blast-tab.active { color: var(--gold); border-bottom-color: var(--gold); font-weight: 700; }
+.blast-tab.active { color: var(--gold-light); border-bottom-color: var(--gold); font-weight: 700; }
 
 .blast-layout { display: grid; grid-template-columns: 340px 1fr; gap: 14px; }
 @media (max-width: 900px) { .blast-layout { grid-template-columns: 1fr; } }
 
 .blast-filter-panel { display: flex; flex-direction: column; gap: 14px; }
-.blast-filter-group { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.blast-filter-group { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 14px; }
 .blast-filter-label { font-size: 9px; font-family: var(--font-mono); letter-spacing: 1.5px; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; }
-.blast-filter-group select { width: 100%; padding: 8px 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; color: var(--navy); background: white; font-family: var(--font-body); outline: none; }
+.blast-filter-group select { width: 100%; padding: 8px 10px; border: 1.5px solid rgba(255,255,255,0.1); border-radius: 8px; font-size: 13px; color: var(--white); background: #1a1a1a; font-family: var(--font-body); outline: none; }
 .blast-filter-group select:focus { border-color: var(--gold); }
+.blast-filter-group select option { background: #1a1a1a; color: var(--white); }
 
 .blast-cb-group { display: flex; flex-direction: column; gap: 6px; }
-.blast-cb { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 12px; color: var(--navy); }
+.blast-cb { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 12px; color: var(--text); }
 .blast-cb input[type="checkbox"] { accent-color: var(--gold); width: 16px; height: 16px; cursor: pointer; }
 
-.blast-count-bar { background: var(--navy); border-radius: 10px; padding: 14px; text-align: center; }
+.blast-count-bar { background: linear-gradient(135deg, #161616, rgba(212,160,23,0.08)); border: 1px solid rgba(212,160,23,0.15); border-radius: 10px; padding: 14px; text-align: center; }
 .blast-count-num { font-family: var(--font-display); font-size: 36px; color: #c8a84b; line-height: 1; }
 .blast-count-label { font-size: 10px; font-family: var(--font-mono); color: rgba(255,255,255,0.5); letter-spacing: 1px; margin-top: 4px; }
 .blast-count-opted { font-size: 10px; color: var(--red-text); font-family: var(--font-mono); margin-top: 6px; background: var(--red-dim); display: inline-block; padding: 2px 8px; border-radius: 4px; }
 
 .blast-composer { display: flex; flex-direction: column; gap: 14px; }
 .blast-textarea-wrap { position: relative; }
-.blast-textarea { width: 100%; min-height: 110px; padding: 14px; border: 1.5px solid var(--border); border-radius: 10px; font-size: 14px; color: var(--navy); font-family: var(--font-body); outline: none; resize: vertical; background: white; line-height: 1.6; }
+.blast-textarea { width: 100%; min-height: 110px; padding: 14px; border: 1.5px solid rgba(255,255,255,0.1); border-radius: 10px; font-size: 14px; color: var(--white); font-family: var(--font-body); outline: none; resize: vertical; background: #1a1a1a; line-height: 1.6; }
 .blast-textarea:focus { border-color: var(--gold); }
 .blast-char-count { position: absolute; bottom: 10px; right: 14px; font-size: 10px; font-family: var(--font-mono); color: var(--muted); }
 .blast-char-count.warn { color: var(--gold-text); font-weight: 700; }
 .blast-char-count.over { color: var(--red-text); font-weight: 700; }
 
 .blast-merge-btns { display: flex; gap: 6px; flex-wrap: wrap; }
-.blast-merge-btn { padding: 5px 12px; font-size: 11px; font-family: var(--font-mono); color: var(--navy); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; transition: all 0.15s; }
+.blast-merge-btn { padding: 5px 12px; font-size: 11px; font-family: var(--font-mono); color: var(--text); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; cursor: pointer; transition: all 0.15s; }
 .blast-merge-btn:hover { background: var(--gold-dim); border-color: var(--gold); color: var(--gold-text); }
 
-.blast-preview-box { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.blast-preview-box { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 14px; }
 .blast-preview-label { font-size: 9px; font-family: var(--font-mono); letter-spacing: 1.5px; color: var(--muted); margin-bottom: 8px; }
-.blast-preview-bubble { background: var(--navy); border-radius: 12px 12px 12px 2px; padding: 12px 16px; color: rgba(255,255,255,0.9); font-size: 13px; line-height: 1.6; max-width: 320px; }
+.blast-preview-bubble { background: rgba(212,160,23,0.1); border: 1px solid rgba(212,160,23,0.2); border-radius: 12px 12px 12px 2px; padding: 12px 16px; color: rgba(255,255,255,0.85); font-size: 13px; line-height: 1.6; max-width: 320px; }
 
 .blast-schedule-row { display: flex; align-items: center; gap: 12px; }
-.blast-schedule-row label { font-size: 12px; color: var(--navy); font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; }
-.blast-schedule-row input[type="datetime-local"] { padding: 8px 10px; border: 1.5px solid var(--border); border-radius: 8px; font-size: 13px; color: var(--navy); background: white; font-family: var(--font-body); outline: none; }
+.blast-schedule-row label { font-size: 12px; color: var(--text); font-weight: 500; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+.blast-schedule-row input[type="datetime-local"] { padding: 8px 10px; border: 1.5px solid rgba(255,255,255,0.1); border-radius: 8px; font-size: 13px; color: var(--white); background: #1a1a1a; font-family: var(--font-body); outline: none; }
 
 .blast-send-btn { padding: 14px 28px; background: #c8a84b; color: #0d0d0d; border: none; border-radius: 10px; font-family: var(--font-display); font-size: 18px; letter-spacing: 2px; cursor: pointer; font-weight: 700; transition: all 0.15s; text-align: center; }
 .blast-send-btn:hover { background: #d4b45c; transform: translateY(-1px); }
@@ -940,17 +946,17 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 .blast-history-table table { width: 100%; }
 
 /* ── CONFIRMATION MODAL ── */
-.blast-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 9999; align-items: center; justify-content: center; }
+.blast-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 9999; align-items: center; justify-content: center; }
 .blast-modal-overlay.open { display: flex; }
-.blast-modal { background: white; border-radius: 14px; padding: 28px; max-width: 440px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-.blast-modal-title { font-family: var(--font-display); font-size: 22px; color: var(--navy); letter-spacing: 1px; margin-bottom: 8px; }
+.blast-modal { background: #1a1a1a; border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 28px; max-width: 440px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+.blast-modal-title { font-family: var(--font-display); font-size: 22px; color: var(--gold); letter-spacing: 1px; margin-bottom: 8px; }
 .blast-modal-warn { font-size: 13px; color: var(--red-text); margin-bottom: 16px; line-height: 1.5; }
-.blast-modal-preview { background: var(--bg); border-radius: 8px; padding: 12px; margin-bottom: 16px; }
-.blast-modal-preview-item { font-size: 12px; color: var(--navy); padding: 4px 0; border-bottom: 1px solid var(--border); }
+.blast-modal-preview { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 12px; margin-bottom: 16px; }
+.blast-modal-preview-item { font-size: 12px; color: var(--text); padding: 4px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
 .blast-modal-preview-item:last-child { border-bottom: none; }
 .blast-modal-btns { display: flex; gap: 10px; justify-content: flex-end; }
-.blast-modal-cancel { padding: 10px 20px; background: var(--bg); color: var(--muted2); border: 1px solid var(--border); border-radius: 8px; font-family: var(--font-display); font-size: 14px; letter-spacing: 1px; cursor: pointer; }
-.blast-modal-confirm { padding: 10px 20px; background: #c8a84b; color: #0d0d0d; border: none; border-radius: 8px; font-family: var(--font-display); font-size: 14px; letter-spacing: 1px; cursor: pointer; font-weight: 700; }
+.blast-modal-cancel { padding: 10px 20px; background: rgba(255,255,255,0.06); color: var(--muted2); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; font-family: var(--font-display); font-size: 14px; letter-spacing: 1px; cursor: pointer; }
+.blast-modal-confirm { padding: 10px 20px; background: var(--gold); color: #0a0a0a; border: none; border-radius: 8px; font-family: var(--font-display); font-size: 14px; letter-spacing: 1px; cursor: pointer; font-weight: 700; }
 
 /* ── MOBILE HAMBURGER ── */
 .mobile-hamburger {
@@ -963,7 +969,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 }
 .mobile-hamburger span {
   display: block; width: 22px; height: 2px;
-  background: var(--navy); border-radius: 2px;
+  background: var(--gold); border-radius: 2px;
   transition: all 0.25s;
 }
 .sidebar-backdrop {
@@ -1283,11 +1289,11 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
             <div style="margin-top:14px;display:flex;gap:20px;">
               <div>
                 <div style="font-size:10px;color:var(--muted);font-family:var(--font-mono);letter-spacing:1px;margin-bottom:3px">PEAK DAY</div>
-                <div style="font-size:14px;font-weight:600;color:var(--navy)">Saturday <span style="color:var(--green);font-family:var(--font-mono);font-size:12px">+8 leads</span></div>
+                <div style="font-size:14px;font-weight:600;color:var(--white)">Saturday <span style="color:var(--green);font-family:var(--font-mono);font-size:12px">+8 leads</span></div>
               </div>
               <div>
                 <div style="font-size:10px;color:var(--muted);font-family:var(--font-mono);letter-spacing:1px;margin-bottom:3px">TOP SOURCE</div>
-                <div style="font-size:14px;font-weight:600;color:var(--navy)">Instagram <span style="color:var(--gold);font-family:var(--font-mono);font-size:12px">62%</span></div>
+                <div style="font-size:14px;font-weight:600;color:var(--white)">Instagram <span style="color:var(--gold);font-family:var(--font-mono);font-size:12px">62%</span></div>
               </div>
             </div>
           </div>
@@ -1327,15 +1333,15 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
               </div>
               <div style="flex:1;">
                 <div style="margin-bottom:12px">
-                  <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--muted2)">Lead → Assessment</span><span style="color:var(--navy);font-family:var(--font-mono)">39%</span></div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--muted2)">Lead → Assessment</span><span style="color:var(--white);font-family:var(--font-mono)">39%</span></div>
                   <div class="progress-wrap"><div class="progress-fill" style="width:39%"></div></div>
                 </div>
                 <div style="margin-bottom:12px">
-                  <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--muted2)">Assessment → Closed</span><span style="color:var(--navy);font-family:var(--font-mono)">78%</span></div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--muted2)">Assessment → Closed</span><span style="color:var(--white);font-family:var(--font-mono)">78%</span></div>
                   <div class="progress-wrap"><div class="progress-fill green" style="width:78%"></div></div>
                 </div>
                 <div>
-                  <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--muted2)">SMS Response Rate</span><span style="color:var(--navy);font-family:var(--font-mono)">52%</span></div>
+                  <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px;"><span style="color:var(--muted2)">SMS Response Rate</span><span style="color:var(--white);font-family:var(--font-mono)">52%</span></div>
                   <div class="progress-wrap"><div class="progress-fill gold" style="width:52%"></div></div>
                 </div>
               </div>
@@ -1358,8 +1364,8 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
         <div class="panel">
           <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> DROP-OFF FUNNEL</div></div>
           <div class="panel-body">
-            <div class="funnel-step"><div class="funnel-label">Page Visitors</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:100%;background:rgba(26,32,53,0.12);color:var(--navy)">1,847</div></div><div class="funnel-count">1847</div><div class="funnel-pct">100%</div></div>
-            <div class="funnel-step"><div class="funnel-label">Form Started</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:72%;background:rgba(26,32,53,0.08);color:var(--navy)">1,340</div></div><div class="funnel-count">1340</div><div class="funnel-pct">72%</div></div>
+            <div class="funnel-step"><div class="funnel-label">Page Visitors</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:100%;background:rgba(212,160,23,0.1);color:var(--white)">1,847</div></div><div class="funnel-count">1847</div><div class="funnel-pct">100%</div></div>
+            <div class="funnel-step"><div class="funnel-label">Form Started</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:72%;background:rgba(212,160,23,0.06);color:var(--white)">1,340</div></div><div class="funnel-count">1340</div><div class="funnel-pct">72%</div></div>
             <div class="funnel-step"><div class="funnel-label">Form Submitted</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:47%;background:var(--gold-dim);color:var(--gold-text)">87</div></div><div class="funnel-count">87</div><div class="funnel-pct" style="color:var(--gold-text)">4.7%</div></div>
             <div class="funnel-step"><div class="funnel-label">Assessment Booked</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:30%;background:var(--purple-dim);color:var(--purple-text)">34</div></div><div class="funnel-count">34</div><div class="funnel-pct" style="color:var(--purple-text)">39%</div></div>
             <div class="funnel-step"><div class="funnel-label">Client Closed</div><div class="funnel-bar-wrap"><div class="funnel-bar" style="width:20%;background:var(--green-dim);color:var(--green-text)">22</div></div><div class="funnel-count">22</div><div class="funnel-pct" style="color:var(--green-text)">78%</div></div>
@@ -1369,10 +1375,10 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
           <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> TRAFFIC SOURCES</div></div>
           <div class="panel-body">
             <div style="display:flex;flex-direction:column;gap:14px;">
-              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;"><span style="color:var(--navy);font-weight:600">📸 Instagram</span><span style="font-family:var(--font-mono);color:var(--navy)">62% · 54 leads</span></div><div class="progress-wrap" style="height:8px"><div class="progress-fill" style="width:62%;background:linear-gradient(90deg,#e1306c,#833ab4)"></div></div></div>
-              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;"><span style="color:var(--navy);font-weight:600">🤖 FLEX AI Button</span><span style="font-family:var(--font-mono);color:var(--navy)">18% · 16 leads</span></div><div class="progress-wrap" style="height:8px"><div class="progress-fill" style="width:18%"></div></div></div>
-              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;"><span style="color:var(--navy);font-weight:600">👋🏾 Word of Mouth</span><span style="font-family:var(--font-mono);color:var(--navy)">12% · 10 leads</span></div><div class="progress-wrap" style="height:8px"><div class="progress-fill green" style="width:12%"></div></div></div>
-              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;"><span style="color:var(--navy);font-weight:600">🔍 Google / Direct</span><span style="font-family:var(--font-mono);color:var(--navy)">8% · 7 leads</span></div><div class="progress-wrap" style="height:8px"><div class="progress-fill gold" style="width:8%"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;"><span style="color:var(--white);font-weight:600">📸 Instagram</span><span style="font-family:var(--font-mono);color:var(--white)">62% · 54 leads</span></div><div class="progress-wrap" style="height:8px"><div class="progress-fill" style="width:62%;background:linear-gradient(90deg,#e1306c,#833ab4)"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;"><span style="color:var(--white);font-weight:600">🤖 FLEX AI Button</span><span style="font-family:var(--font-mono);color:var(--white)">18% · 16 leads</span></div><div class="progress-wrap" style="height:8px"><div class="progress-fill" style="width:18%"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;"><span style="color:var(--white);font-weight:600">👋🏾 Word of Mouth</span><span style="font-family:var(--font-mono);color:var(--white)">12% · 10 leads</span></div><div class="progress-wrap" style="height:8px"><div class="progress-fill green" style="width:12%"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px;"><span style="color:var(--white);font-weight:600">🔍 Google / Direct</span><span style="font-family:var(--font-mono);color:var(--white)">8% · 7 leads</span></div><div class="progress-wrap" style="height:8px"><div class="progress-fill gold" style="width:8%"></div></div></div>
             </div>
           </div>
         </div>
@@ -1394,7 +1400,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
           <div class="crm-mode-tab active" onclick="setCrmMode('table',this)">Lead Table</div>
           <div class="crm-mode-tab" onclick="setCrmMode('pipeline',this)">Pipeline Board</div>
         </div>
-        <button onclick="openAddLeadModal()" style="margin-left:auto;padding:7px 16px;background:var(--navy);color:white;border:none;border-radius:7px;font-family:var(--font-display);font-size:13px;letter-spacing:1.5px;cursor:pointer;">+ ADD NEW LEAD</button>
+        <button onclick="openAddLeadModal()" style="margin-left:auto;padding:7px 16px;background:var(--gold);color:#0a0a0a;border:none;border-radius:7px;font-weight:700;font-family:var(--font-display);font-size:13px;letter-spacing:1.5px;cursor:pointer;">+ ADD NEW LEAD</button>
       </div>
 
       <!-- Search -->
@@ -1435,8 +1441,8 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
         <div id="crm-pagination" style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding:0 4px;">
           <div id="crm-page-info" style="font-size:11px;color:var(--muted);font-family:var(--font-mono);"></div>
           <div style="display:flex;gap:6px;">
-            <button onclick="crmPrevPage()" id="crm-prev-btn" class="sync-btn" style="background:var(--white);color:var(--navy);border:1px solid var(--border);padding:5px 12px;font-size:10px;" disabled>← Prev</button>
-            <button onclick="crmNextPage()" id="crm-next-btn" class="sync-btn" style="background:var(--white);color:var(--navy);border:1px solid var(--border);padding:5px 12px;font-size:10px;" disabled>Next →</button>
+            <button onclick="crmPrevPage()" id="crm-prev-btn" class="sync-btn" style="background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.1);padding:5px 12px;font-size:10px;" disabled>← Prev</button>
+            <button onclick="crmNextPage()" id="crm-next-btn" class="sync-btn" style="background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.1);padding:5px 12px;font-size:10px;" disabled>Next →</button>
           </div>
         </div>
       </div>
@@ -1461,9 +1467,9 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 
     <!-- Add lead modal -->
     <div class="add-lead-modal" id="add-lead-modal">
-      <div style="background:var(--white);border-radius:14px;padding:28px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;">
+      <div style="background:#1a1a1a;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:28px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-          <div style="font-family:var(--font-display);font-size:20px;letter-spacing:2px;color:var(--navy)">ADD NEW LEAD</div>
+          <div style="font-family:var(--font-display);font-size:20px;letter-spacing:2px;color:var(--white)">ADD NEW LEAD</div>
           <div style="cursor:pointer;font-size:18px;color:var(--muted)" onclick="closeAddLeadModal()">✕</div>
         </div>
         <form id="add-lead-form" onsubmit="submitNewLead(event)">
@@ -1475,7 +1481,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
             <div class="form-group"><label>SOURCE</label><select id="new-lead-source"><option value="Manual Entry">Manual Entry</option><option value="Instagram">Instagram</option><option value="Website">Website</option><option value="Referral">Referral</option><option value="Walk-in">Walk-in</option><option value="Phone Call">Phone Call</option></select></div>
             <div class="form-group"><label>SEGMENT</label><select id="new-lead-segment"><option value="athlete">Athlete</option><option value="lifestyle">Lifestyle</option></select></div>
           </div>
-          <button type="submit" style="width:100%;margin-top:18px;padding:12px;background:var(--navy);color:white;border:none;border-radius:9px;font-family:var(--font-display);font-size:16px;letter-spacing:2px;cursor:pointer;">CREATE LEAD</button>
+          <button type="submit" style="width:100%;margin-top:18px;padding:12px;background:var(--gold);color:#0a0a0a;border:none;border-radius:9px;font-weight:700;font-family:var(--font-display);font-size:16px;letter-spacing:2px;cursor:pointer;">CREATE LEAD</button>
         </form>
       </div>
     </div>
@@ -1520,9 +1526,9 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
         <div class="section-sub" id="cal-week-label">Loading...</div>
       </div>
       <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;">
-        <button class="sync-btn" onclick="calPrevWeek()" style="background:var(--white);color:var(--navy);border:1px solid var(--border);">← Prev Week</button>
+        <button class="sync-btn" onclick="calPrevWeek()" style="background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.1);">← Prev Week</button>
         <button class="sync-btn" onclick="calToday()">Today</button>
-        <button class="sync-btn" onclick="calNextWeek()" style="background:var(--white);color:var(--navy);border:1px solid var(--border);">Next Week →</button>
+        <button class="sync-btn" onclick="calNextWeek()" style="background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.1);">Next Week →</button>
         <div style="margin-left:auto;display:flex;gap:8px;">
           <button class="sync-btn" onclick="openManualBooking()" style="background:var(--green);border-color:var(--green);">+ Manual Booking</button>
           <button class="sync-btn" onclick="showView('sms-center',null)">💬 SMS Center</button>
@@ -1560,32 +1566,32 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
           <div class="panel-body">
             <div style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted);margin-bottom:12px;">BLOCK A DATE</div>
             <div style="display:flex;gap:8px;margin-bottom:16px;">
-              <input type="date" id="block-date" style="flex:1;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-family:var(--font-body);font-size:13px;color:var(--navy);background:var(--bg);outline:none;">
-              <input type="text" id="block-reason" placeholder="Reason (optional)" style="flex:2;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-family:var(--font-body);font-size:13px;color:var(--navy);background:var(--bg);outline:none;">
+              <input type="date" id="block-date" style="flex:1;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-family:var(--font-body);font-size:13px;color:var(--white);background:var(--bg);outline:none;">
+              <input type="text" id="block-reason" placeholder="Reason (optional)" style="flex:2;padding:8px 12px;border:1px solid var(--border);border-radius:8px;font-family:var(--font-body);font-size:13px;color:var(--white);background:var(--bg);outline:none;">
             </div>
-            <button onclick="blockDate()" style="width:100%;padding:9px;background:var(--navy);color:white;border:none;border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:2px;cursor:pointer;margin-bottom:16px;">BLOCK DATE</button>
+            <button onclick="blockDate()" style="width:100%;padding:9px;background:var(--gold);color:#0a0a0a;border:none;border-radius:8px;font-weight:700;font-family:var(--font-display);font-size:14px;letter-spacing:2px;cursor:pointer;margin-bottom:16px;">BLOCK DATE</button>
             <div id="blocked-dates-list" style="display:flex;flex-direction:column;gap:6px;"></div>
           </div>
         </div>
       </div>
       <!-- MANUAL BOOKING MODAL -->
       <div id="manual-booking-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:1000;align-items:center;justify-content:center;">
-        <div style="background:var(--white);border-radius:14px;padding:28px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;">
+        <div style="background:#1a1a1a;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:28px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-            <div style="font-family:var(--font-display);font-size:20px;letter-spacing:2px;color:var(--navy)">MANUAL BOOKING</div>
+            <div style="font-family:var(--font-display);font-size:20px;letter-spacing:2px;color:var(--white)">MANUAL BOOKING</div>
             <div style="cursor:pointer;font-size:18px;color:var(--muted)" onclick="closeManualBooking()">✕</div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-            <div style="grid-column:1/3"><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">FULL NAME *</label><input id="mb-name" type="text" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);" placeholder="Customer name"></div>
-            <div><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">PHONE *</label><input id="mb-phone" type="tel" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);" placeholder="(314) 000-0000"></div>
-            <div><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">EMAIL *</label><input id="mb-email" type="email" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);" placeholder="email@example.com"></div>
-            <div><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">DATE *</label><input id="mb-date" type="date" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);"></div>
-            <div><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">TIME *</label><input id="mb-time" type="time" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);"></div>
-            <div><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">SESSION TYPE</label><select id="mb-session" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);"><option value="athlete">Athlete Assessment</option><option value="lifestyle">Lifestyle Consultation</option><option value="bodybuilding">Bodybuilding Consult</option></select></div>
-            <div style="grid-column:1/3"><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">NOTES</label><textarea id="mb-notes" rows="2" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);resize:vertical;" placeholder="Sport, goal, referral source..."></textarea></div>
-            <div style="grid-column:1/3;display:flex;align-items:center;gap:8px;"><input type="checkbox" id="mb-sms" checked style="width:16px;height:16px;accent-color:var(--navy);"><label for="mb-sms" style="font-size:13px;color:var(--muted2)">Send confirmation SMS to customer</label></div>
+            <div style="grid-column:1/3"><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">FULL NAME *</label><input id="mb-name" type="text" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--white);background:var(--bg);outline:none;font-family:var(--font-body);" placeholder="Customer name"></div>
+            <div><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">PHONE *</label><input id="mb-phone" type="tel" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--white);background:var(--bg);outline:none;font-family:var(--font-body);" placeholder="(314) 000-0000"></div>
+            <div><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">EMAIL *</label><input id="mb-email" type="email" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--white);background:var(--bg);outline:none;font-family:var(--font-body);" placeholder="email@example.com"></div>
+            <div><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">DATE *</label><input id="mb-date" type="date" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--white);background:var(--bg);outline:none;font-family:var(--font-body);"></div>
+            <div><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">TIME *</label><input id="mb-time" type="time" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--white);background:var(--bg);outline:none;font-family:var(--font-body);"></div>
+            <div><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">SESSION TYPE</label><select id="mb-session" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--white);background:var(--bg);outline:none;font-family:var(--font-body);"><option value="athlete">Athlete Assessment</option><option value="lifestyle">Lifestyle Consultation</option><option value="bodybuilding">Bodybuilding Consult</option></select></div>
+            <div style="grid-column:1/3"><label style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);display:block;margin-bottom:5px;">NOTES</label><textarea id="mb-notes" rows="2" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--white);background:var(--bg);outline:none;font-family:var(--font-body);resize:vertical;" placeholder="Sport, goal, referral source..."></textarea></div>
+            <div style="grid-column:1/3;display:flex;align-items:center;gap:8px;"><input type="checkbox" id="mb-sms" checked style="width:16px;height:16px;accent-color:var(--gold);"><label for="mb-sms" style="font-size:13px;color:var(--muted2)">Send confirmation SMS to customer</label></div>
           </div>
-          <button onclick="submitManualBooking()" style="width:100%;margin-top:18px;padding:12px;background:var(--navy);color:white;border:none;border-radius:9px;font-family:var(--font-display);font-size:16px;letter-spacing:2px;cursor:pointer;">CONFIRM BOOKING</button>
+          <button onclick="submitManualBooking()" style="width:100%;margin-top:18px;padding:12px;background:var(--gold);color:#0a0a0a;border:none;border-radius:9px;font-weight:700;font-family:var(--font-display);font-size:16px;letter-spacing:2px;cursor:pointer;">CONFIRM BOOKING</button>
         </div>
       </div>
     </div>
@@ -1603,8 +1609,8 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
             <div style="margin-bottom:14px;">
               <div style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);margin-bottom:6px;">RECIPIENT</div>
               <div style="display:flex;gap:8px;">
-                <input id="sms-to-name" type="text" placeholder="Customer name" style="flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);">
-                <input id="sms-to-phone" type="tel" placeholder="(314) 000-0000" style="flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);">
+                <input id="sms-to-name" type="text" placeholder="Customer name" style="flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--white);background:var(--bg);outline:none;font-family:var(--font-body);">
+                <input id="sms-to-phone" type="tel" placeholder="(314) 000-0000" style="flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--white);background:var(--bg);outline:none;font-family:var(--font-body);">
               </div>
             </div>
             <div style="margin-bottom:10px;">
@@ -1619,14 +1625,14 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
             </div>
             <div style="margin-bottom:10px;">
               <div style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted2);margin-bottom:6px;">MESSAGE</div>
-              <textarea id="sms-body" rows="5" placeholder="Type your message here..." style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);resize:vertical;" oninput="updateSmsCount()"></textarea>
+              <textarea id="sms-body" rows="5" placeholder="Type your message here..." style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--white);background:var(--bg);outline:none;font-family:var(--font-body);resize:vertical;" oninput="updateSmsCount()"></textarea>
               <div style="display:flex;justify-content:space-between;margin-top:4px;">
                 <div id="sms-count" style="font-size:11px;color:var(--muted);font-family:var(--font-mono);">0 / 160 chars</div>
                 <div id="sms-count-warn" style="font-size:11px;color:var(--red-text);font-family:var(--font-mono);display:none;">Multiple SMS segments</div>
               </div>
             </div>
-            <button onclick="sendSingleSMS()" style="width:100%;padding:11px;background:var(--navy);color:white;border:none;border-radius:9px;font-family:var(--font-display);font-size:16px;letter-spacing:2px;cursor:pointer;margin-bottom:10px;">SEND MESSAGE</button>
-            <button onclick="openBlastModal()" style="width:100%;padding:11px;background:var(--white);color:var(--navy);border:1.5px solid var(--border);border-radius:9px;font-family:var(--font-display);font-size:16px;letter-spacing:2px;cursor:pointer;">📣 SMS BLAST</button>
+            <button onclick="sendSingleSMS()" style="width:100%;padding:11px;background:var(--gold);color:#0a0a0a;border:none;border-radius:9px;font-weight:700;font-family:var(--font-display);font-size:16px;letter-spacing:2px;cursor:pointer;margin-bottom:10px;">SEND MESSAGE</button>
+            <button onclick="openBlastModal()" style="width:100%;padding:11px;background:rgba(255,255,255,0.06);color:var(--text);border:1.5px solid rgba(255,255,255,0.1);border-radius:9px;font-family:var(--font-display);font-size:16px;letter-spacing:2px;cursor:pointer;">📣 SMS BLAST</button>
           </div>
         </div>
         <div class="panel">
@@ -1767,7 +1773,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
               <div class="sms-flow">
                 <div class="sms-node"><div class="sms-node-icon done">✅</div><div class="sms-node-body"><div class="sms-node-title">Stage 1 — Immediate Welcome</div><div class="sms-node-text">"Hey [Name]! Coach Kenny here from The Flex Facility 💪🏾 Just saw your info. Let's set up your free athlete assessment!"</div><div class="sms-node-meta">Fires immediately after form submit</div><div class="sms-stats"><div class="sms-stat sent">Sent: 87</div><div class="sms-stat replied">Replied: 52</div><div class="sms-stat clicked">Clicked: 34</div></div></div></div>
                 <div class="sms-node"><div class="sms-node-icon done">✅</div><div class="sms-node-body"><div class="sms-node-title">Stage 2 — Social Proof (Day 1)</div><div class="sms-node-text">"Real results happen at The Flex Facility. Spots filling up — book your free session 👉🏾 [link]"</div><div class="sms-node-meta">24 hrs after Stage 1 · If not booked</div><div class="sms-stats"><div class="sms-stat sent">Sent: 53</div><div class="sms-stat replied">Replied: 28</div><div class="sms-stat clicked">Clicked: 19</div></div></div></div>
-                <div class="sms-node"><div class="sms-node-icon active">⚡</div><div class="sms-node-body"><div class="sms-node-title">Stage 3 — Urgency (Day 3)</div><div class="sms-node-text">"[Name], your free assessment slot is still open — but not for long. Claim it: [link]"</div><div class="sms-node-meta" style="color:var(--navy);font-weight:600">⚡ ACTIVE — 14 leads in this stage</div><div class="sms-stats"><div class="sms-stat sent">Sent: 14</div><div class="sms-stat replied">Replied: 7</div></div></div></div>
+                <div class="sms-node"><div class="sms-node-icon active">⚡</div><div class="sms-node-body"><div class="sms-node-title">Stage 3 — Urgency (Day 3)</div><div class="sms-node-text">"[Name], your free assessment slot is still open — but not for long. Claim it: [link]"</div><div class="sms-node-meta" style="color:var(--white);font-weight:600">⚡ ACTIVE — 14 leads in this stage</div><div class="sms-stats"><div class="sms-stat sent">Sent: 14</div><div class="sms-stat replied">Replied: 7</div></div></div></div>
                 <div class="sms-node"><div class="sms-node-icon">🔒</div><div class="sms-node-body"><div class="sms-node-title">Stage 4 — Final Attempt (Day 7)</div><div class="sms-node-text">"Last message — The Flex Facility will be here when you're ready. Coach Kenny, 1-877-515-FLEX."</div><div class="sms-node-meta" style="color:var(--muted)">Pending · Booking webhook needed first</div></div></div>
               </div>
             </div>
@@ -1782,9 +1788,9 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
               </div>
               <div style="font-size:10px;font-family:var(--font-mono);letter-spacing:1.5px;color:var(--muted);margin-bottom:10px;">ACTIVE SEQUENCES</div>
               <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
-                <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;"><span style="font-size:12px;color:var(--navy)">Athlete Nurture Sequence</span><span style="font-size:10px;font-family:var(--font-mono);color:var(--green-text);display:flex;align-items:center;gap:4px"><span style="width:6px;height:6px;background:var(--green);border-radius:50%;display:inline-block"></span>ACTIVE</span></div>
-                <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;opacity:0.6;"><span style="font-size:12px;color:var(--navy)">Lifestyle / Bodybuilding Sequence</span><span style="font-size:10px;font-family:var(--font-mono);color:var(--muted)">PENDING BUILD</span></div>
-                <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;opacity:0.6;"><span style="font-size:12px;color:var(--navy)">Re-engagement (Cold Leads)</span><span style="font-size:10px;font-family:var(--font-mono);color:var(--muted)">PENDING BUILD</span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;"><span style="font-size:12px;color:var(--white)">Athlete Nurture Sequence</span><span style="font-size:10px;font-family:var(--font-mono);color:var(--green-text);display:flex;align-items:center;gap:4px"><span style="width:6px;height:6px;background:var(--green);border-radius:50%;display:inline-block"></span>ACTIVE</span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;opacity:0.6;"><span style="font-size:12px;color:var(--white)">Lifestyle / Bodybuilding Sequence</span><span style="font-size:10px;font-family:var(--font-mono);color:var(--muted)">PENDING BUILD</span></div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;opacity:0.6;"><span style="font-size:12px;color:var(--white)">Re-engagement (Cold Leads)</span><span style="font-size:10px;font-family:var(--font-mono);color:var(--muted)">PENDING BUILD</span></div>
               </div>
               <div class="warn-banner"><div class="warn-title">⚠️ Action Needed</div><div class="warn-text">TidyCal webhook not connected. Booked leads may still receive nudge SMS. Connect booking webhook to stop sequence on booking.</div></div>
             </div>
@@ -1824,13 +1830,13 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
           <div class="panel">
             <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> ASK FLEX AI</div></div>
             <div class="panel-body">
-              <div style="background:var(--navy);border-radius:10px;padding:14px;margin-bottom:12px;min-height:100px;">
+              <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:14px;margin-bottom:12px;min-height:100px;">
                 <div style="font-size:10px;font-family:var(--font-mono);color:rgba(255,255,255,0.4);margin-bottom:8px;letter-spacing:1px;">FLEX AI ●</div>
                 <div style="font-size:13px;color:rgba(255,255,255,0.85);line-height:1.6;">Hey Coach 👋🏾 Tracking your funnel in real time. You have 14 hot leads right now — Check your CRM for new leads and follow up immediately.</div>
               </div>
               <div style="display:flex;gap:8px;">
-                <input type="text" placeholder="Ask anything about your funnel..." style="flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 13px;font-size:13px;color:var(--navy);outline:none;font-family:var(--font-body);">
-                <button style="background:var(--navy);border:none;border-radius:8px;padding:0 16px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;color:white;">SEND</button>
+                <input type="text" placeholder="Ask anything about your funnel..." style="flex:1;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 13px;font-size:13px;color:var(--white);outline:none;font-family:var(--font-body);">
+                <button style="background:var(--gold);border:none;border-radius:8px;padding:0 16px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;color:#0a0a0a;font-weight:700;">SEND</button>
               </div>
               <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;">
                 <div style="font-size:10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:4px 10px;color:var(--muted2);cursor:pointer;font-family:var(--font-mono)">Who are my hottest leads?</div>
@@ -1845,7 +1851,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
             <div class="rev-sub">Based on 14 hot leads × 78% close rate × avg $1,024 value</div>
             <div class="rev-row">
               <div><div class="rev-mini-label">AVG CLIENT VALUE</div><div class="rev-mini-val">$1,024</div></div>
-              <div><div class="rev-mini-label">BEST CASE</div><div class="rev-mini-val" style="color:#7ee8b8">$14,336</div></div>
+              <div><div class="rev-mini-label">BEST CASE</div><div class="rev-mini-val" style="color:var(--green-text)">$14,336</div></div>
               <div><div class="rev-mini-label">CONSERVATIVE</div><div class="rev-mini-val" style="color:var(--gold)">$8,192</div></div>
             </div>
           </div>
@@ -1902,7 +1908,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
           <div style="font-size:12px;color:var(--muted2);line-height:1.6;margin-bottom:12px;">Copy this URL and paste it into your Twilio Console under <strong>Messaging → Services → Incoming Messages webhook</strong>. When a contact replies STOP, they will automatically be opted out of SMS blasts.</div>
           <div style="display:flex;gap:8px;align-items:center;">
             <input type="text" id="optout-webhook-url" readonly value="https://portal.theflexfacility.com/api/twilio-opt-out" style="flex:1;padding:10px 12px;font-family:var(--font-mono);font-size:12px;color:var(--cyan-text);background:var(--bg);border:1.5px solid var(--border);border-radius:8px;outline:none;">
-            <button onclick="copyOptOutUrl()" style="padding:10px 16px;background:var(--navy);color:white;border:none;border-radius:8px;font-family:var(--font-display);font-size:13px;letter-spacing:1px;cursor:pointer;white-space:nowrap;">COPY URL</button>
+            <button onclick="copyOptOutUrl()" style="padding:10px 16px;background:var(--gold);color:#0a0a0a;border:none;border-radius:8px;font-weight:700;font-family:var(--font-display);font-size:13px;letter-spacing:1px;cursor:pointer;white-space:nowrap;">COPY URL</button>
           </div>
           <div id="optout-copy-msg" style="font-size:11px;color:var(--green-text);margin-top:6px;display:none;">Copied to clipboard!</div>
         </div>
@@ -2278,7 +2284,7 @@ async function loadCrmPipeline() {
         +leads.map(function(l) {
           var name = l.full_name || ((l.first_name||'')+' '+(l.last_name||'')).trim() || 'Unknown';
           return '<div class="kanban-card" draggable="true" ondragstart="kanbanDragStart(event,\''+l.id+'\')" onclick="openLeadDrawer(\''+l.id+'\',\''+crmSegment+'\')">'
-            +'<div style="font-size:12px;font-weight:600;color:var(--navy);margin-bottom:3px;">'+name+'</div>'
+            +'<div style="font-size:12px;font-weight:600;color:var(--white);margin-bottom:3px;">'+name+'</div>'
             +'<div style="font-size:10px;color:var(--muted2);">'+(l.source||'—')+'</div>'
           +'</div>';
         }).join('')
@@ -2336,7 +2342,7 @@ async function openLeadDrawer(id, segment) {
         +'</select></div>'
         +'<div class="drawer-field"><label>NOTES</label><textarea name="notes" rows="3">'+(lead.notes||'')+'</textarea></div>'
       +'</div>'
-      +'<button type="submit" style="width:100%;padding:11px;background:var(--navy);color:white;border:none;border-radius:9px;font-family:var(--font-display);font-size:15px;letter-spacing:2px;cursor:pointer;margin-top:10px;">SAVE CHANGES</button>'
+      +'<button type="submit" style="width:100%;padding:11px;background:var(--gold);color:#0a0a0a;border:none;border-radius:9px;font-weight:700;font-family:var(--font-display);font-size:15px;letter-spacing:2px;cursor:pointer;margin-top:10px;">SAVE CHANGES</button>'
     +'</form>';
   } catch(err) {
     body.innerHTML = '<div style="text-align:center;padding:30px;color:var(--red-text)">Error loading lead details</div>';
@@ -2429,15 +2435,15 @@ async function renderCalendarManager() {
     const isToday = date.toDateString()===today;
     const dayBookings = calBookings.filter(b=>b.booking_date===dateStr);
     const isBlocked = calBlocked.includes(dateStr);
-    return '<div style="border-right:1px solid var(--border);min-height:280px;'+(i===6?'border-right:none':'')+';background:'+(isToday?'rgba(26,32,53,0.03)':'transparent')+'">'
-      +'<div style="padding:10px 12px;border-bottom:1px solid var(--border);background:'+(isToday?'var(--navy)':'var(--bg)')+';text-align:center;">'
-        +'<div style="font-size:10px;font-family:var(--font-mono);color:'+(isToday?'rgba(255,255,255,0.6)':'var(--muted)')+';letter-spacing:1px;">'+days[i]+'</div>'
-        +'<div style="font-family:var(--font-display);font-size:20px;color:'+(isToday?'white':'var(--navy)')+';">'+date.getDate()+'</div>'
+    return '<div style="border-right:1px solid var(--border);min-height:280px;'+(i===6?'border-right:none':'')+';background:'+(isToday?'rgba(212,160,23,0.04)':'transparent')+'">'
+      +'<div style="padding:10px 12px;border-bottom:1px solid var(--border);background:'+(isToday?'rgba(212,160,23,0.12)':'rgba(255,255,255,0.02)')+';text-align:center;">'
+        +'<div style="font-size:10px;font-family:var(--font-mono);color:'+(isToday?'var(--gold)':'var(--muted)')+';letter-spacing:1px;">'+days[i]+'</div>'
+        +'<div style="font-family:var(--font-display);font-size:20px;color:'+(isToday?'var(--gold-light)':'var(--white)')+';">'+date.getDate()+'</div>'
       +'</div>'
       +'<div style="padding:8px;">'
         +(isBlocked?'<div style="background:rgba(136,136,152,0.15);border:1px solid var(--border);border-radius:6px;padding:6px 8px;font-size:10px;font-family:var(--font-mono);color:var(--muted);text-align:center;">BLOCKED</div>':'')
 +dayBookings.map(function(b){ var bg=statusColor[b.status]||'var(--cyan-dim)'; var tc=statusText[b.status]||'var(--cyan-text)'; return '<div onclick="openApptDetail(\''+b.id+'\')" style="background:'+bg+';border:1px solid var(--border);border-radius:6px;padding:7px 8px;margin-bottom:5px;cursor:pointer;">'
-          +'<div style="font-size:12px;color:var(--navy);font-weight:500;margin-top:2px;">'+(b.full_name||'Unknown')+'</div>'
+          +'<div style="font-size:12px;color:var(--white);font-weight:500;margin-top:2px;">'+(b.full_name||'Unknown')+'</div>'
           +'<div style="font-size:10px;color:var(--muted2);">'+(b.booking_type||'').slice(0,20)+'</div>'
         +'</div>'; }).join('')
         +(dayBookings.length===0&&!isBlocked?'<div style="text-align:center;padding:16px 0;font-size:11px;color:var(--muted);font-family:var(--font-mono);">—</div>':'')
@@ -2453,18 +2459,18 @@ async function openApptDetail(bookingId) {
   const booking = calBookings.find(b=>b.id===bookingId)||{};
   const statusClass = {'Confirmed':'booked','Pending':'warm','Cancelled':'cold','No-Show':'hot','Showed Up':'booked'};
   body.innerHTML = '<div style="display:flex;flex-direction:column;gap:14px;">'
-    +'<div style="display:flex;justify-content:space-between;align-items:center;"><div><div style="font-family:var(--font-display);font-size:22px;color:var(--navy);">'+(booking.full_name||'Unknown')+'</div><div style="font-size:12px;color:var(--muted2);">'+(booking.booking_type||'—')+'</div></div><span class="pill '+(statusClass[booking.status]||'new')+'"><span class="pill-dot"></span>'+(booking.status||'UNKNOWN').toUpperCase()+'</span></div>'
+    +'<div style="display:flex;justify-content:space-between;align-items:center;"><div><div style="font-family:var(--font-display);font-size:22px;color:var(--white);">'+(booking.full_name||'Unknown')+'</div><div style="font-size:12px;color:var(--muted2);">'+(booking.booking_type||'—')+'</div></div><span class="pill '+(statusClass[booking.status]||'new')+'"><span class="pill-dot"></span>'+(booking.status||'UNKNOWN').toUpperCase()+'</span></div>'
     +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">'
-      +'<div style="background:var(--bg);border-radius:8px;padding:10px 12px;"><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">DATE & TIME</div><div style="font-size:13px;font-weight:600;color:var(--navy);">'+(booking.booking_date||'—')+' · '+(booking.booking_time||'—')+'</div></div>'
-      +'<div style="background:var(--bg);border-radius:8px;padding:10px 12px;"><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">PHONE</div><div style="font-size:13px;font-weight:600;color:var(--navy);">'+(booking.phone||'—')+'</div></div>'
-      +'<div style="background:var(--bg);border-radius:8px;padding:10px 12px;"><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">EMAIL</div><div style="font-size:12px;color:var(--navy);">'+(booking.email||'—')+'</div></div>'
-      +'<div style="background:var(--bg);border-radius:8px;padding:10px 12px;"><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">SEGMENT</div><div style="font-size:13px;font-weight:600;color:var(--navy);">'+(booking.segment||'—')+'</div></div>'
+      +'<div style="background:var(--bg);border-radius:8px;padding:10px 12px;"><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">DATE & TIME</div><div style="font-size:13px;font-weight:600;color:var(--white);">'+(booking.booking_date||'—')+' · '+(booking.booking_time||'—')+'</div></div>'
+      +'<div style="background:var(--bg);border-radius:8px;padding:10px 12px;"><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">PHONE</div><div style="font-size:13px;font-weight:600;color:var(--white);">'+(booking.phone||'—')+'</div></div>'
+      +'<div style="background:var(--bg);border-radius:8px;padding:10px 12px;"><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">EMAIL</div><div style="font-size:12px;color:var(--white);">'+(booking.email||'—')+'</div></div>'
+      +'<div style="background:var(--bg);border-radius:8px;padding:10px 12px;"><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:3px;">SEGMENT</div><div style="font-size:13px;font-weight:600;color:var(--white);">'+(booking.segment||'—')+'</div></div>'
     +'</div>'
-    +'<div><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:6px;">NOTES</div><textarea id="appt-notes" rows="2" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);resize:none;">'+(booking.notes||'')+'</textarea></div>'
-    +'<div><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:8px;">RESCHEDULE</div><div style="display:flex;gap:8px;"><input type="date" id="appt-new-date" value="'+(booking.booking_date||'')+'" style="flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);"><input type="text" id="appt-new-time" value="'+(booking.booking_time||'')+'" placeholder="7:00 PM" style="flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--navy);background:var(--bg);outline:none;font-family:var(--font-body);"></div></div>'
+    +'<div><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:6px;">NOTES</div><textarea id="appt-notes" rows="2" style="width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--white);background:var(--bg);outline:none;font-family:var(--font-body);resize:none;">'+(booking.notes||'')+'</textarea></div>'
+    +'<div><div style="font-size:9px;font-family:var(--font-mono);color:var(--muted);letter-spacing:1px;margin-bottom:8px;">RESCHEDULE</div><div style="display:flex;gap:8px;"><input type="date" id="appt-new-date" value="'+(booking.booking_date||'')+'" style="flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--white);background:var(--bg);outline:none;font-family:var(--font-body);"><input type="text" id="appt-new-time" value="'+(booking.booking_time||'')+'" placeholder="7:00 PM" style="flex:1;padding:8px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--white);background:var(--bg);outline:none;font-family:var(--font-body);"></div></div>'
     +'<div style="display:flex;gap:8px;">'
-+'<button id="btn-reschedule" style="flex:1;padding:10px;background:var(--navy);color:white;border:none;border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;">RESCHEDULE</button>'
-+'<button id="btn-sms" style="flex:1;padding:10px;background:var(--white);color:var(--navy);border:1.5px solid var(--border);border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;">💬 SMS</button>'
++'<button id="btn-reschedule" style="flex:1;padding:10px;background:var(--gold);color:#0a0a0a;border:none;border-radius:8px;font-weight:700;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;">RESCHEDULE</button>'
++'<button id="btn-sms" style="flex:1;padding:10px;background:rgba(255,255,255,0.06);color:var(--text);border:1.5px solid rgba(255,255,255,0.1);border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;">💬 SMS</button>'
 +'<button id="btn-cancel" style="flex:1;padding:10px;background:var(--red-dim);color:var(--red-text);border:1px solid rgba(214,56,85,0.2);border-radius:8px;font-family:var(--font-display);font-size:14px;letter-spacing:1px;cursor:pointer;">CANCEL</button>'
     +'</div>'
   +'</div>';
@@ -2713,8 +2719,8 @@ async function loadBlastHistory() {
       var statusText = b.failed > 0 ? b.sent+' SENT / '+b.failed+' FAILED' : b.sent+' SENT';
       return '<tr>'
         +'<td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2);white-space:nowrap;">'+date+'</td>'
-        +'<td style="font-size:12px;color:var(--navy);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+preview+'</td>'
-        +'<td style="font-family:var(--font-mono);font-size:12px;color:var(--navy);font-weight:600;">'+b.recipients+'</td>'
+        +'<td style="font-size:12px;color:var(--white);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+preview+'</td>'
+        +'<td style="font-family:var(--font-mono);font-size:12px;color:var(--white);font-weight:600;">'+b.recipients+'</td>'
         +'<td><span class="source-tag">'+segLabel+'</span></td>'
         +'<td><span class="pill '+statusClass+'"><span class="pill-dot"></span>'+statusText+'</span></td>'
       +'</tr>';
