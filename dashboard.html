@@ -951,6 +951,165 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 .blast-modal-btns { display: flex; gap: 10px; justify-content: flex-end; }
 .blast-modal-cancel { padding: 10px 20px; background: var(--bg); color: var(--muted2); border: 1px solid var(--border); border-radius: 8px; font-family: var(--font-display); font-size: 14px; letter-spacing: 1px; cursor: pointer; }
 .blast-modal-confirm { padding: 10px 20px; background: #c8a84b; color: #0d0d0d; border: none; border-radius: 8px; font-family: var(--font-display); font-size: 14px; letter-spacing: 1px; cursor: pointer; font-weight: 700; }
+
+/* ── MOBILE HAMBURGER ── */
+.mobile-hamburger {
+  display: none;
+  width: 36px; height: 36px;
+  border: none; background: none;
+  cursor: pointer; padding: 6px;
+  flex-direction: column; justify-content: center; gap: 5px;
+  flex-shrink: 0;
+}
+.mobile-hamburger span {
+  display: block; width: 22px; height: 2px;
+  background: var(--navy); border-radius: 2px;
+  transition: all 0.25s;
+}
+.sidebar-backdrop {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5); z-index: 999;
+}
+.sidebar-backdrop.open { display: block; }
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE — TABLET (<=1024px)
+   ══════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .grid-2, .grid-3-1, .grid-1-3 { grid-template-columns: 1fr; }
+  .settings-grid { grid-template-columns: 1fr; }
+  .quick-actions { grid-template-columns: 1fr 1fr; }
+  #cal-grid { grid-template-columns: repeat(7, 1fr) !important; }
+}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE — MOBILE (<=768px)
+   ══════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  :root { --sidebar-w: 260px; }
+  html, body { overflow: auto; overflow-x: hidden; }
+
+  .layout { flex-direction: column; height: auto; min-height: 100vh; }
+
+  /* Sidebar as off-canvas drawer */
+  .sidebar {
+    position: fixed; top: 0; left: -280px;
+    width: 260px; min-width: 260px;
+    height: 100vh; z-index: 1000;
+    transition: left 0.3s ease;
+  }
+  .sidebar.open { left: 0; }
+
+  .mobile-hamburger { display: flex; }
+
+  .main { width: 100%; overflow: visible; }
+  .content { padding: 14px 12px; overflow: visible; }
+
+  /* Topbar */
+  .topbar { padding: 0 12px; gap: 8px; height: 50px; }
+  .page-title { font-size: 16px; letter-spacing: 1px; }
+  .topbar-time { display: none; }
+  .sync-btn { font-size: 9px; padding: 6px 10px; }
+
+  /* KPIs */
+  .kpi-grid { grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+  .kpi-card { padding: 14px; }
+  .kpi-value { font-size: 28px; }
+  .kpi-label { font-size: 8px; letter-spacing: 1.5px; margin-bottom: 6px; }
+  .kpi-bg { font-size: 32px; }
+
+  /* Banner */
+  .dash-banner { padding: 14px; gap: 10px; flex-wrap: wrap; }
+  .banner-text h2 { font-size: 16px; }
+  .banner-text p { font-size: 11px; }
+  .banner-stat { margin-left: 0; text-align: left; }
+  .banner-stat-val { font-size: 24px; }
+
+  /* Section headers */
+  .section-header { flex-direction: column; gap: 2px; align-items: flex-start; }
+  .section-title { font-size: 17px; }
+
+  /* Grids → single column */
+  .grid-2, .grid-3-1, .grid-1-3 { grid-template-columns: 1fr; gap: 10px; }
+  .settings-grid { grid-template-columns: 1fr; gap: 10px; }
+  .stat-mini-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Panels */
+  .panel { border-radius: 10px; }
+  .panel-header { padding: 11px 14px; }
+  .panel-title { font-size: 12px; }
+  .panel-body { padding: 12px 14px; }
+
+  /* Tables */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { min-width: 600px; }
+
+  /* CRM */
+  .search-bar { max-width: 100%; }
+  .search-bar input { font-size: 13px; }
+  .filter-row { gap: 4px; }
+  .filter-chip { font-size: 9px; padding: 3px 8px; }
+  .crm-kanban { flex-direction: column; min-height: auto; }
+  .kanban-col { min-width: auto; }
+
+  /* Lead drawer */
+  .lead-drawer { width: 100vw; right: -100vw; }
+  .lead-drawer.open { right: 0; }
+
+  /* Add lead modal */
+  .add-lead-modal > div, .blast-modal { width: 95%; max-width: 95%; padding: 20px; }
+
+  /* Calendar */
+  #cal-grid { grid-template-columns: repeat(3, 1fr) !important; }
+
+  /* Bookings */
+  .booking-item { padding: 10px; gap: 10px; }
+  .booking-time { padding: 6px 8px; min-width: 44px; }
+  .booking-time-hr { font-size: 16px; }
+
+  /* SMS Blast */
+  .blast-layout { grid-template-columns: 1fr; }
+  .blast-tabs { gap: 0; }
+  .blast-tab { padding: 8px 14px; font-size: 10px; }
+  .blast-send-btn { font-size: 14px; padding: 12px 16px; }
+
+  /* Calls */
+  .call-item { flex-wrap: wrap; gap: 8px; }
+
+  /* AI Insights */
+  .ai-card { flex-direction: column; }
+
+  /* Revenue card */
+  .rev-card { padding: 14px 16px; }
+  .rev-value { font-size: 30px; }
+  .rev-row { flex-wrap: wrap; gap: 12px; }
+
+  /* Settings */
+  .setting-row { flex-wrap: wrap; gap: 8px; }
+
+  /* Quick actions */
+  .quick-actions { grid-template-columns: 1fr; }
+}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE — SMALL PHONE (<=420px)
+   ══════════════════════════════════════════════ */
+@media (max-width: 420px) {
+  .kpi-grid { grid-template-columns: 1fr; }
+  .kpi-value { font-size: 24px; }
+  .content { padding: 10px 8px; }
+  .topbar { padding: 0 8px; }
+  .page-title { font-size: 14px; }
+  .sync-btn { display: none; }
+  .dash-banner { flex-direction: column; align-items: flex-start; }
+  .banner-icon { font-size: 24px; }
+  #cal-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .blast-merge-btns { flex-direction: column; }
+  .blast-merge-btn { text-align: center; }
+  .blast-modal-btns { flex-direction: column; }
+  .blast-modal-cancel, .blast-modal-confirm { width: 100%; text-align: center; }
+}
 </style>
 </head>
 <body>
@@ -1032,9 +1191,15 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
   </div>
 </aside>
 
+<!-- ── SIDEBAR BACKDROP (mobile) ── -->
+<div class="sidebar-backdrop" id="sidebar-backdrop" onclick="closeMobileSidebar()"></div>
+
 <!-- ── MAIN ── -->
 <div class="main">
   <div class="topbar">
+    <button class="mobile-hamburger" id="mobile-hamburger" onclick="toggleMobileSidebar()">
+      <span></span><span></span><span></span>
+    </button>
     <div class="page-title" id="page-title">DASHBOARD</div>
     <div class="topbar-right">
       <div class="topbar-time" id="clock">—</div>
@@ -2637,6 +2802,22 @@ showView = function(id, el) {
   _origShowView(id, el);
   if (id === 'sms') { updateBlastCount(); loadBlastHistory(); loadBlastTags(); }
 };
+
+// ── MOBILE SIDEBAR ──
+function toggleMobileSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.getElementById('sidebar-backdrop').classList.toggle('open');
+}
+function closeMobileSidebar() {
+  document.querySelector('.sidebar').classList.remove('open');
+  document.getElementById('sidebar-backdrop').classList.remove('open');
+}
+// Close sidebar when a nav item is tapped on mobile
+document.querySelectorAll('.nav-item').forEach(function(item) {
+  item.addEventListener('click', function() {
+    if (window.innerWidth <= 768) closeMobileSidebar();
+  });
+});
 
 // toggle settings
 document.querySelectorAll('.toggle').forEach(t => {
