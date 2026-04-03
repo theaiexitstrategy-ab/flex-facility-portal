@@ -2251,7 +2251,7 @@ async function rescheduleBooking(id, phone) {
   try {
     const r = await fetch('/api/bookings?id='+id,{method:'PUT',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({booking_date:newDate,booking_time:newTime,notes})});
     if (!r.ok) throw new Error('Update failed');
-    if (phone) await fetch('/api/sms',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({to:phone,message:'Hi! Your appointment at The Flex Facility has been rescheduled to '+newDate+' at '+newTime+'. Questions? Call 1-877-515-FLEX. 💪🏾'})});
+    if (phone) await fetch('/api/sms-blast?action=send-single',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({to:phone,message:'Hi! Your appointment at The Flex Facility has been rescheduled to '+newDate+' at '+newTime+'. Questions? Call 1-877-515-FLEX. 💪🏾'})});
     closeApptDetail(); renderCalendarManager(); alert('Booking rescheduled and SMS sent.');
   } catch(err) { alert('Reschedule failed: '+err.message); }
 }
@@ -2261,7 +2261,7 @@ async function cancelBooking(id, phone, firstName) {
   try {
     const r = await fetch('/api/bookings?id='+id,{method:'PUT',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({status:'Cancelled'})});
     if (!r.ok) throw new Error('Cancel failed');
-    if (phone) await fetch('/api/sms',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({to:phone,message:'Hi '+firstName+', your appointment at The Flex Facility has been cancelled. To rebook: book.theflexfacility.com or call 1-877-515-FLEX. 💪🏾'})});
+    if (phone) await fetch('/api/sms-blast?action=send-single',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({to:phone,message:'Hi '+firstName+', your appointment at The Flex Facility has been cancelled. To rebook: book.theflexfacility.com or call 1-877-515-FLEX. 💪🏾'})});
     closeApptDetail(); renderCalendarManager();
   } catch(err) { alert('Cancellation failed: '+err.message); }
 }
@@ -2345,7 +2345,7 @@ async function sendSingleSMS() {
   if (!phone||!message) { alert('Please enter a phone number and message.'); return; }
   if (!confirm('Send SMS to '+phone+'?')) return;
   try {
-    const r = await fetch('/api/sms',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({to:phone,message})});
+    const r = await fetch('/api/sms-blast?action=send-single',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({to:phone,message})});
     const d = await r.json();
     if (!r.ok) throw new Error(d.error);
     alert('SMS sent! ✅');
@@ -2369,7 +2369,7 @@ var pendingPackage = null;
 var pendingClientSecret = null;
 
 function loadCreditsData() {
-  fetch('/api/credits/balance', {credentials:'include'}).then(function(r){return r.json();}).then(function(json){
+  fetch('/api/credits?action=balance', {credentials:'include'}).then(function(r){return r.json();}).then(function(json){
     if (!json.success) return;
     var d = json.data || {};
     var el;
@@ -2390,7 +2390,7 @@ function loadCreditsHistory(page) {
   creditsHistoryPage = page || 1;
   var tbody = document.getElementById('credits-history-tbody'); if(!tbody) return;
   tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">Loading...</td></tr>';
-  fetch('/api/credits/transactions?page='+creditsHistoryPage+'&per_page=20', {credentials:'include'}).then(function(r){return r.json();}).then(function(json){
+  fetch('/api/credits?action=transactions&page='+creditsHistoryPage+'&per_page=20', {credentials:'include'}).then(function(r){return r.json();}).then(function(json){
     var txns = json.data || [];
     var total = json.total || 0;
     if(txns.length===0) { tbody.innerHTML='<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">No transactions yet</td></tr>'; return; }
@@ -2411,7 +2411,7 @@ function saveAutoReload() {
   var enabled = document.getElementById('autoreload-toggle').checked;
   var pkg = document.getElementById('autoreload-package').value;
   var threshold = parseInt(document.getElementById('autoreload-threshold').value) || 50;
-  fetch('/api/credits/auto-reload', {method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include', body:JSON.stringify({enabled:enabled,package:pkg,threshold:threshold})}).then(function(r){return r.json();}).then(function(json){
+  fetch('/api/credits?action=auto-reload', {method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include', body:JSON.stringify({enabled:enabled,package:pkg,threshold:threshold})}).then(function(r){return r.json();}).then(function(json){
     if(json.success) { alert('Auto-reload settings saved.'); loadCreditsData(); } else { alert('Error: '+(json.error||'Failed')); }
   }).catch(function(e){ alert('Error: '+e.message); });
 }
@@ -2423,12 +2423,12 @@ async function purchaseCredits(pkg) {
   document.getElementById('stripe-modal').style.display = 'flex';
   document.getElementById('stripe-error').style.display = 'none';
   try {
-    var res = await fetch('/api/credits/create-payment-intent', {method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include', body:JSON.stringify({package:pkg})});
+    var res = await fetch('/api/credits?action=create-payment-intent', {method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include', body:JSON.stringify({package:pkg})});
     var json = await res.json();
     if(!json.clientSecret) throw new Error(json.error||'Failed to create payment');
     pendingClientSecret = json.clientSecret;
     if(!stripeInstance) {
-      var pkRes = await fetch('/api/credits/stripe-config',{credentials:'include'});
+      var pkRes = await fetch('/api/credits?action=stripe-config',{credentials:'include'});
       var pkJson = await pkRes.json();
       stripeInstance = Stripe(pkJson.publishableKey);
     }
@@ -2451,7 +2451,7 @@ async function confirmStripePayment() {
   try {
     var result = await stripeInstance.confirmPayment({elements:stripeElements, confirmParams:{return_url:window.location.origin+'/dashboard'}, redirect:'if_required'});
     if(result.error) throw new Error(result.error.message);
-    var confirmRes = await fetch('/api/credits/confirm-purchase', {method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include', body:JSON.stringify({paymentIntentId:result.paymentIntent.id, package:pendingPackage})});
+    var confirmRes = await fetch('/api/credits?action=confirm-purchase', {method:'POST', headers:{'Content-Type':'application/json'}, credentials:'include', body:JSON.stringify({paymentIntentId:result.paymentIntent.id, package:pendingPackage})});
     var confirmJson = await confirmRes.json();
     if(!confirmJson.success) throw new Error(confirmJson.error||'Confirmation failed');
     closeStripeModal();

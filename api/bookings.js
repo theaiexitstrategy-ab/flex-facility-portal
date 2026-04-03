@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import supabase from '../lib/supabase.js';
-import { deductCredit } from './utils/deductCredit.js';
+import { deductCredit } from '../lib/deductCredit.js';
 
 function requireAuth(req) {
   const cookie = req.headers.cookie || '';
