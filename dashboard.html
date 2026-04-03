@@ -297,6 +297,12 @@ html, body { height: 100%; font-family: var(--font-body); background: #0a0a0a; c
   border: 2px solid #0a0a0a;
 }
 
+.credits-pill { display:flex;align-items:center;gap:4px;background:#141720;border:1px solid #c8a84b;border-radius:20px;padding:6px 14px;font-size:11px;font-family:var(--font-mono);color:#c8a84b;font-weight:700;cursor:pointer;transition:all 0.15s;white-space:nowrap; }
+.credits-pill:hover { background:rgba(200,168,75,0.1); }
+.credits-pill.warning { color:#f59e0b;border-color:#f59e0b; }
+.credits-pill.danger { color:#ef4444;border-color:#ef4444;animation:creditPulse 2s ease-in-out infinite; }
+@keyframes creditPulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+
 .sync-btn {
   background: var(--gold);
   color: #0a0a0a;
@@ -752,8 +758,8 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 /* ── QUICK ACTIONS ── */
 .quick-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .qa-btn {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
+  background: #141720;
+  border: 1px solid rgba(200,168,75,0.2);
   border-radius: 10px;
   padding: 12px 14px;
   cursor: pointer;
@@ -761,10 +767,10 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
   transition: all 0.15s;
   display: flex; align-items: center; gap: 10px;
 }
-.qa-btn:hover { border-color: rgba(212,160,23,0.3); background: rgba(212,160,23,0.05); }
-.qa-icon { font-size: 18px; }
-.qa-text { font-size: 12px; font-weight: 600; color: var(--navy); }
-.qa-sub { font-size: 10px; color: var(--muted2); margin-top: 1px; }
+.qa-btn:hover { border-color: #c8a84b; background: #1a1a2e; box-shadow: 0 0 12px rgba(200,168,75,0.08); }
+.qa-icon { font-size: 18px; color: #c8a84b; }
+.qa-text { font-size: 12px; font-weight: 600; color: #ffffff; }
+.qa-sub { font-size: 10px; color: #a0a0a0; margin-top: 1px; }
 
 /* ── AI CARDS ── */
 .ai-card {
@@ -1124,20 +1130,15 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 
 <!-- ── SIDEBAR ── -->
 <aside class="sidebar">
-  <div class="brand">
-    <div class="brand-logo-row">
-      <div class="brand-icon">F</div>
-      <div>
-        <div class="brand-name">THE FLEX<br>FACILITY</div>
-      </div>
-    </div>
-    <div class="brand-sub">Command Center</div>
+  <div class="brand" style="text-align:center;padding:20px 18px 16px;">
+    <img src="https://theflexfacility.com/images/logo.png" alt="The Flex Facility" style="max-width:140px;height:auto;display:block;margin:0 auto;" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <div style="display:none;font-family:var(--font-display);font-size:17px;letter-spacing:2px;color:#c8a84b;line-height:1.1;">THE FLEX<br>FACILITY</div>
   </div>
 
   <div class="coach-badge">
-    <div class="coach-av">K</div>
+    <div class="coach-av" id="user-avatar">K</div>
     <div class="coach-info">
-      <div class="coach-name">Coach Kenny Sims</div>
+      <div class="coach-name" id="user-display-name">Coach Kenny</div>
       <div class="coach-status">● Online</div>
     </div>
     <div class="online-dot"></div>
@@ -1173,7 +1174,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
     <div class="nav-section">
       <div class="nav-label">Automation</div>
       <div class="nav-item" onclick="showView('sms',this)">
-        <span class="nav-icon">💬</span> SMS Sequences
+        <span class="nav-icon">📣</span> Send a Message
       </div>
       <div class="nav-item" onclick="showView('ai',this)">
         <span class="nav-icon">🤖</span> AI Insights
@@ -1212,6 +1213,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
       <div class="topbar-btn">🔔<div class="notif-badge"></div></div>
       <div class="topbar-btn">🔄</div>
       <button class="topbar-btn" onclick="logout()" title="Sign out" style="font-size:13px;">🚪</button>
+      <button class="credits-pill" id="credits-pill" onclick="showView('credits',document.querySelector('[onclick*=credits]'))" title="Click to add more credits">💳 <span id="credits-pill-num">—</span> Credits</button>
       <button class="sync-btn" onclick="flashSync(this)">⚡ SYNC DATA</button>
     </div>
   </div>
@@ -1510,8 +1512,8 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
               <div style="display:flex;align-items:center;gap:10px;"><div style="font-family:var(--font-display);font-size:28px;color:var(--red)">12%</div><div style="font-size:12px;color:var(--muted2)">4 of 34 assessments<br>resulted in no-shows</div></div>
             </div>
             <div style="padding:12px;background:var(--red-dim);border:1px solid rgba(214,56,85,0.15);border-radius:8px;">
-              <div class="warn-title">⚠️ Booking Webhook Not Connected</div>
-              <div class="warn-text">Booked leads may still receive SMS nudges. Wire book.theflexfacility.com → Make.com → Supabase to fix this.</div>
+              <div class="warn-title" style="display:none">Booking connection placeholder</div>
+              <div class="warn-text" style="display:none"></div>
             </div>
           </div>
         </div>
@@ -1646,7 +1648,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 
     <!-- ══ CALLS ══ -->
     <div class="view" id="view-calls">
-      <div class="section-header"><div class="section-title">FLEX AI CALL LOG</div><div class="section-sub">VAPI assistant · Last 7 days</div></div>
+      <div class="section-header"><div class="section-title">FLEX AI CALL LOG</div><div class="section-sub">AI assistant · Last 7 days</div></div>
       <div class="panel">
         <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> RECENT CALLS</div><div class="panel-action">EXPORT CSV →</div></div>
         <div class="panel-body">
@@ -1657,12 +1659,10 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 
     <!-- ══ SMS ══ -->
     <div class="view" id="view-sms">
-      <div class="section-header"><div class="section-title">SMS SEQUENCES</div><div class="section-sub">Mass messaging & nurture sequences · Twilio</div></div>
+      <div class="section-header"><div class="section-title">SEND A MESSAGE</div><div class="section-sub">Text your community directly from your AI number.</div></div>
 
-      <div class="blast-tabs">
-        <div class="blast-tab active" onclick="switchSmsTab('blast',this)">SMS BLAST</div>
-        <div class="blast-tab" onclick="switchSmsTab('sequences',this)">SEQUENCES</div>
-      </div>
+      <!-- Blast only, sequences removed -->
+      <div class="blast-tabs" style="display:none;"></div>
 
       <!-- ── SMS BLAST TAB ── -->
       <div id="sms-blast-tab">
@@ -1792,7 +1792,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
                 <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;opacity:0.6;"><span style="font-size:12px;color:var(--white)">Lifestyle / Bodybuilding Sequence</span><span style="font-size:10px;font-family:var(--font-mono);color:var(--muted)">PENDING BUILD</span></div>
                 <div style="display:flex;justify-content:space-between;align-items:center;padding:9px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;opacity:0.6;"><span style="font-size:12px;color:var(--white)">Re-engagement (Cold Leads)</span><span style="font-size:10px;font-family:var(--font-mono);color:var(--muted)">PENDING BUILD</span></div>
               </div>
-              <div class="warn-banner"><div class="warn-title">⚠️ Action Needed</div><div class="warn-text">TidyCal webhook not connected. Booked leads may still receive nudge SMS. Connect booking webhook to stop sequence on booking.</div></div>
+              <!-- Booking warning removed - syncs directly -->
             </div>
           </div>
         </div>
@@ -1822,7 +1822,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
             <div class="ai-card"><div class="ai-card-icon fire">🔥</div><div class="ai-card-body"><div class="ai-card-title">Follow up with your hottest lead</div><div class="ai-card-desc">Check your CRM for the most recent lead submission and follow up immediately for best conversion rates.</div><div class="ai-priority high">HIGH PRIORITY</div></div></div>
             <div class="ai-card"><div class="ai-card-icon star">⭐</div><div class="ai-card-body"><div class="ai-card-title">Re-engage 10 Cold Leads This Week</div><div class="ai-card-desc">10 leads went cold 7+ days ago. A "we saved your spot" SMS converts at 22% for this audience.</div><div class="ai-priority med">MEDIUM PRIORITY</div></div></div>
             <div class="ai-card"><div class="ai-card-icon chart">📊</div><div class="ai-card-body"><div class="ai-card-title">Activate Your Existing Member Base</div><div class="ai-card-desc">Current members haven't been used as a referral source. A "refer a friend" campaign could generate 15–20 warm leads in 2 weeks.</div><div class="ai-priority med">MEDIUM PRIORITY</div></div></div>
-            <div class="ai-card"><div class="ai-card-icon msg">💬</div><div class="ai-card-body"><div class="ai-card-title">Connect Booking Webhook</div><div class="ai-card-desc">Booked leads are still receiving SMS nudges. Connect book.theflexfacility.com → Make.com → Supabase to stop sequences on booking.</div><div class="ai-priority high">HIGH PRIORITY</div></div></div>
+            <!-- Booking webhook card removed - syncs directly from book.theflexfacility.com -->
             <div class="ai-card"><div class="ai-card-icon check">✅</div><div class="ai-card-body"><div class="ai-card-title">Saturday Is Your Best Day — Post More</div><div class="ai-card-desc">8 of your last 30 leads came in on Saturdays. Friday evening Instagram posts with parent testimonials are driving this.</div><div class="ai-priority low">OPPORTUNITY</div></div></div>
           </div>
         </div>
@@ -1866,11 +1866,11 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
         <div class="panel">
           <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> INTEGRATIONS</div></div>
           <div class="panel-body">
-            <div class="setting-row"><div><div class="setting-label">🤖 VAPI — FLEX AI</div><div class="setting-sub" style="color:var(--green-text)">Connected · Assistant ID active</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-            <div class="setting-row"><div><div class="setting-label">📋 Supabase CRM</div><div class="setting-sub" style="color:var(--green-text)">Connected · 9 tables syncing</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-            <div class="setting-row"><div><div class="setting-label">⚡ Make.com Webhooks</div><div class="setting-sub" style="color:var(--green-text)">Connected · 3 webhooks active</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="setting-row"><div><div class="setting-label">🤖 FLEX AI Assistant</div><div class="setting-sub" style="color:var(--green-text)">Connected</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="setting-row"><div><div class="setting-label">📋 Your Data</div><div class="setting-sub" style="color:var(--green-text)">Connected · Syncing</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="setting-row"><div><div class="setting-label">⚡ Automation</div><div class="setting-sub" style="color:var(--green-text)">Connected · 3 active</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
             <div class="setting-row"><div><div class="setting-label">💬 Twilio SMS</div><div class="setting-sub" style="color:var(--green-text)">Connected · Sending enabled</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-            <div class="setting-row"><div><div class="setting-label">📅 Booking Webhook</div><div class="setting-sub" style="color:var(--red-text)">⚠️ Not connected — action needed</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+            <div class="setting-row"><div><div class="setting-label">📅 Booking Calendar</div><div class="setting-sub" style="color:var(--green-text)">Connected · syncing via book.theflexfacility.com</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
           </div>
         </div>
         <div class="panel">
@@ -1878,7 +1878,7 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
           <div class="panel-body">
             <div class="setting-row"><div><div class="setting-label">New Lead Alert (SMS to Coach)</div><div class="setting-sub">Text when a new form is submitted</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
             <div class="setting-row"><div><div class="setting-label">Booking Confirmation Alert</div><div class="setting-sub">Notify when a lead books</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
-            <div class="setting-row"><div><div class="setting-label">FLEX AI Call Summary</div><div class="setting-sub">Send recap after each VAPI call</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+            <div class="setting-row"><div><div class="setting-label">FLEX AI Call Summary</div><div class="setting-sub">Send recap after each AI call</div></div><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
             <div class="setting-row"><div><div class="setting-label">Daily Funnel Report</div><div class="setting-sub">Morning summary at 8 AM daily</div></div><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
           </div>
         </div>
@@ -1895,17 +1895,17 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
           <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> SYSTEM STATUS</div></div>
           <div class="panel-body">
             <div class="status-row"><div class="status-label">Website (Vercel)</div><div class="status-live">LIVE</div></div>
-            <div class="status-row"><div class="status-label">VAPI Assistant (FLEX)</div><div class="status-live">LIVE</div></div>
-            <div class="status-row"><div class="status-label">Make.com Automation</div><div class="status-live">LIVE</div></div>
-            <div class="status-row"><div class="status-label">Supabase Sync</div><div class="status-live">LIVE</div></div>
-            <div class="status-row"><div class="status-label">Booking Webhook</div><div class="status-offline">OFFLINE</div></div>
+            <div class="status-row"><div class="status-label">FLEX AI Assistant</div><div class="status-live">LIVE</div></div>
+            <div class="status-row"><div class="status-label">Automation</div><div class="status-live">LIVE</div></div>
+            <div class="status-row"><div class="status-label">Data Sync</div><div class="status-live">LIVE</div></div>
+            <div class="status-row"><div class="status-label">Booking Calendar</div><div class="status-live">LIVE</div></div>
           </div>
         </div>
       </div>
       <div class="panel" style="margin-top:14px;">
-        <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> TWILIO OPT-OUT WEBHOOK</div></div>
+        <div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> OPT-OUT HANDLER</div></div>
         <div class="panel-body">
-          <div style="font-size:12px;color:var(--muted2);line-height:1.6;margin-bottom:12px;">Copy this URL and paste it into your Twilio Console under <strong>Messaging → Services → Incoming Messages webhook</strong>. When a contact replies STOP, they will automatically be opted out of SMS blasts.</div>
+          <div style="font-size:12px;color:var(--muted2);line-height:1.6;margin-bottom:12px;">When someone replies STOP to a text, they're automatically removed from future messages. Share this link with your messaging provider:</div>
           <div style="display:flex;gap:8px;align-items:center;">
             <input type="text" id="optout-webhook-url" readonly value="https://portal.theflexfacility.com/api/twilio-opt-out" style="flex:1;padding:10px 12px;font-family:var(--font-mono);font-size:12px;color:var(--cyan-text);background:var(--bg);border:1.5px solid var(--border);border-radius:8px;outline:none;">
             <button onclick="copyOptOutUrl()" style="padding:10px 16px;background:var(--gold);color:#0a0a0a;border:none;border-radius:8px;font-weight:700;font-family:var(--font-display);font-size:13px;letter-spacing:1px;cursor:pointer;white-space:nowrap;">COPY URL</button>
@@ -1920,18 +1920,52 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
 </div><!-- /layout -->
 
 <script>
+// ── SAFE JSON PARSE HELPER ──
+async function safeFetchJson(url, opts) {
+  try {
+    var r = await fetch(url, Object.assign({ credentials: 'include' }, opts || {}));
+    var text = await r.text();
+    try { return { ok: r.ok, status: r.status, data: JSON.parse(text) }; }
+    catch { return { ok: false, status: r.status, data: { error: text } }; }
+  } catch (e) { return { ok: false, status: 0, data: { error: e.message } }; }
+}
+
 // ── AUTH GUARD ──
+var currentUserRole = 'owner';
+var currentUserEmail = '';
 (async function checkAuth() {
   try {
-    const res = await fetch('/api/auth?action=verify', { credentials: 'include' });
-    const data = await res.json();
-    if (!res.ok || !data.authenticated) { window.location.replace('/login'); return; }
-    if (data.user?.name) {
-      const nameEl = document.querySelector('.coach-name');
-      if (nameEl) nameEl.textContent = data.user.name;
+    var result = await safeFetchJson('/api/auth?action=verify');
+    if (!result.ok || !result.data.authenticated) { window.location.replace('/login'); return; }
+    var user = result.data.user || {};
+    currentUserRole = user.role || 'owner';
+    currentUserEmail = user.email || '';
+    // Dynamic avatar
+    var avEl = document.getElementById('user-avatar');
+    var nameEl = document.getElementById('user-display-name');
+    if (user.role === 'admin') {
+      if (avEl) { avEl.textContent = 'A'; avEl.style.background = '#c8a84b'; avEl.style.color = '#0d0d0d'; }
+      if (nameEl) nameEl.textContent = 'Aaron';
+    } else {
+      if (avEl) { avEl.textContent = 'K'; avEl.style.background = '#141720'; avEl.style.color = '#c8a84b'; }
+      if (nameEl) nameEl.textContent = user.name || 'Coach Kenny';
     }
   } catch { window.location.replace('/login'); }
 })();
+
+// ── CREDITS PILL ──
+function updateCreditsPill() {
+  safeFetchJson('/api/dashboard?action=credits').then(function(r) {
+    var bal = r.data?.balance ?? null;
+    if (bal === null) return;
+    var pill = document.getElementById('credits-pill');
+    var num = document.getElementById('credits-pill-num');
+    if (num) num.textContent = bal;
+    if (pill) { pill.className = 'credits-pill'; if (bal <= 50) pill.classList.add('danger'); else if (bal <= 100) pill.classList.add('warning'); }
+  });
+}
+updateCreditsPill();
+setInterval(updateCreditsPill, 60000);
 
 // ── LOGOUT ──
 async function logout() {
@@ -1948,7 +1982,7 @@ function timeAgo(date) {
 }
 
 // ── NAV ──
-const titles = { dashboard:'DASHBOARD', funnel:'FUNNEL ANALYTICS', crm:'CRM — LEAD PIPELINE', bookings:'BOOKINGS', calendar:'CALENDAR MANAGER', 'sms-center':'SMS CENTER', calls:'CALL LOG', sms:'SMS SEQUENCES', ai:'AI INSIGHTS', settings:'SETTINGS' };
+const titles = { dashboard:'DASHBOARD', funnel:'FUNNEL ANALYTICS', crm:'CRM — LEAD PIPELINE', bookings:'BOOKINGS', calendar:'CALENDAR MANAGER', calls:'CALL LOG', sms:'SEND A MESSAGE', credits:'CREDITS', ai:'AI INSIGHTS', settings:'SETTINGS' };
 
 function showView(id, el) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -2063,34 +2097,31 @@ function renderActivity(bookings, leads) {
   }
 }
 
-function updateKPIs(dash, athletes) {
-  const hotLeads = (athletes||[]).filter(l => l.lead_status==='Hot').length;
-  const kpiLeads = document.getElementById('kpi-leads');
-  const kpiBookings = document.getElementById('kpi-bookings');
-  const kpiCommission = document.getElementById('kpi-commission');
-  const kpiHot = document.getElementById('kpi-hot');
-  if (kpiLeads) kpiLeads.textContent = dash.totalLeads ?? 0;
-  if (kpiBookings) kpiBookings.textContent = dash.upcomingBookings ?? 0;
-  if (kpiCommission) kpiCommission.textContent = dash.commissionEarned != null ? '$'+Math.round(dash.commissionEarned).toLocaleString() : '$0';
-  if (kpiHot) kpiHot.textContent = hotLeads;
+function updateKPIs(dash) {
+  var el;
+  el = document.getElementById('kpi-leads'); if (el) el.textContent = dash.totalLeads ?? 0;
+  el = document.getElementById('kpi-bookings'); if (el) el.textContent = dash.upcomingBookings ?? 0;
+  el = document.getElementById('kpi-commission'); if (el) el.textContent = dash.closedLeads ?? 0;
+  el = document.getElementById('kpi-hot'); if (el) el.textContent = dash.hotLeads ?? 0;
+  el = document.getElementById('kpi-closerate'); if (el) el.textContent = (dash.closeRate ?? 0) + '%';
 }
 
 // ── LOAD ALL DATA ──
 async function loadAllData() {
   try {
     const [dashRes, athleteRes, lifestyleRes, bookingsRes, callsRes] = await Promise.all([
-      fetch('/api/dashboard', {credentials:'include'}).then(r=>r.ok?r.json():{}),
-      fetch('/api/leads?segment=athlete', {credentials:'include'}).then(r=>r.ok?r.json():{data:[]}),
-      fetch('/api/leads?segment=lifestyle', {credentials:'include'}).then(r=>r.ok?r.json():{data:[]}),
-      fetch('/api/bookings?upcoming=true', {credentials:'include'}).then(r=>r.ok?r.json():{data:[]}),
-      fetch('/api/interactions', {credentials:'include'}).then(r=>r.ok?r.json():{data:[]}),
+      safeFetchJson('/api/dashboard'),
+      safeFetchJson('/api/leads?segment=athlete'),
+      safeFetchJson('/api/leads?segment=lifestyle'),
+      safeFetchJson('/api/bookings?upcoming=true'),
+      safeFetchJson('/api/interactions'),
     ]);
-    const dash = dashRes.data || dashRes;
-    const athletes = athleteRes.data || [];
-    const lifestyle = lifestyleRes.data || [];
-    const bookings = bookingsRes.data || [];
-    const calls = callsRes.data || [];
-    updateKPIs(dash, athletes);
+    const dash = dashRes.data?.data || dashRes.data || {};
+    const athletes = athleteRes.data?.data || [];
+    const lifestyle = lifestyleRes.data?.data || [];
+    const bookings = bookingsRes.data?.data || [];
+    const calls = callsRes.data?.data || [];
+    updateKPIs(dash);
     renderLeadsTable(athletes, lifestyle);
     renderBookings(bookings);
     renderCalls(calls);
@@ -2493,7 +2524,7 @@ async function rescheduleBooking(id, phone) {
   try {
     const r = await fetch('/api/bookings?id='+id,{method:'PUT',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({booking_date:newDate,booking_time:newTime,notes})});
     if (!r.ok) throw new Error('Update failed');
-    if (phone) await fetch('/api/sms',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({to:phone,message:'Hi! Your appointment at The Flex Facility has been rescheduled to '+newDate+' at '+newTime+'. Questions? Call 1-877-515-FLEX. 💪🏾'})});
+    if (phone) await fetch('/api/sms-blast?action=send-single',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({to:phone,message:'Hi! Your appointment at The Flex Facility has been rescheduled to '+newDate+' at '+newTime+'. Questions? Call 1-877-515-FLEX. 💪🏾'})});
     closeApptDetail(); renderCalendarManager(); alert('Booking rescheduled and SMS sent.');
   } catch(err) { alert('Reschedule failed: '+err.message); }
 }
@@ -2503,7 +2534,7 @@ async function cancelBooking(id, phone, firstName) {
   try {
     const r = await fetch('/api/bookings?id='+id,{method:'PUT',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({status:'Cancelled'})});
     if (!r.ok) throw new Error('Cancel failed');
-    if (phone) await fetch('/api/sms',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({to:phone,message:'Hi '+firstName+', your appointment at The Flex Facility has been cancelled. To rebook: book.theflexfacility.com or call 1-877-515-FLEX. 💪🏾'})});
+    if (phone) await fetch('/api/sms-blast?action=send-single',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({to:phone,message:'Hi '+firstName+', your appointment at The Flex Facility has been cancelled. To rebook: book.theflexfacility.com or call 1-877-515-FLEX. 💪🏾'})});
     closeApptDetail(); renderCalendarManager();
   } catch(err) { alert('Cancellation failed: '+err.message); }
 }
@@ -2587,7 +2618,7 @@ async function sendSingleSMS() {
   if (!phone||!message) { alert('Please enter a phone number and message.'); return; }
   if (!confirm('Send SMS to '+phone+'?')) return;
   try {
-    const r = await fetch('/api/sms',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({to:phone,message})});
+    const r = await fetch('/api/sms-blast?action=send-single',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'include',body:JSON.stringify({to:phone,message})});
     const d = await r.json();
     if (!r.ok) throw new Error(d.error);
     alert('SMS sent! ✅');
