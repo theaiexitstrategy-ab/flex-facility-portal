@@ -1183,6 +1183,9 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
     </div>
     <div class="nav-section">
       <div class="nav-label">System</div>
+      <div class="nav-item" onclick="showView('payments',this)">
+        <span class="nav-icon">💰</span> Payments
+      </div>
       <div class="nav-item" onclick="showView('settings',this)">
         <span class="nav-icon">⚙️</span> Settings
       </div>
@@ -1915,6 +1918,90 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
       </div>
     </div>
 
+    <!-- ══ PAYMENTS ══ -->
+    <div class="view" id="view-payments">
+      <div class="section-header"><div class="section-title">PAYMENTS</div><div class="section-sub">Stripe Connect — connection status, revenue, and order history</div></div>
+
+      <div id="payments-state-loading" class="panel">
+        <div class="panel-body" style="text-align:center;padding:40px;color:var(--muted);">Loading payment status…</div>
+      </div>
+
+      <!-- STATE A — Not connected -->
+      <div id="payments-state-disconnected" class="panel" style="display:none;">
+        <div class="panel-body" style="padding:40px 28px;text-align:center;">
+          <div style="font-size:48px;margin-bottom:10px;">💳</div>
+          <div style="font-family:var(--font-display);font-size:26px;letter-spacing:2px;color:var(--white);margin-bottom:8px;">CONNECT YOUR STRIPE ACCOUNT</div>
+          <div style="color:var(--muted2);font-size:14px;max-width:560px;margin:0 auto 26px;line-height:1.6;">Once connected, you'll get paid directly into your bank account on every order placed at theflexfacility.com. Go Elev8.AI takes a 7% platform fee — everything else is yours. Powered by Stripe; no card data ever touches our servers.</div>
+          <button id="connect-stripe-btn" onclick="connectStripe()" style="background:var(--gold);color:#0a0a0a;border:none;border-radius:10px;padding:14px 32px;font-family:var(--font-display);font-size:16px;letter-spacing:2px;cursor:pointer;font-weight:700;">CONNECT STRIPE ACCOUNT</button>
+          <div id="connect-stripe-err" style="display:none;color:var(--red-text);font-size:13px;margin-top:14px;"></div>
+        </div>
+      </div>
+
+      <!-- STATE B — Connected -->
+      <div id="payments-state-connected" style="display:none;">
+        <div class="panel" style="margin-bottom:14px;">
+          <div class="panel-body" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;">
+            <div>
+              <div style="display:inline-flex;align-items:center;gap:8px;background:var(--green-dim);color:var(--green-text);padding:6px 12px;border-radius:8px;font-size:12px;font-weight:600;letter-spacing:1px;"><span style="width:8px;height:8px;background:var(--green);border-radius:50%;display:inline-block;"></span> STRIPE CONNECTED</div>
+              <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+                <span id="pill-charges" style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:6px;"></span>
+                <span id="pill-payouts" style="font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:6px;"></span>
+              </div>
+              <div id="pay-account-id" style="font-size:11px;color:var(--muted);margin-top:8px;font-family:var(--font-mono);"></div>
+            </div>
+            <a href="https://dashboard.stripe.com/" target="_blank" rel="noopener" style="background:var(--bg);border:1px solid var(--border);color:var(--white);text-decoration:none;padding:10px 18px;border-radius:8px;font-size:13px;letter-spacing:1px;font-weight:600;white-space:nowrap;">Open Stripe Dashboard →</a>
+          </div>
+        </div>
+
+        <div class="settings-grid" style="margin-bottom:14px;">
+          <div class="panel"><div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> THIS MONTH'S REVENUE</div></div><div class="panel-body"><div id="rev-revenue" style="font-family:var(--font-display);font-size:34px;letter-spacing:1px;color:var(--white);">$0.00</div><div style="font-size:11px;color:var(--muted);">Total customer charges</div></div></div>
+          <div class="panel"><div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> PLATFORM FEE PAID</div></div><div class="panel-body"><div id="rev-fee" style="font-family:var(--font-display);font-size:34px;letter-spacing:1px;color:var(--gold-text);">$0.00</div><div style="font-size:11px;color:var(--muted);">7% to Go Elev8.AI</div></div></div>
+          <div class="panel"><div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> NET TO YOU</div></div><div class="panel-body"><div id="rev-net" style="font-family:var(--font-display);font-size:34px;letter-spacing:1px;color:var(--green-text);">$0.00</div><div style="font-size:11px;color:var(--muted);">After all fees</div></div></div>
+          <div class="panel"><div class="panel-header"><div class="panel-title"><div class="panel-dot"></div> ORDERS</div></div><div class="panel-body"><div id="rev-count" style="font-family:var(--font-display);font-size:34px;letter-spacing:1px;color:var(--white);">0</div><div style="font-size:11px;color:var(--muted);">This month</div></div></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+            <div class="panel-title"><div class="panel-dot"></div> ORDERS</div>
+            <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+              <select id="orders-status-filter" onchange="loadOrders(1)" style="background:var(--bg);border:1px solid var(--border);color:var(--white);padding:7px 10px;border-radius:6px;font-size:13px;font-family:var(--font-body);">
+                <option value="all">All statuses</option>
+                <option value="pending">Pending</option>
+                <option value="paid">Paid</option>
+                <option value="failed">Failed</option>
+                <option value="refunded">Refunded</option>
+              </select>
+              <button onclick="exportOrdersCsv()" style="background:var(--gold);color:#0a0a0a;border:none;border-radius:6px;padding:7px 14px;font-size:12px;font-weight:700;letter-spacing:1px;font-family:var(--font-display);cursor:pointer;">⬇ CSV</button>
+            </div>
+          </div>
+          <div class="panel-body" style="padding:0;overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;font-size:13px;">
+              <thead>
+                <tr style="background:var(--bg);text-align:left;color:var(--muted);">
+                  <th style="padding:10px 12px;font-weight:600;border-bottom:1px solid var(--border);">Date</th>
+                  <th style="padding:10px 12px;font-weight:600;border-bottom:1px solid var(--border);">Product</th>
+                  <th style="padding:10px 12px;font-weight:600;border-bottom:1px solid var(--border);">Customer</th>
+                  <th style="padding:10px 12px;font-weight:600;border-bottom:1px solid var(--border);text-align:right;">List</th>
+                  <th style="padding:10px 12px;font-weight:600;border-bottom:1px solid var(--border);text-align:right;">Fees</th>
+                  <th style="padding:10px 12px;font-weight:600;border-bottom:1px solid var(--border);text-align:right;">Total</th>
+                  <th style="padding:10px 12px;font-weight:600;border-bottom:1px solid var(--border);">Status</th>
+                </tr>
+              </thead>
+              <tbody id="orders-tbody"></tbody>
+            </table>
+            <div id="orders-empty" style="display:none;padding:36px;text-align:center;color:var(--muted);">No orders yet.</div>
+          </div>
+          <div class="panel-body" style="display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding:10px 14px;">
+            <div id="orders-meta" style="font-size:12px;color:var(--muted);">—</div>
+            <div style="display:flex;gap:8px;">
+              <button id="orders-prev" onclick="changeOrdersPage(-1)" style="background:var(--bg);border:1px solid var(--border);color:var(--white);padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer;">◀ Prev</button>
+              <button id="orders-next" onclick="changeOrdersPage(1)" style="background:var(--bg);border:1px solid var(--border);color:var(--white);padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer;">Next ▶</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div><!-- /content -->
 </div><!-- /main -->
 </div><!-- /layout -->
@@ -1982,7 +2069,7 @@ function timeAgo(date) {
 }
 
 // ── NAV ──
-const titles = { dashboard:'DASHBOARD', funnel:'FUNNEL ANALYTICS', crm:'CRM — LEAD PIPELINE', bookings:'BOOKINGS', calendar:'CALENDAR MANAGER', calls:'CALL LOG', sms:'SEND A MESSAGE', credits:'CREDITS', ai:'AI INSIGHTS', settings:'SETTINGS' };
+const titles = { dashboard:'DASHBOARD', funnel:'FUNNEL ANALYTICS', crm:'CRM — LEAD PIPELINE', bookings:'BOOKINGS', calendar:'CALENDAR MANAGER', calls:'CALL LOG', sms:'SEND A MESSAGE', credits:'CREDITS', ai:'AI INSIGHTS', payments:'PAYMENTS', settings:'SETTINGS' };
 
 function showView(id, el) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -1993,6 +2080,7 @@ function showView(id, el) {
   const titleEl = document.getElementById('page-title');
   if (titleEl) titleEl.textContent = titles[id] || id.toUpperCase();
   if (id === 'calendar') renderCalendarManager();
+  if (id === 'payments') initPaymentsView();
 }
 
 function updateClock() {
@@ -2860,6 +2948,143 @@ document.querySelectorAll('.nav-item').forEach(function(item) {
 document.querySelectorAll('.toggle').forEach(t => {
   t.addEventListener('click', function() { this.classList.toggle('on'); });
 });
+
+// ─── PAYMENTS TAB ─────────────────────────────────────────────────
+const paymentsState = { page: 1, totalPages: 1, connected: false };
+
+function payFmtUsd(c) { return '$' + ((c || 0) / 100).toFixed(2); }
+
+function payShowState(state) {
+  document.getElementById('payments-state-loading').style.display      = state === 'loading'      ? '' : 'none';
+  document.getElementById('payments-state-disconnected').style.display = state === 'disconnected' ? '' : 'none';
+  document.getElementById('payments-state-connected').style.display    = state === 'connected'    ? '' : 'none';
+}
+
+function payEscape(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[ch]));
+}
+
+function payStatusBadge(s) {
+  const color = s === 'paid' ? 'var(--green-text)' : s === 'failed' ? 'var(--red-text)' : s === 'refunded' ? 'var(--muted2)' : 'var(--cyan-text)';
+  const bg    = s === 'paid' ? 'var(--green-dim)'  : s === 'failed' ? 'var(--red-dim)'  : s === 'refunded' ? 'var(--navy-dim)' : 'var(--cyan-dim)';
+  return '<span style="background:' + bg + ';color:' + color + ';padding:3px 8px;border-radius:6px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;">' + payEscape(s) + '</span>';
+}
+
+function payCapabilityPill(label, enabled) {
+  const color = enabled ? 'var(--green-text)' : 'var(--muted2)';
+  const bg    = enabled ? 'var(--green-dim)'  : 'var(--navy-dim)';
+  return '<span style="background:' + bg + ';color:' + color + ';font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:6px;">' + label + ': ' + (enabled ? 'enabled' : 'pending') + '</span>';
+}
+
+async function initPaymentsView() {
+  payShowState('loading');
+  const r = await safeFetchJson('/api/portal-payments?action=get-revenue-summary');
+  if (!r.ok) { payShowState('disconnected'); return; }
+  const d = r.data;
+  if (!d.connected) { payShowState('disconnected'); return; }
+
+  paymentsState.connected = true;
+  document.getElementById('rev-revenue').textContent = payFmtUsd(d.revenue_cents);
+  document.getElementById('rev-fee').textContent     = payFmtUsd(d.platform_fee_paid_cents);
+  document.getElementById('rev-net').textContent     = payFmtUsd(d.net_to_you_cents);
+  document.getElementById('rev-count').textContent   = d.order_count;
+  document.getElementById('pill-charges').outerHTML  = '<span id="pill-charges">' + payCapabilityPill('Charges', d.charges_enabled) + '</span>';
+  document.getElementById('pill-payouts').outerHTML  = '<span id="pill-payouts">' + payCapabilityPill('Payouts', d.payouts_enabled) + '</span>';
+  document.getElementById('pay-account-id').textContent = d.account_id || '';
+
+  await loadOrders(1);
+  payShowState('connected');
+}
+
+async function connectStripe() {
+  const btn = document.getElementById('connect-stripe-btn');
+  const err = document.getElementById('connect-stripe-err');
+  btn.disabled = true; btn.textContent = 'REDIRECTING…'; err.style.display = 'none';
+  const r = await safeFetchJson('/api/portal-payments?action=create-connect-link');
+  if (!r.ok || !r.data.url) {
+    btn.disabled = false; btn.textContent = 'CONNECT STRIPE ACCOUNT';
+    err.textContent = 'Could not start Stripe connect: ' + (r.data?.detail || r.data?.error || 'unknown error');
+    err.style.display = '';
+    return;
+  }
+  window.location.href = r.data.url;
+}
+
+async function loadOrders(page) {
+  const status = document.getElementById('orders-status-filter')?.value || 'all';
+  paymentsState.page = page;
+  const r = await safeFetchJson('/api/portal-payments?action=get-orders&page=' + page + '&status=' + encodeURIComponent(status));
+  if (!r.ok) return;
+  const orders = r.data.orders || [];
+  const tbody = document.getElementById('orders-tbody');
+  const empty = document.getElementById('orders-empty');
+  paymentsState.totalPages = r.data.total_pages || 1;
+
+  if (!orders.length) {
+    tbody.innerHTML = '';
+    empty.style.display = '';
+  } else {
+    empty.style.display = 'none';
+    tbody.innerHTML = orders.map(function(o) {
+      const date = new Date(o.created_at).toLocaleDateString();
+      const detail = (o.size ? ' · ' + payEscape(o.size) : '') + (o.color ? ' · ' + payEscape(o.color) : '');
+      return '<tr style="border-bottom:1px solid var(--border);">'
+        + '<td style="padding:10px 12px;color:var(--muted2);white-space:nowrap;">' + date + '</td>'
+        + '<td style="padding:10px 12px;color:var(--white);">' + payEscape(o.product_name) + '<span style="color:var(--muted)">' + detail + '</span></td>'
+        + '<td style="padding:10px 12px;color:var(--white);">' + payEscape(o.customer_name) + '<div style="font-size:11px;color:var(--muted)">' + payEscape(o.customer_email) + '</div></td>'
+        + '<td style="padding:10px 12px;text-align:right;font-family:var(--font-mono);color:var(--muted2);">' + payFmtUsd(o.list_price_cents) + '</td>'
+        + '<td style="padding:10px 12px;text-align:right;font-family:var(--font-mono);color:var(--muted2);">' + payFmtUsd((o.platform_fee_cents || 0) + (o.transaction_fee_cents || 0)) + '</td>'
+        + '<td style="padding:10px 12px;text-align:right;font-family:var(--font-mono);color:var(--white);font-weight:600;">' + payFmtUsd(o.customer_total_cents) + '</td>'
+        + '<td style="padding:10px 12px;">' + payStatusBadge(o.status) + '</td>'
+        + '</tr>';
+    }).join('');
+  }
+
+  document.getElementById('orders-meta').textContent = 'Page ' + page + ' of ' + paymentsState.totalPages + ' · ' + r.data.total + ' total';
+  const prev = document.getElementById('orders-prev');
+  const next = document.getElementById('orders-next');
+  prev.disabled = page <= 1; prev.style.opacity = page <= 1 ? '0.5' : '1';
+  next.disabled = page >= paymentsState.totalPages; next.style.opacity = page >= paymentsState.totalPages ? '0.5' : '1';
+}
+
+function changeOrdersPage(delta) {
+  const p = paymentsState.page + delta;
+  if (p < 1 || p > paymentsState.totalPages) return;
+  loadOrders(p);
+}
+
+function exportOrdersCsv() {
+  const status = document.getElementById('orders-status-filter')?.value || 'all';
+  window.location.href = '/api/portal-payments?action=get-orders&format=csv&status=' + encodeURIComponent(status);
+}
+
+// Stripe Connect OAuth callback handler. When Kenny returns from the
+// Stripe OAuth page, the URL is /dashboard.html?stripe_connect=callback&code=…
+// — we exchange the code for an account id and refresh the payments view.
+(async function checkStripeConnectCallback() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('stripe_connect') !== 'callback' || !params.get('code')) return;
+  const code = params.get('code');
+  // Clean URL immediately so a refresh doesn't re-trigger the exchange.
+  history.replaceState({}, '', '/dashboard.html');
+  // Auto-navigate to the payments view.
+  const navItem = document.querySelector('.nav-item[onclick*="payments"]');
+  if (navItem) navItem.click();
+  payShowState('loading');
+  const r = await safeFetchJson('/api/portal-payments?action=complete-connect', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ code }),
+  });
+  if (!r.ok) {
+    payShowState('disconnected');
+    const err = document.getElementById('connect-stripe-err');
+    if (err) { err.textContent = 'Stripe connection failed: ' + (r.data?.detail || r.data?.error || 'unknown'); err.style.display = ''; }
+    return;
+  }
+  // Success — re-init to load revenue + orders against the new account.
+  initPaymentsView();
+})();
 </script>
 </body>
 </html>
