@@ -1164,6 +1164,9 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
         <span class="nav-icon">📅</span> Bookings
         <span class="nav-badge white">6</span>
       </div>
+      <div class="nav-item" onclick="showView('bootcamp',this)">
+        <span class="nav-icon">🏋️</span> Bootcamp Signups
+      </div>
       <div class="nav-item" onclick="showView('calendar',this)">
         <span class="nav-icon">📆</span> Calendar Manager
       </div>
@@ -1520,6 +1523,58 @@ tbody td { padding: 11px 12px; color: var(--text); vertical-align: middle; }
       </div>
     </div>
 
+
+    <!-- ══ BOOTCAMP SIGNUPS ══ -->
+    <!-- Read-only view of reservations taken at theflexfacility.com/bootcamp.
+         Rows are written by the main site + its Stripe webhook. -->
+    <div class="view" id="view-bootcamp">
+      <div class="section-header">
+        <div class="section-title">BOOTCAMP SIGNUPS</div>
+        <div class="section-sub" id="bootcamp-subtitle">Loading...</div>
+      </div>
+
+      <div class="stat-mini-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:16px;">
+        <div class="stat-mini"><div class="stat-mini-val" id="bc-stat-paid">—</div><div class="stat-mini-label">SEATS PAID</div></div>
+        <div class="stat-mini"><div class="stat-mini-val" id="bc-stat-total">—</div><div class="stat-mini-label">TOTAL SIGNUPS</div></div>
+        <div class="stat-mini"><div class="stat-mini-val" id="bc-stat-revenue">—</div><div class="stat-mini-label">RESERVED REVENUE</div></div>
+      </div>
+
+      <div class="search-bar"><span class="search-icon">🔍</span><input type="text" id="bootcamp-search" placeholder="Search by name, phone, or email..." oninput="debounceBootcampSearch()"></div>
+
+      <div class="filter-row" id="bootcamp-status-filters">
+        <div class="filter-chip active" onclick="setBootcampStatus('',this)">All</div>
+        <div class="filter-chip" onclick="setBootcampStatus('paid',this)">Paid</div>
+        <div class="filter-chip" onclick="setBootcampStatus('pending',this)">Pending</div>
+        <div class="filter-chip" onclick="setBootcampStatus('failed',this)">Failed</div>
+        <div class="filter-chip" onclick="setBootcampStatus('expired',this)">Expired</div>
+      </div>
+
+      <div class="panel">
+        <div class="table-wrap">
+          <table id="bootcamp-table">
+            <thead><tr>
+              <th>NAME</th>
+              <th>PHONE</th>
+              <th>EMAIL</th>
+              <th>PAYMENT</th>
+              <th>WAIVER</th>
+              <th>SIGNED UP</th>
+            </tr></thead>
+            <tbody id="bootcamp-tbody">
+              <tr><td colspan="6" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">Loading signups...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding:0 4px;">
+        <div id="bootcamp-page-info" style="font-size:11px;color:var(--muted);font-family:var(--font-mono);"></div>
+        <div style="display:flex;gap:6px;">
+          <button onclick="bootcampPrevPage()" id="bootcamp-prev-btn" class="sync-btn" style="background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.1);padding:5px 12px;font-size:10px;" disabled>← Prev</button>
+          <button onclick="bootcampNextPage()" id="bootcamp-next-btn" class="sync-btn" style="background:rgba(255,255,255,0.06);color:var(--text);border:1px solid rgba(255,255,255,0.1);padding:5px 12px;font-size:10px;" disabled>Next →</button>
+        </div>
+      </div>
+    </div>
 
     <!-- ══ CALENDAR MANAGER ══ -->
     <div class="view" id="view-calendar">
@@ -1982,7 +2037,7 @@ function timeAgo(date) {
 }
 
 // ── NAV ──
-const titles = { dashboard:'DASHBOARD', funnel:'FUNNEL ANALYTICS', crm:'CRM — LEAD PIPELINE', bookings:'BOOKINGS', calendar:'CALENDAR MANAGER', calls:'CALL LOG', sms:'SEND A MESSAGE', credits:'CREDITS', ai:'AI INSIGHTS', settings:'SETTINGS' };
+const titles = { dashboard:'DASHBOARD', funnel:'FUNNEL ANALYTICS', crm:'CRM — LEAD PIPELINE', bookings:'BOOKINGS', bootcamp:'BOOTCAMP SIGNUPS', calendar:'CALENDAR MANAGER', calls:'CALL LOG', sms:'SEND A MESSAGE', credits:'CREDITS', ai:'AI INSIGHTS', settings:'SETTINGS' };
 
 function showView(id, el) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -1993,6 +2048,7 @@ function showView(id, el) {
   const titleEl = document.getElementById('page-title');
   if (titleEl) titleEl.textContent = titles[id] || id.toUpperCase();
   if (id === 'calendar') renderCalendarManager();
+  if (id === 'bootcamp') loadBootcampSignups();
 }
 
 function updateClock() {
@@ -2220,6 +2276,112 @@ function debounceCrmSearch() {
 
 function crmPrevPage() { if (crmPage>1) { crmPage--; loadCrmLeads(); } }
 function crmNextPage() { crmPage++; loadCrmLeads(); }
+
+// ══ BOOTCAMP SIGNUPS ══
+// Read-only table of theflexfacility.com/bootcamp reservations. The API
+// scopes every query to client_id server-side; nothing here passes it.
+var bootcampPage = 1;
+var bootcampStatus = '';
+var bootcampSearch = '';
+var bootcampSearchTimer = null;
+var bootcampTicketCents = 1000; // $10 seat — matches BOOTCAMP_EVENT on the main site
+
+// This table renders names/emails typed by the public into a form, so
+// escape before it touches innerHTML.
+function bcEsc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+    return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+  });
+}
+
+function bcPaymentPill(status) {
+  var s = (status || 'pending').toLowerCase();
+  var colors = {
+    paid:    ['rgba(74,222,128,0.12)', '#4ade80'],
+    pending: ['rgba(200,168,75,0.12)', 'var(--gold)'],
+    failed:  ['rgba(255,107,107,0.12)', '#ff6b6b'],
+    expired: ['rgba(255,255,255,0.06)', 'var(--muted)']
+  };
+  var c = colors[s] || colors.pending;
+  return '<span style="display:inline-block;background:' + c[0] + ';color:' + c[1] +
+    ';border-radius:6px;padding:3px 9px;font-size:10px;font-family:var(--font-mono);letter-spacing:1px;text-transform:uppercase;">' +
+    bcEsc(s) + '</span>';
+}
+
+function setBootcampStatus(status, el) {
+  bootcampStatus = status;
+  bootcampPage = 1;
+  loadBootcampSignups();
+}
+
+function debounceBootcampSearch() {
+  clearTimeout(bootcampSearchTimer);
+  bootcampSearchTimer = setTimeout(function () {
+    bootcampSearch = document.getElementById('bootcamp-search').value.trim();
+    bootcampPage = 1;
+    loadBootcampSignups();
+  }, 350);
+}
+
+function bootcampPrevPage() { if (bootcampPage > 1) { bootcampPage--; loadBootcampSignups(); } }
+function bootcampNextPage() { bootcampPage++; loadBootcampSignups(); }
+
+async function loadBootcampSignups() {
+  var tbody = document.getElementById('bootcamp-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--muted);font-size:13px;">Loading signups...</td></tr>';
+
+  try {
+    var url = '/api/bootcamp-signups?page=' + bootcampPage;
+    if (bootcampStatus) url += '&status=' + encodeURIComponent(bootcampStatus);
+    if (bootcampSearch) url += '&search=' + encodeURIComponent(bootcampSearch);
+
+    var res = await fetch(url, { credentials: 'include' });
+    var json = await res.json();
+    if (!json.success) throw new Error(json.error || 'Request failed');
+
+    var rows = json.data || [];
+    var total = json.total || 0;
+    var paid = json.paid || 0;
+    var perPage = json.perPage || 50;
+
+    document.getElementById('bc-stat-paid').textContent = paid;
+    document.getElementById('bc-stat-total').textContent = total;
+    document.getElementById('bc-stat-revenue').textContent = '$' + ((paid * bootcampTicketCents) / 100).toFixed(2);
+
+    var sub = document.getElementById('bootcamp-subtitle');
+    if (sub) sub.textContent = paid + ' seat' + (paid === 1 ? '' : 's') + ' paid · ROQ N FLEX Bootcamp · Aug 15, 2026';
+
+    if (rows.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:30px;color:var(--muted);font-size:13px;">No signups yet</td></tr>';
+    } else {
+      tbody.innerHTML = rows.map(function (r) {
+        var waiver = r.waiver_accepted
+          ? '<span style="color:#4ade80;">✓ Accepted</span>'
+          : '<span style="color:#ff6b6b;">✕ Missing</span>';
+        return '<tr>'
+          + '<td><div class="lead-name">' + bcEsc(r.name || 'Unknown') + '</div></td>'
+          + '<td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">' + bcEsc(formatPhone(r.phone)) + '</td>'
+          + '<td style="font-size:11px;color:var(--muted2)">' + bcEsc(r.email || '—') + '</td>'
+          + '<td>' + bcPaymentPill(r.payment_status) + '</td>'
+          + '<td style="font-size:11px;">' + waiver + '</td>'
+          + '<td style="font-family:var(--font-mono);font-size:11px;color:var(--muted2)">' + (r.created_at ? bcEsc(timeAgo(r.created_at)) : '—') + '</td>'
+          + '</tr>';
+      }).join('');
+    }
+
+    var totalPages = Math.ceil(total / perPage) || 1;
+    var info = document.getElementById('bootcamp-page-info');
+    if (info) info.textContent = 'Page ' + bootcampPage + ' of ' + totalPages + ' (' + total + ' signups)';
+    var prev = document.getElementById('bootcamp-prev-btn');
+    var next = document.getElementById('bootcamp-next-btn');
+    if (prev) prev.disabled = bootcampPage <= 1;
+    if (next) next.disabled = bootcampPage >= totalPages;
+  } catch (err) {
+    console.error('Bootcamp load error:', err);
+    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:20px;color:var(--red-text);font-size:13px;">Error loading signups</td></tr>';
+  }
+}
 
 async function loadCrmLeads() {
   const tbody = document.getElementById('crm-tbody');
